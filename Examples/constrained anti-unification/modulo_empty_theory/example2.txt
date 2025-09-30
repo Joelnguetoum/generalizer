@@ -1,0 +1,7 @@
+Function: f 2
+Function: g 2
+Function: a 0
+Function: b 0 S
+Function: c 0
+Function: d 0
+Problem: x f(a,b) f(c,b)

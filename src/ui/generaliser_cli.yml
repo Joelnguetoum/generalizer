@@ -1,0 +1,27 @@
+
+
+
+
+name: generaliser
+version: "0.0.0"
+author: Joel Nguetoum
+about: Anti-unification toolkit
+subcommands:
+  - lgg:
+      about: Find lgg solutions of an anti-unification problem
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - file:
+            required: true
+            index: 1
+            help: File containing the signature and an anti-unification problem
+  - clgg:
+      about: Find lgg solutions of a constrained anti-unification problem
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - file:
+            required: true
+            index: 1
+            help: File containing the signature and a constrained anti-unification problem

@@ -95,7 +95,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "generalizer"
+name = "generaliser"
 version = "0.1.0"
 dependencies = [
  "clap",
