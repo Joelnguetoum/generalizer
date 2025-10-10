@@ -1,6 +1,7 @@
 use clap::{load_yaml, App};
 use crate::ui::commands::cli_clgg::cli_clgg;
 use crate::ui::commands::cli_lgg::cli_lgg;
+use crate::ui::utils::logo::print_logo;
 
 pub fn generaliser_cli() -> i32{
     let yaml = load_yaml!("generaliser_cli.yml");
@@ -8,6 +9,8 @@ pub fn generaliser_cli() -> i32{
 
     let mut ret_print : Vec<String> = vec![];
     let mut ret_code : u32 = 1;
+
+    print_logo();
 
     if let Some(matches) = matches.subcommand_matches("lgg") {
         let mut got = cli_lgg(matches);

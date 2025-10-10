@@ -37,7 +37,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
     let pairs_inner = unparsed_function.clone().into_inner();
     let mut name = String::from("");
     let mut arity: usize = 0;
-    let mut axioms = HashSet::new();
+    let mut axioms = Vec::new();
 
     for pair in pairs_inner {
         if pair.as_rule() == Rule::DCL_NAME{
@@ -56,7 +56,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
                 if arity!=0{
                     panic!("A special constant must be of arity 0");
                 }
-                axioms.insert(Axioms::SpecialConst);
+                axioms.push(Axioms::SpecialConst);
             }
 
             if axiom_str.contains("A") {
@@ -64,7 +64,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
                     panic!("Associative functions must be of arity greater or equal than 2");
                 }
 
-                axioms.insert(Axioms::A);
+                axioms.push(Axioms::A);
             }
 
             if axiom_str.contains("C"){
@@ -72,14 +72,14 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
                     panic!("Commutative functions must be of arity greater or equal than 2");
                 }
 
-                axioms.insert(Axioms::C);
+                axioms.push(Axioms::C);
             }
 
             if axiom_str.contains("U") && arity>0{
                 if arity<2{
                     panic!("Functions having unit element must be of arity greater or equal than 2");
                 }
-                axioms.insert(Axioms::U);
+                axioms.push(Axioms::U);
             }
 
         }

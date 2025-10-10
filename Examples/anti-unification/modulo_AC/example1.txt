@@ -1,0 +1,6 @@
+Function: f 2 C
+Function: a 0
+Function: b 0
+Function: c 0
+Function: d 0
+Problem: x f(a,b) f(c,a)

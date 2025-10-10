@@ -18,8 +18,10 @@ impl Configuration {
         false
     }
 
-    /*
+
     pub fn constrained_recover(config: &Configuration) -> Configuration {
+        //Redundancy????
+
         let mut new_active = config.active.clone();
         let mut new_store = config.store.clone();
         let mut new_sub = config.sub.clone();
@@ -30,12 +32,13 @@ impl Configuration {
         for aut2 in &config.store {
             if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
                 sub.insert(&aut.x, &Term::Variable(aut2.x.clone()));
+                new_sub.push(sub.clone());
             }
         }
 
         Configuration::new(new_active,new_store,new_sub)
     }
 
-     */
+
 
 }

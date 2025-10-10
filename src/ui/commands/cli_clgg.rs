@@ -1,26 +1,39 @@
+use std::time::Instant;
 use clap::ArgMatches;
-use crate::anti_unfication::modulo_empty::generalisation_empty_theory::generalisation_empty_theory;
-use crate::constrained_anti_unification::modulo_empty::constrained_generalisation_empty_theory::constrained_generalisation_empty_theory;
+use crate::configuration::generalisation_process::GeneralisationProcess;
 use crate::global_counter::counter::reset_counter;
 use crate::terms::parsing::interface::parse_file;
+use crate::ui::utils::print_file::print_file;
+use crate::ui::utils::print_generalisers::print_generalisers;
 
 pub fn cli_clgg(matches: &ArgMatches) {
     reset_counter();
 
     let file = matches.value_of("file").unwrap();
 
+    print_file(file);
 
     match parse_file(file) {
         Ok((sig,t1,t2)) => {
-            match constrained_generalisation_empty_theory(&t1,&t2){
-                Some(clgg)=>{
-                    println!("Constrained generalisation successful");
+            let mut process = GeneralisationProcess::init_process(&t1,&t2);
+            let time = Instant::now();
 
-                    println!("{}", clgg);
+            match process.constrained_generalise(){
+                Ok(clggs)=>{
+
+                    let elapsed = time.elapsed().as_secs_f64();
+
+                    println!("Constrained generalisation successful");
+                    println!("Duration: {} s", elapsed);
+
+                    print_generalisers(&clggs);
+
                 },
-                None=>{
-                    println!("Constrained generalisation Failed");
-                    println!("No constrained generaliser could be found");
+                Err(e)=>{
+                    let elapsed = time.elapsed().as_secs_f64();
+
+                    println!("{}",e);
+                    println!("Duration: {} s", elapsed);
                 }
             }
         },

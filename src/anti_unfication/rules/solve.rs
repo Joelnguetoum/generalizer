@@ -7,11 +7,11 @@ use crate::terms::term::Term;
 
 
 impl Configuration {
-    pub fn can_apply_solve(config: &Configuration) -> bool {
-        let aut = config.active[0].clone();
+    pub fn can_apply_solve(&self) -> bool {
+        let aut = self.active[0].clone();
 
         if aut.t1.head_ground() != aut.t2.head_ground() {
-            for aut2 in &config.store {
+            for aut2 in &self.store {
                 if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
                     return false;
                 }
@@ -23,10 +23,10 @@ impl Configuration {
     }
 
 
-    pub fn solve(config: &Configuration) -> Configuration {
-        let mut new_active = config.active.clone();
-        let mut new_store = config.store.clone();
-        let mut new_sub = config.sub.clone();
+    pub fn solve(&self) -> Configuration {
+        let mut new_active = self.active.clone();
+        let mut new_store = self.store.clone();
+        let mut new_sub = self.sub.clone();
 
         let aut = new_active.remove(0);
 

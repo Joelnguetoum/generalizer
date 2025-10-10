@@ -11,24 +11,23 @@ pub enum Axioms {
     U
 }
 
-#[derive(Clone, PartialEq,Eq, Debug)]
+#[derive(Clone, PartialEq,Eq, Debug, Hash)]
 pub struct FunctionSignature {
     pub name: String,
     pub arity: usize,
-    pub axioms: HashSet<Axioms>,
+    pub axioms: Vec<Axioms>,
 }
-#[derive(Clone, PartialEq, Debug, Eq)]
+#[derive(Clone, PartialEq, Debug, Eq, Hash)]
 pub struct Function {
     pub signature: FunctionSignature,
     pub args: Vec<Term>,
-    //pub axioms: Vec<Axioms>,
 }
 
 pub type Signature = Vec<FunctionSignature>;
 
 
 impl FunctionSignature {
-    pub fn new(name: String, arity: usize,axioms: HashSet<Axioms>) -> FunctionSignature {
+    pub fn new(name: String, arity: usize,axioms: Vec<Axioms>) -> FunctionSignature {
         FunctionSignature{name, arity,axioms}
     }
 }

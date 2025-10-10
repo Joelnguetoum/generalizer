@@ -10,7 +10,10 @@ impl Configuration {
     pub fn can_apply_constrained_solve(config: &Configuration) -> bool {
         let aut = config.active[0].clone();
 
-        if (aut.t1.head_ground() != aut.t2.head_ground())&& !aut.t1.is_special_constant() && !aut.t2.is_special_constant() {
+        if (aut.t1.head_ground() != aut.t2.head_ground())
+            && aut.t1.get_special_constants().is_empty()
+            && aut.t2.get_special_constants().is_empty()
+        {
             for aut2 in &config.store {
                 if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
                     return false;
@@ -22,8 +25,9 @@ impl Configuration {
         false
     }
 
-    /*
+
     pub fn constrained_solve(config: &Configuration) -> Configuration {
+        //Redundancy????
         let mut new_active = config.active.clone();
         let mut new_store = config.store.clone();
         let mut new_sub = config.sub.clone();
@@ -35,6 +39,6 @@ impl Configuration {
         Configuration::new(new_active,new_store,new_sub)
     }
 
-     */
+
 
 }

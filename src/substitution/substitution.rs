@@ -32,11 +32,18 @@ impl fmt::Display for Substitution {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut result = String::new();
         let mut items: Vec<(&Variable, &Term)> = self.map.iter().collect();
-        //items.sort_by_key(|(v, _)| v);
+        items.sort_by_key(|(v, _)| *v);
+        let mut ct = items.len();
 
         result.push('{');
         for (variable, t) in items {
-            result.push_str(&format!("{} --> {},", variable, t));
+            result.push_str(&format!("{} --> {}", variable, t));
+
+            ct -= 1;
+
+            if ct >0{
+                result.push(',');
+            }
         }
 
         result.push('}');

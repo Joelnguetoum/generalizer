@@ -1,3 +1,4 @@
+use std::fmt::{format, Display};
 use crate::configuration::aut::AUT;
 use crate::generaliser::generaliser::Generaliser;
 use crate::substitution::substitution::Substitution;
@@ -31,6 +32,9 @@ impl Configuration {
         let mut sub1 = Substitution::new();
         let mut sub2 = Substitution::new();
 
+        //println!("{:?}",self.store);
+
+
         for aut in self.active.iter() {
             sub1.insert(&aut.x.clone(),&aut.t1.clone());
             sub2.insert(&aut.x.clone(),&aut.t2.clone());
@@ -54,5 +58,33 @@ impl Configuration {
 
          */
         Generaliser::new(&t,&sub1,&sub2)
+    }
+}
+
+impl Display for Configuration {
+    fn fmt (&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        let mut active_string = String::new();
+        let mut store_string = String::new();
+        let mut sub_string = String::new();
+
+        for aut in self.active.iter() {
+            active_string.push_str(format!("{}, ",aut).as_str());
+        }
+
+        for aut in self.store.iter() {
+            store_string.push_str(format!("{}, ",aut).as_str());
+        }
+
+        for sub in self.sub.iter() {
+            sub_string.push_str(format!("{}",sub).as_str());
+        }
+        let result = format!(
+            "{:<12} {}\n{:<12} {}\n{:<12} {}",
+            "active set:", active_string,
+            "store set:", store_string,
+            "subs:", sub_string
+        );
+
+        write!(f, "{}", result)
     }
 }

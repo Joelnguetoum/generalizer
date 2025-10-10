@@ -6,20 +6,27 @@ use crate::terms::function::Function;
 use crate::terms::term::Term;
 
 
-/*
-impl Configuration {
-    pub fn can_apply_decompose(config: &Configuration) -> bool {
-        let aut = config.active[0].clone();
 
-        if aut.t1.head_ground() == aut.t2.head_ground() {
+impl Configuration {
+    pub fn can_apply_decompose(&self) -> bool {
+        let aut = self.active[0].clone();
+
+        if aut.t1.head_ground() == aut.t2.head_ground()
+            && !aut.t1.is_head_function_commutative()
+            && !aut.t1.is_head_function_associative()
+            && !aut.t1.is_head_function_associative_commutative(){
             return true;
         }
         false
     }
-    pub fn decompose(config: &Configuration) -> Configuration {
-        let mut new_active = config.active.clone();
-        let mut new_store = config.store.clone();
-        let mut new_sub = config.sub.clone();
+    pub fn decompose(&self) -> Configuration {
+
+
+        // println!("decompose");
+
+        let mut new_active = self.active.clone();
+        let mut new_store = self.store.clone();
+        let mut new_sub = self.sub.clone();
 
 
         //Since this is decompose, we remove the concerned AUT
@@ -49,5 +56,3 @@ impl Configuration {
     }
 
 }
-
- */

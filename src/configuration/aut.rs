@@ -26,14 +26,13 @@ impl AUT {
 
 }
 
-/*
+
 impl fmt::Display for AUT{
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut result = String::new();
 
-        result.push_str(&format!("AUT \n x = {}\n t = {}\n t' = {} \n", self.x, self.t1, self.t2));
+        result.push_str(&format!(" {}: {} =^=  {}", self.x, self.t1, self.t2));
         write!(f, "{}", result.trim_end())
     }
 }
 
- */
