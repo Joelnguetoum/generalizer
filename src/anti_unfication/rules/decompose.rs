@@ -1,5 +1,6 @@
 use crate::configuration::aut::AUT;
 use crate::configuration::configuration::Configuration;
+use crate::configuration::history::History;
 use crate::substitution::substitution::Substitution;
 use crate::substitution::variable::Variable;
 use crate::terms::function::Function;
@@ -49,7 +50,7 @@ impl Configuration {
                 sub.insert(&aut.x, &Term::Function(Function::new(&aut.t1.head_ground(), &sub_term_args)));
                 new_sub.push(sub);
 
-                Configuration::new(new_active, new_store,new_sub)
+                Configuration::new(new_active, new_store,new_sub,self.x0.clone(),self.update_history("Decompose"))
             },
             _ => panic!("Genereralisation of a non-gound term")
         }

@@ -8,6 +8,7 @@ mod generaliser;
 mod global_counter;
 mod constrained_anti_unification;
 mod ui;
+mod matching;
 
 use std::env;
 use crate::ui::generaliser_cli::generaliser_cli;

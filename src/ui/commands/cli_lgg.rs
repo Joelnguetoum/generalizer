@@ -11,6 +11,9 @@ pub fn cli_lgg(matches: &ArgMatches) {
     reset_counter();
 
     let file = matches.value_of("file").unwrap();
+    let verbose = matches.is_present("verbose");
+    let dot = matches.is_present("dot");
+
     print_file(file);
 
     match parse_file(file) {
@@ -27,7 +30,7 @@ pub fn cli_lgg(matches: &ArgMatches) {
             println!("Generalisation successful");
             println!("Duration: {} s", elapsed);
 
-            print_generalisers(&lggs);
+            print_generalisers(&lggs,verbose,dot);
 
         },
         Err(e) => {

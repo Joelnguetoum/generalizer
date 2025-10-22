@@ -53,7 +53,7 @@ impl Configuration {
                 sub1.insert(&aut.x, &Term::Function(Function::new(&aut.t1.head_ground(), &sub_term_args1)));
                 new_sub1.push(sub1);
 
-                let conf1 = Configuration::new(new_active1, new_store1,new_sub1);
+                let conf1 = Configuration::new(new_active1, new_store1,new_sub1,self.x0.clone(),self.update_history("Decompose_C"));
 
                 //Return config 2
 
@@ -79,7 +79,7 @@ impl Configuration {
                 sub2.insert(&aut.x, &Term::Function(Function::new(&aut.t1.head_ground(), &sub_term_args2)));
                 new_sub2.push(sub2);
 
-                let conf2 = Configuration::new(new_active2, new_store2,new_sub2);
+                let conf2 = Configuration::new(new_active2, new_store2,new_sub2,self.x0.clone(),self.update_history("Decompose_C"));
 
                 //return
                 vec![conf1, conf2]

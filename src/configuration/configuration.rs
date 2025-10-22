@@ -1,5 +1,6 @@
 use std::fmt::{format, Display};
 use crate::configuration::aut::AUT;
+use crate::configuration::history::History;
 use crate::generaliser::generaliser::Generaliser;
 use crate::substitution::substitution::Substitution;
 use crate::substitution::variable::Variable;
@@ -10,12 +11,14 @@ pub struct Configuration {
     pub active : Vec<AUT>,
     pub store : Vec<AUT>,
     pub sub: Vec<Substitution>,
+    pub x0 : Variable,
+    pub history: History,
 }
 
 
 impl Configuration {
-    pub fn new(active: Vec<AUT>, store: Vec<AUT>, sub: Vec<Substitution>) -> Self {
-        Self { active , store, sub }
+    pub fn new(active: Vec<AUT>, store: Vec<AUT>, sub: Vec<Substitution>,x0: Variable, history: History) -> Self {
+        Self { active , store, sub,x0 , history }
     }
 
     pub fn init_conf(t1: &Term, t2: &Term) -> Configuration {
@@ -23,9 +26,9 @@ impl Configuration {
 
         let sub = Vec::new();
 
-        let init_active = Vec::from(&[AUT::new(x0,t1.clone(), t2.clone())]);
+        let init_active = Vec::from(&[AUT::new(x0.clone(),t1.clone(), t2.clone())]);
 
-        Self::new(init_active,Vec::new(),sub)
+        Self::new(init_active,Vec::new(),sub,x0,History::new())
     }
 
     pub fn to_generaliser(&self) -> Generaliser{
@@ -57,7 +60,14 @@ impl Configuration {
         println!("sub2: {}", sub2);
 
          */
-        Generaliser::new(&t,&sub1,&sub2)
+        Generaliser::new_with_history(&t,&sub1,&sub2,&self.update_history(""))
+    }
+
+    pub fn update_history(&self,rule: &str)->History{
+        let mut hist = self.history.clone();
+
+        hist.add_config(&self,rule);
+        hist
     }
 }
 
@@ -67,23 +77,32 @@ impl Display for Configuration {
         let mut store_string = String::new();
         let mut sub_string = String::new();
 
+        //Active set
+        active_string.push('{');
         for aut in self.active.iter() {
             active_string.push_str(format!("{}, ",aut).as_str());
         }
+        active_string.push('}');
 
+        //Store set
+        store_string.push('{');
         for aut in self.store.iter() {
             store_string.push_str(format!("{}, ",aut).as_str());
         }
+        store_string.push('}');
 
+        // Substitution
+        sub_string.push('{');
         for sub in self.sub.iter() {
             sub_string.push_str(format!("{}",sub).as_str());
         }
+        sub_string.push('}');
+
+
+        //Total string
+
         let result = format!(
-            "{:<12} {}\n{:<12} {}\n{:<12} {}",
-            "active set:", active_string,
-            "store set:", store_string,
-            "subs:", sub_string
-        );
+            "< {} |  {} | {} | {} >", active_string,store_string,sub_string, self.x0);
 
         write!(f, "{}", result)
     }

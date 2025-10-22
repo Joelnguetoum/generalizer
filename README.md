@@ -48,3 +48,45 @@ or
     $ generaliser clgg example1.txt
 
 if the executable is in the same folder that of the input files.
+
+
+### Visulisation flags
+
+#### verbose
+
+The flag verbose print in command line the computation history of each least general generalisations.
+
+An example is 
+
+    $ generaliser lgg example1.txt -v
+
+or
+
+    $ generaliser lgg example1.txt --verbose
+
+The same flag remain available for the command clgg.
+
+#### dot
+
+The flag dot creates a .dot file and a png depicting the computation history of the least general generalisations.
+
+An example is
+
+    $ generaliser lgg example1.txt -d
+
+or
+
+    $ generaliser lgg example1.txt --dot
+
+#### verbose and dot can be used together
+
+The flags can obviously be combined.
+
+For example 
+
+
+    $ generaliser lgg example1.txt -v -d
+
+or
+
+    $ generaliser lgg example1.txt --verbose --dot

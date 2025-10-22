@@ -1,6 +1,7 @@
 use clap::{load_yaml, App};
 use crate::ui::commands::cli_clgg::cli_clgg;
 use crate::ui::commands::cli_lgg::cli_lgg;
+use crate::ui::commands::cli_test::cli_test;
 use crate::ui::utils::logo::print_logo;
 
 pub fn generaliser_cli() -> i32{
@@ -18,6 +19,10 @@ pub fn generaliser_cli() -> i32{
         //ret_code = got.1;
     } else if let Some(matches) = matches.subcommand_matches("clgg") {
         let mut got = cli_clgg(matches);
+        //ret_print = got.0;
+        //ret_code = got.1;
+    } else if let Some(matches) = matches.subcommand_matches("test") {
+        let mut got = cli_test(matches);
         //ret_print = got.0;
         //ret_code = got.1;
     } else {

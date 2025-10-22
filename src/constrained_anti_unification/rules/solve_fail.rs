@@ -3,8 +3,8 @@ use crate::terms::function::Signature;
 
 impl Configuration {
 
-    pub fn can_apply_fail(config: &Configuration) -> bool{
-        let aut = config.active[0].clone();
+    pub fn can_apply_fail(&self) -> bool{
+        let aut = self.active[0].clone();
 
         if aut.t1.head_ground() != aut.t2.head_ground()
         {

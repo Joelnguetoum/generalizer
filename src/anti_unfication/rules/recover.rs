@@ -32,7 +32,7 @@ impl Configuration {
             }
         }
         new_sub.push(sub);
-        Configuration::new(new_active,new_store,new_sub)
+        Configuration::new(new_active,new_store,new_sub,self.x0.clone(),self.update_history("Recover"))
     }
 
 }

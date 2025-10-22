@@ -16,6 +16,14 @@ subcommands:
             required: true
             index: 1
             help: File containing the signature and an anti-unification problem
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of lggs
+        - dot:
+            long: dot
+            short: d
+            help: Print the computation history of lggs in a dot file together with an image
   - clgg:
       about: Find lgg solutions of a constrained anti-unification problem
       version: "0.0.0"
@@ -25,3 +33,17 @@ subcommands:
             required: true
             index: 1
             help: File containing the signature and a constrained anti-unification problem
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of clggs
+        - dot:
+            long: dot
+            short: d
+            help: Print the computation history of lggs in a dot file together with an image
+  - test:
+      about: Various tests
+      version: "0.0.0"
+      author: Joel Nguetoum
+
+

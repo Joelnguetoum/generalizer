@@ -10,7 +10,8 @@ pub fn cli_clgg(matches: &ArgMatches) {
     reset_counter();
 
     let file = matches.value_of("file").unwrap();
-
+    let verbose = matches.is_present("verbose");
+    let dot = matches.is_present("dot");
     print_file(file);
 
     match parse_file(file) {
@@ -26,7 +27,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
                     println!("Constrained generalisation successful");
                     println!("Duration: {} s", elapsed);
 
-                    print_generalisers(&clggs);
+                    print_generalisers(&clggs,verbose,dot);
 
                 },
                 Err(e)=>{
