@@ -1,2 +1,2 @@
-pub mod matching_ac;
-mod matching_maude;
+pub mod brute_force;
+pub mod contejean_algorithm;

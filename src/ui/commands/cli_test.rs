@@ -1,6 +1,6 @@
 use clap::ArgMatches;
-use crate::matching::matching_ac::match_modulo_ac;
-use crate::substitution::variable::Variable;
+use crate::matching::brute_force::matching_ac::brute_force_match_modulo_ac;
+use crate::terms::substitution::variable::Variable;
 use crate::terms::function::{Axioms, Function, FunctionSignature};
 use crate::terms::term::Term;
 
@@ -36,7 +36,7 @@ pub fn cli_test(matches: &ArgMatches) {
 
     let t7 = Term::Function(Function::new(&sig_f,&vec![a.clone(),t6.clone()]));
 
-    let verdict = match_modulo_ac(&t4,&t7);
+    let verdict = brute_force_match_modulo_ac(&t4, &t7);
 
     println!("{}", verdict);
 

@@ -1,6 +1,6 @@
 use std::str::Chars;
 use pest::iterators::Pair;
-use crate::substitution::variable::Variable;
+use crate::terms::substitution::variable::Variable;
 use crate::terms::function::{Function, Signature};
 
 use crate::terms::parsing::parser::Rule;

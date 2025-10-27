@@ -1,6 +1,7 @@
 use std::time::Instant;
 use clap::ArgMatches;
-use crate::configuration::generalisation_process::GeneralisationProcess;
+use colored::Colorize;
+use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::global_counter::counter::reset_counter;
 use crate::terms::parsing::interface::parse_file;
 use crate::ui::utils::print_file::print_file;
@@ -24,7 +25,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
 
                     let elapsed = time.elapsed().as_secs_f64();
 
-                    println!("Constrained generalisation successful");
+                    println!("{}", "Constrained generalisation successful".to_string().green());
                     println!("Duration: {} s", elapsed);
 
                     print_generalisers(&clggs,verbose,dot);
@@ -33,7 +34,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
                 Err(e)=>{
                     let elapsed = time.elapsed().as_secs_f64();
 
-                    println!("{}",e);
+                    println!("{}",e.to_string().red());
                     println!("Duration: {} s", elapsed);
                 }
             }

@@ -1,0 +1,46 @@
+use crate::anti_unification::configuration::configuration::Configuration;
+use crate::anti_unification::rules::rule::Rule;
+use crate::anti_unification::error::ConfigurationError;
+use crate::terms::substitution::substitution::Substitution;
+use crate::terms::function::Signature;
+use crate::terms::term::Term;
+
+impl Configuration {
+    pub fn can_apply_constrained_recover(&self) -> bool {
+        let aut = self.active[0].clone();
+
+        if (aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature())&& !aut.t1.is_special_constant() && !aut.t2.is_special_constant() {
+            for aut2 in &self.store {
+                if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
+                    return true;
+                }
+            }
+        }
+
+        false
+    }
+
+
+    pub fn constrained_recover(&self) -> Result<Configuration, ConfigurationError> {
+        // redundancy ???
+        let mut new_active = self.active.clone();
+        let new_store = self.store.clone();
+        let mut new_sub = self.sub.clone();
+
+        let aut = new_active.remove(0);
+
+        let mut sub = Substitution::new();
+        for aut2 in &self.store {
+            if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
+                sub.insert(&aut.x, &Term::Variable(aut2.x.clone()));
+                new_sub.push(sub);
+                return Ok(self.create_new_config(new_active, new_store, new_sub, &Rule::ConstrainedRecover));
+            }
+        }
+
+        Err(ConfigurationError::InvalidRuleApplication)
+    }
+
+
+
+}

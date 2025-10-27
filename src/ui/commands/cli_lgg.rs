@@ -1,6 +1,7 @@
 use std::time::Instant;
 use clap::ArgMatches;
-use crate::configuration::generalisation_process::GeneralisationProcess;
+use colored::Colorize;
+use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::global_counter::counter::reset_counter;
 use crate::terms::parsing::interface::parse_file;
 use crate::ui::utils::logo::print_logo;
@@ -22,19 +23,18 @@ pub fn cli_lgg(matches: &ArgMatches) {
 
             let mut process = GeneralisationProcess::init_process(&t1,&t2);
 
-            let elapsed = time.elapsed().as_secs_f64();
-
             let lggs = process.generalise();
 
+            let elapsed = time.elapsed().as_secs_f64();
 
-            println!("Generalisation successful");
+            println!("{}", "Generalisation successful".to_string().green());
             println!("Duration: {} s", elapsed);
 
             print_generalisers(&lggs,verbose,dot);
 
         },
         Err(e) => {
-            println!("Error: {}", e);
+            println!("Error: {}", e.to_string().red());
         }
     }
 

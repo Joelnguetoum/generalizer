@@ -1,6 +1,6 @@
 use std::collections::HashSet;
 use std::fmt;
-use crate::substitution::variable::Variable;
+use crate::terms::substitution::variable::Variable;
 use crate::terms::term::Term;
 
 #[derive(Clone, PartialEq, Eq,Hash, Debug)]
@@ -30,11 +30,22 @@ impl FunctionSignature {
     pub fn new(name: String, arity: usize,axioms: Vec<Axioms>) -> FunctionSignature {
         FunctionSignature{name, arity,axioms}
     }
+
+    pub fn get_unit(&self)->Term{
+        let name = format!("U_{}", self.name);
+        let sig = FunctionSignature::new(name,0,vec![]);
+        Term::Function(Function::new(&sig,&vec![]))
+    }
+
 }
 
 impl Function {
     pub fn new(signature: &FunctionSignature, args: &Vec<Term>) -> Function {
         Function{signature: signature.clone(), args: args.clone()}
+    }
+
+    pub fn get_unit(&self)->Term{
+        self.signature.get_unit()
     }
 }
 
