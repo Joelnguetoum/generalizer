@@ -24,6 +24,10 @@ subcommands:
             long: dot
             short: d
             help: Print the computation history of lggs in a dot file together with an image
+        - alpuente:
+            long: alpuente
+            short: a
+            help: Use the computation rules of the work of Alpuente et al.
   - clgg:
       about: Find lgg solutions of a constrained anti-unification problem
       version: "0.0.0"
@@ -41,6 +45,39 @@ subcommands:
             long: dot
             short: d
             help: Print the computation history of lggs in a dot file together with an image
+        - alpuente:
+            long: alpuente
+            short: a
+            help: Use the computation rules of the work of Alpuente et al.
+  - compose:
+      about: Composition of two interaction models
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - hsf:
+            required: true
+            index: 1
+            help: hsf file
+        - hif1:
+            required: true
+            index: 2
+            help: hsf file
+        - hif2:
+            required: true
+            index: 3
+            help: hsf file
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of clggs
+        - dot:
+            long: dot
+            short: d
+            help: Print the computation history of lggs in a dot file together with an image
+        - alpuente:
+            long: alpuente
+            short: a
+            help: Use the computation rules of the work of Alpuente et al.
   - test:
       about: Various tests
       version: "0.0.0"

@@ -8,7 +8,9 @@ impl Configuration {
     pub fn can_apply_recover(&self) -> bool {
         let aut = self.active[0].clone();
 
-        if aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature() {
+        if aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature()
+            && !aut.t1.is_head_function_has_unit()
+            && !aut.t2.is_head_function_has_unit(){
             for aut2 in &self.store {
                 if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
                     return true;

@@ -1,34 +1,31 @@
-use crate::anti_unification::configuration::aut::AUT;
-use crate::anti_unification::configuration::configuration::Configuration;
 use crate::matching::contejean_algorithm::error::MatchingError;
 use crate::matching::contejean_algorithm::m_rules::m_rule::MRule;
 use crate::terms::function::FunctionSignature;
-use crate::terms::substitution::substitution::Substitution;
 use crate::terms::substitution::variable::Variable;
 use crate::terms::term::Term;
 #[derive(Clone, Debug)]
 pub struct MConfiguration {
     pub y: Vec<Variable>,
-    pub U: Vec<(Term,Term)>,
-    pub P: Vec<(Variable,FunctionSignature,Variable,Term)>,
-    pub S: Vec<(Variable,Term)>
+    pub u: Vec<(Term, Term)>,
+    pub p: Vec<(Variable, FunctionSignature, Variable, Term)>,
+    pub s: Vec<(Variable, Term)>
 }
 
 impl MConfiguration {
-    pub fn new(y: Vec<Variable>, U: Vec<(Term,Term)>, P: Vec<(Variable,FunctionSignature,Variable,Term)>, S: Vec<(Variable,Term)> ) -> MConfiguration {
-        MConfiguration{ y, U, P, S }
+    pub fn new(y: Vec<Variable>, u: Vec<(Term, Term)>, p: Vec<(Variable, FunctionSignature, Variable, Term)>, s: Vec<(Variable, Term)> ) -> MConfiguration {
+        MConfiguration{ y, u: u, p: p, s: s }
     }
 
     pub fn init_m_conf(t1: &Term, t2: &Term) -> MConfiguration {
         let y = vec![];
-        let U = vec![(t1.clone(),t2.clone())];
-        let P = vec![];
-        let S = vec![];
+        let u = vec![(t1.clone(), t2.clone())];
+        let p = vec![];
+        let s = vec![];
 
-        MConfiguration::new(y, U, P, S)
+        MConfiguration::new(y, u, p, s)
     }
     pub fn applicable_rule(&self) -> Option<MRule> {
-        if self.U.is_empty() {
+        if self.u.is_empty() {
             return None;
         }
 

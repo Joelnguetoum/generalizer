@@ -1,6 +1,4 @@
 use std::collections::HashSet;
-use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
 use crate::matching::contejean_algorithm::m_configuration::matching_process::MatchingProcess;
 use crate::terms::function::{Axioms, Function, FunctionSignature};
 use crate::terms::substitution::variable::Variable;

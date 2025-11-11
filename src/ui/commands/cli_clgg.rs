@@ -13,14 +13,15 @@ pub fn cli_clgg(matches: &ArgMatches) {
     let file = matches.value_of("file").unwrap();
     let verbose = matches.is_present("verbose");
     let dot = matches.is_present("dot");
-    print_file(file);
+    let alpuente = matches.is_present("alpuente");
+    print_file(file,alpuente);
 
     match parse_file(file) {
         Ok((sig,t1,t2)) => {
             let mut process = GeneralisationProcess::init_process(&t1,&t2);
             let time = Instant::now();
 
-            match process.constrained_generalise(){
+            match process.constrained_generalise(alpuente,verbose) {
                 Ok(clggs)=>{
 
                     let elapsed = time.elapsed().as_secs_f64();

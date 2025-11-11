@@ -1,6 +1,4 @@
-use std::collections::HashSet;
 use std::fmt;
-use crate::terms::substitution::variable::Variable;
 use crate::terms::term::Term;
 
 #[derive(Clone, PartialEq, Eq,Hash, Debug)]
@@ -32,9 +30,20 @@ impl FunctionSignature {
     }
 
     pub fn get_unit(&self)->Term{
-        let name = format!("U_{}", self.name);
-        let sig = FunctionSignature::new(name,0,vec![]);
-        Term::Function(Function::new(&sig,&vec![]))
+
+        match self.name.as_str(){
+            "seq"|"par"|"tensor"=>{
+                let sig = FunctionSignature::new("Empty".to_string(),0,vec![]);
+                let f = Function::new(&sig,&vec![]);
+                Term::Function(f)
+            },
+            _ =>{
+                let name = format!("U_{}", self.name);
+                let sig = FunctionSignature::new(name,0,vec![]);
+                Term::Function(Function::new(&sig,&vec![]))
+            }
+        }
+
     }
 
 }

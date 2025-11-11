@@ -1,9 +1,7 @@
-use std::collections::HashSet;
 use pest::iterators::Pair;
 use pest::Parser;
-use crate::terms::function::{Axioms, Function, FunctionSignature, Signature};
+use crate::terms::function::{Axioms, FunctionSignature, Signature};
 use crate::terms::parsing::parser::{GrammarParser, Rule};
-use crate::terms::term::Term;
 
 pub fn parse_string(unparsed_string:&String) ->  Result<(Signature, String, String),String> {
 

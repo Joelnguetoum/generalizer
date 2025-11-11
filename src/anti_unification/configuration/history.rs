@@ -4,7 +4,6 @@ use std::fs::File;
 use std::io::Write;
 use std::process::Command;
 use crate::anti_unification::configuration::configuration::Configuration;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
 #[derive(Clone, Debug)]
 pub struct History {
     configs : Vec<(Configuration,String)>,
@@ -119,16 +118,16 @@ impl History {
         let dot_filename = format!("{}.dot", base_name);
         let png_filename = format!("{}.png", base_name);
 
-        println!("Generating DOT file: {}", dot_filename);
+        //println!("Generating DOT file: {}", dot_filename);
         self.write_dot_file(&dot_filename)
-            .map_err(|e| format!("Failed to write DOT file: {}", e))?;
+           .map_err(|e| format!("Failed to write DOT file: {}", e))?;
 
-        println!("Generating PNG image: {}", png_filename);
+        //println!("Generating PNG image: {}", png_filename);
         self.generate_image(&dot_filename, &png_filename, "png")?;
 
-        println!("Successfully created visualization files:");
-        println!("  - {}", dot_filename);
-        println!("  - {}", png_filename);
+        //println!("Successfully created visualization files:");
+        //println!("  - {}", dot_filename);
+        //println!("  - {}", png_filename);
 
         Ok(())
     }

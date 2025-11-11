@@ -1,5 +1,4 @@
-use crate::anti_unification::configuration::configuration::Configuration;
-use crate::anti_unification::error::ConfigurationError;
+
 
 #[derive(Clone, Debug)]
 pub enum Rule {
@@ -8,15 +7,22 @@ pub enum Rule {
     DecomposeA,
     DecomposeAC,
     DecomposeU,
+    DecomposeCU,
+    DecomposeAU,
+    DecomposeACU,
     Solve,
     Recover,
     ConstrainedSolve,
     ConstrainedRecover,
     SolveFail,
+    GreedySolveFail,
     ExpandULeft,
     ExpandURight,
-    ExpandUSame,
-    ExpandDecomposeU,
+    ExpandUBoth,
+    ExpandUBothDecompose,
+    ExpandUSameLeft,
+    ExpandUSameRight,
+    ExpandUSameBoth,
 }
 
 
@@ -28,15 +34,22 @@ impl Rule {
             Rule::DecomposeA => "Decompose_A",
             Rule::DecomposeAC => "Decompose_AC",
             Rule::DecomposeU => "Decompose_U",
-            Rule::ExpandDecomposeU => "Expand_Decompose_U",
+            Rule::DecomposeCU => "Decompose_CU",
+            Rule::DecomposeAU => "Decompose_AU",
+            Rule::DecomposeACU => "Decompose_ACU",
             Rule::Solve => "Solve",
             Rule::Recover => "Recover",
             Rule::ExpandULeft => "Expand_U_Left",
             Rule::ExpandURight => "Expand_U_Right",
-            Rule::ExpandUSame => "Expand_U_Same",
             Rule::ConstrainedSolve => "Constrained-Solve",
             Rule::ConstrainedRecover => "Constrained-Recover",
-            Rule::SolveFail => "Solve-Fail"
+            Rule::SolveFail => "Solve-Fail",
+            Rule::GreedySolveFail => "Solve-Fail",
+            Rule::ExpandUBoth => "Expand_U_Both",
+            Rule::ExpandUBothDecompose => "Expand_U_BothDecompose",
+            Rule::ExpandUSameLeft => "Expand_U_Left",
+            Rule::ExpandUSameRight => "Expand_U_Right",
+            Rule::ExpandUSameBoth => "Expand_U_RightBoth",
         }
     }
 }

@@ -1,5 +1,3 @@
-use crate::anti_unification::configuration::configuration::Configuration;
-use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::matching::contejean_algorithm::m_configuration::m_configuration::MConfiguration;
 use crate::terms::term::Term;
 
@@ -22,7 +20,7 @@ impl MatchingProcess {
 
     pub fn process_m_configuration(&mut self, config: MConfiguration) {
         // Check if configuration is already solved
-        if config.U.is_empty() {
+        if config.u.is_empty() {
             self.solved_configurations.push(config);
             return;
         }

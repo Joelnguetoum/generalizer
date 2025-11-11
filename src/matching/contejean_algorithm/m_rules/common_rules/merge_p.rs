@@ -8,7 +8,7 @@ impl MConfiguration {
 
 
     pub fn can_apply_merge_p(&self)-> bool{
-        let problem = self.U[0].clone();
+        let problem = self.u[0].clone();
 
         if let (Term::Variable(x),Term::Function(f)) = (problem.0.clone(),problem.1.clone()) {
 
@@ -16,7 +16,7 @@ impl MConfiguration {
                 return false;
             }
 
-            for (x_1,f_prime,y,s_prime) in self.P.iter() {
+            for (x_1,f_prime,y,s_prime) in self.p.iter() {
                 if f.signature == *f_prime
                 && f.args.contains(s_prime){
                     return true;
@@ -30,29 +30,29 @@ impl MConfiguration {
 
     pub fn merge_p(&self)->Result<Vec<MConfiguration>,MatchingError>{
         let new_y = self.y.clone();
-        let mut new_U = self.U.clone();
-        let new_P = self.P.clone();
-        let new_S = self.S.clone();
+        let mut new_u = self.u.clone();
+        let new_p = self.p.clone();
+        let new_s = self.s.clone();
 
 
-        let problem = new_U.remove(0);
+        let problem = new_u.remove(0);
 
         if let (Term::Variable(x),Term::Function(f)) = (problem.0.clone(),problem.1.clone()) {
 
-            for (x1,f_prime,y,s_prime) in self.P.iter() {
+            for (x1,f_prime,y,s_prime) in self.p.iter() {
                 if x == *x1
                     && f.signature == *f_prime
                     && f.args.contains(s_prime){
                     let new_args  = remove_first(f.args.clone(),s_prime.clone());
                     let new_var = Term::Variable(y.clone());
                     let new_term = Term::Function(Function::new(&f.signature, &new_args));
-                    new_U.insert(0,(new_var,new_term));
+                    new_u.insert(0, (new_var, new_term));
                     break;
                 }
             }
         }
 
-        let mconf = MConfiguration::new(new_y,new_U,new_P,new_S);
+        let mconf = MConfiguration::new(new_y, new_u, new_p, new_s);
 
         Ok(vec![mconf])
     }

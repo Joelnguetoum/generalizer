@@ -7,8 +7,8 @@ use crate::terms::term::Term;
 impl MConfiguration {
 
     pub fn is_variable_in_ps(&self, x: &Variable) -> bool {
-        self.S.iter().any(|(y, _)| y == x) ||
-            self.P.iter().any(|(x2, _, _, _)| x2 == x)
+        self.s.iter().any(|(y, _)| y == x) ||
+            self.p.iter().any(|(x2, _, _, _)| x2 == x)
     }
 
     // Helper function to create AC term from arguments
@@ -21,11 +21,11 @@ impl MConfiguration {
     }
 
     pub fn can_apply_ac(&self) -> bool {
-        if self.U.is_empty() {
+        if self.u.is_empty() {
             return false;
         }
 
-        let problem = &self.U[0];
+        let problem = &self.u[0];
 
         if let (Term::Function(ref f1), Term::Function(ref f2)) = (&problem.0, &problem.1) {
             // Both must be AC with same signature
@@ -50,7 +50,7 @@ impl MConfiguration {
 
     pub fn ac(&self) -> Result<Vec<MConfiguration>, MatchingError> {
         let mut new_configs = Vec::new();
-        let problem = self.U[0].clone();
+        let problem = self.u[0].clone();
 
         if let (Term::Function(f1), Term::Function(f2)) = (problem.0, problem.1) {
             let ac_sig = f1.signature.clone();
@@ -58,8 +58,8 @@ impl MConfiguration {
             // For each subject subterm that matches the head symbol of pattern's first subterm
             for (idx, s_k) in f2.args.iter().enumerate() {
                 if s_k.head_symbol_signature() == f1.args[0].head_symbol_signature() {
-                    let mut new_U = self.U.clone();
-                    new_U.remove(0);
+                    let mut new_u = self.u.clone();
+                    new_u.remove(0);
 
                     // Create new equations:
                     // g(p') = s_k
@@ -75,14 +75,14 @@ impl MConfiguration {
 
                     let second_eq = (remaining_pattern, remaining_subject);
 
-                    new_U.insert(0, first_eq);
-                    new_U.insert(1, second_eq);
+                    new_u.insert(0, first_eq);
+                    new_u.insert(1, second_eq);
 
                     let new_conf = MConfiguration::new(
                         self.y.clone(),
-                        new_U,
-                        self.P.clone(),
-                        self.S.clone()
+                        new_u,
+                        self.p.clone(),
+                        self.s.clone()
                     );
                     new_configs.push(new_conf);
                 }

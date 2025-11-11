@@ -1,6 +1,5 @@
 use crate::anti_unification::generaliser::generaliser::Generaliser;
 use crate::matching::brute_force::matching_ac::brute_force_match_modulo_ac;
-use crate::matching::contejean_algorithm::m_configuration::matching_process::MatchingProcess;
 /* WITH BRUTE FORCE MATCHING */
 /**/
 pub fn minimise_ac(generalisers: Vec<Generaliser>) -> Vec<Generaliser> {

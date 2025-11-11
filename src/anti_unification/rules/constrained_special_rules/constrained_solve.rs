@@ -1,10 +1,7 @@
 use crate::anti_unification::configuration::configuration::Configuration;
 use crate::anti_unification::rules::rule::Rule;
 use crate::anti_unification::error::ConfigurationError;
-use crate::terms::substitution::substitution::Substitution;
-use crate::terms::substitution::variable::Variable;
-use crate::terms::function::{Function, Signature};
-use crate::terms::term::Term;
+
 
 
 impl Configuration {
@@ -14,6 +11,8 @@ impl Configuration {
         if (aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature())
             && aut.t1.get_special_constants().is_empty()
             && aut.t2.get_special_constants().is_empty()
+            && !aut.t1.is_head_function_has_unit()
+            && !aut.t2.is_head_function_has_unit()
         {
             for aut2 in &self.store {
                 if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {

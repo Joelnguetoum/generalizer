@@ -3,7 +3,7 @@ use crate::terms::term::Term;
 
 impl MConfiguration{
     pub fn can_apply_clash(&self)->bool{
-        let problem = self.U[0].clone();
+        let problem = self.u[0].clone();
 
 
         if let (Term::Function(f1),Term::Function(f2)) = (problem.0,problem.1){

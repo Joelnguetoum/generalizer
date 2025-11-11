@@ -1,4 +1,3 @@
-use crate::anti_unification::configuration::configuration::Configuration;
 use crate::matching::contejean_algorithm::error::MatchingError;
 use crate::matching::contejean_algorithm::m_configuration::m_configuration::MConfiguration;
 use crate::terms::term::Term;
@@ -6,11 +5,11 @@ use crate::terms::term::Term;
 impl MConfiguration {
 
     pub fn can_apply_dec(&self) -> bool {
-        let pb = self.U[0].clone();
+        let pb = self.u[0].clone();
 
 
 
-        match self.U[0].clone(){
+        match self.u[0].clone(){
             (Term::Function(f1), Term::Function(f2)) => {
                 if f1.signature == f2.signature
                 && f1.args.len() == f2.args.len()
@@ -28,12 +27,12 @@ impl MConfiguration {
 
     pub fn dec(&self) -> Result<Vec<MConfiguration>,MatchingError> {
             let new_y = self.y.clone();
-            let mut new_U = self.U.clone();
-            let new_P = self.P.clone();
-            let new_S = self.S.clone();
+            let mut new_u = self.u.clone();
+            let new_p = self.p.clone();
+            let new_s = self.s.clone();
 
 
-            let problem = new_U.remove(0);
+            let problem = new_u.remove(0);
 
             match problem{
                 (Term::Function(f1),Term::Function(f2))=>{
@@ -43,10 +42,10 @@ impl MConfiguration {
                         new_problems.push((p1.clone(),p2.clone()));
                     }
 
-                    new_problems.extend(new_U);
-                    new_U = new_problems;
+                    new_problems.extend(new_u);
+                    new_u = new_problems;
 
-                    let mconf = MConfiguration::new(new_y,new_U,new_P,new_S);
+                    let mconf = MConfiguration::new(new_y, new_u, new_p, new_s);
 
                     Ok(vec![mconf])
                 },

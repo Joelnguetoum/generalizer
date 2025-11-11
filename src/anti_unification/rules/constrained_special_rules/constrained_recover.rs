@@ -2,14 +2,17 @@ use crate::anti_unification::configuration::configuration::Configuration;
 use crate::anti_unification::rules::rule::Rule;
 use crate::anti_unification::error::ConfigurationError;
 use crate::terms::substitution::substitution::Substitution;
-use crate::terms::function::Signature;
 use crate::terms::term::Term;
 
 impl Configuration {
     pub fn can_apply_constrained_recover(&self) -> bool {
         let aut = self.active[0].clone();
 
-        if (aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature())&& !aut.t1.is_special_constant() && !aut.t2.is_special_constant() {
+        if (aut.t1.head_symbol_signature() != aut.t2.head_symbol_signature())
+            && aut.t1.get_special_constants().is_empty()
+            && aut.t2.get_special_constants().is_empty()
+            && !aut.t1.is_head_function_has_unit()
+            && !aut.t2.is_head_function_has_unit(){
             for aut2 in &self.store {
                 if aut.t1 == aut2.t1 && aut.t2 == aut2.t2 {
                     return true;

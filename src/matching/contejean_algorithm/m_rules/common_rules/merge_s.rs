@@ -6,10 +6,10 @@ impl MConfiguration {
 
 
     pub fn can_apply_merge_s(&self)-> bool{
-        let problem = self.U[0].clone();
+        let problem = self.u[0].clone();
 
         if let (Term::Variable(x),s) = (problem.0,problem.1){
-            for (y,s_prime) in self.S.iter() {
+            for (y,s_prime) in self.s.iter() {
                 if x == *y && s == *s_prime{
                     return true;
                 }
@@ -22,14 +22,14 @@ impl MConfiguration {
 
     pub fn merge_s(&self)->Result<Vec<MConfiguration>,MatchingError>{
         let new_y = self.y.clone();
-        let mut new_U = self.U.clone();
-        let new_P = self.P.clone();
-        let new_S = self.S.clone();
+        let mut new_u = self.u.clone();
+        let new_p = self.p.clone();
+        let new_s = self.s.clone();
 
 
-        let problem = new_U.remove(0);
+        let problem = new_u.remove(0);
 
-        let mconf = MConfiguration::new(new_y,new_U,new_P,new_S);
+        let mconf = MConfiguration::new(new_y, new_u, new_p, new_s);
 
         Ok(vec![mconf])
     }

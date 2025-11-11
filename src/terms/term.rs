@@ -1,9 +1,8 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::fmt;
-use colored::Colorize;
 use crate::terms::substitution::substitution::Substitution;
 use crate::terms::substitution::variable::Variable;
-use crate::terms::function::{Axioms, Function, FunctionSignature, Signature};
+use crate::terms::function::{Axioms, Function, FunctionSignature};
 
 #[derive(Clone, PartialEq, Debug, Eq, Hash)]
 pub enum Term {

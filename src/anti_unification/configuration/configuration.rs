@@ -1,4 +1,4 @@
-use std::fmt::{format, Display};
+use std::fmt::Display;
 use crate::anti_unification::configuration::aut::AUT;
 use crate::anti_unification::configuration::history::History;
 use crate::anti_unification::rules::rule::Rule;
@@ -73,35 +73,89 @@ impl Configuration {
     }
 
 
-    pub fn applicable_rule(&self,is_constrained_anti_unification: bool) -> Option<Rule> {
+    pub fn applicable_rule(&self,is_constrained_anti_unification: bool,alpuente: bool) -> Option<Rule> {
         if self.active.is_empty() {
             return None;
         }
 
-        if self.can_apply_decompose() & !self.can_apply_decompose_u(){
-            Some(Rule::Decompose)
-        } else if self.can_apply_decompose_c() & !self.can_apply_decompose_u(){
-            Some(Rule::DecomposeC)
-        } else if self.can_apply_decompose_a() & !self.can_apply_decompose_u(){
-            Some(Rule::DecomposeA)
-        } else if self.can_apply_decompose_ac() & !self.can_apply_decompose_u(){
-            Some(Rule::DecomposeAC)
-        }else if self.can_apply_decompose_u(){
-            Some(Rule::DecomposeU)
-        }else if self.can_apply_expand_decompose_u(){
-            Some(Rule::ExpandDecomposeU)
+        /*Greedy Optimisation: Prioritize Greedy Solve fail
+        if self.can_apply_greedy_solve_fail() && is_constrained_anti_unification {
+            return Some(Rule::GreedySolveFail);
         }
+         */
+
+        //Optimisation: Prioritize Solve fail
         /*
-        else if self.can_apply_expand_u_left(){
-            Some(Rule::ExpandULeft)
-        } else if self.can_apply_expand_u_right(){
-            Some(Rule::ExpandURight)
+        if self.can_apply_solve_fail() && is_constrained_anti_unification {
+            return Some(Rule::SolveFail);
         }
 
-        else if self.can_apply_expand_same(){
-            Some(Rule::ExpandUSame)
+         */
+
+        //Algorithm of Alpuente et al,
+        if alpuente{
+            return self.applicable_rule_alpuente(is_constrained_anti_unification);
         }
-     */
+
+
+        //OUR ALGORITHM WITH THE NEW RULES
+        if self.can_apply_decompose() && !self.can_apply_decompose_u(){
+            Some(Rule::Decompose)
+        } else if self.can_apply_decompose_c() && !self.can_apply_decompose_cu(){
+            Some(Rule::DecomposeC)
+        } else if self.can_apply_decompose_a() && !self.can_apply_decompose_au() {
+            Some(Rule::DecomposeA)
+        } else if self.can_apply_decompose_ac() && !self.can_apply_decompose_acu(){
+            Some(Rule::DecomposeAC)
+        } else if self.can_apply_decompose_u(){
+            Some(Rule::DecomposeU)
+        }
+        else if self.can_apply_decompose_au(){
+            Some(Rule::DecomposeAU)
+        }
+        else if self.can_apply_decompose_cu(){
+            Some(Rule::DecomposeCU)
+        }
+        else if self.can_apply_decompose_acu(){
+            Some(Rule::DecomposeACU)
+        }else if self.can_apply_expand_u_both_decompose(){
+            Some(Rule::ExpandUBothDecompose)
+        }
+        else if self.can_apply_solve() && !is_constrained_anti_unification {
+            Some(Rule::Solve)
+        } else if self.can_apply_recover() && !is_constrained_anti_unification {
+            Some(Rule::Recover)
+        } else if self.can_apply_constrained_solve() && is_constrained_anti_unification {
+            Some(Rule::ConstrainedSolve)
+        } else if self.can_apply_constrained_recover() && is_constrained_anti_unification {
+            Some(Rule::ConstrainedRecover)
+        }/*else if self.can_apply_solve_fail() && is_constrained_anti_unification {
+            Some(Rule::SolveFail)
+        }
+        */
+        else {
+            None
+        }
+
+    }
+
+    pub fn applicable_rule_alpuente(&self,is_constrained_anti_unification: bool) -> Option<Rule> {
+        if self.active.is_empty() {
+            return None;
+        }
+
+        if self.relaxed_can_apply_decompose(){
+            Some(Rule::Decompose)
+        } else if self.relaxed_can_apply_decompose_c() {
+            Some(Rule::DecomposeC)
+        } else if self.relaxed_can_apply_decompose_a() {
+            Some(Rule::DecomposeA)
+        } else if self.relaxed_can_apply_decompose_ac(){
+            Some(Rule::DecomposeAC)
+        }
+        else if self.can_apply_expand_u_both(){
+            Some(Rule::ExpandUBoth)
+        }
         else if self.can_apply_solve() && !is_constrained_anti_unification {
             Some(Rule::Solve)
         } else if self.can_apply_recover() && !is_constrained_anti_unification {
@@ -118,7 +172,6 @@ impl Configuration {
         }
 
     }
-
     pub fn apply_rule(&self, rule: Rule) -> Result<Vec<Configuration>, ConfigurationError> {
         match rule {
             Rule::Decompose => self.decompose(),
@@ -126,17 +179,19 @@ impl Configuration {
             Rule::DecomposeA => self.decompose_a(),
             Rule::DecomposeAC => self.decompose_ac(),
             Rule::DecomposeU => self.decompose_u(),
-            Rule::ExpandDecomposeU => self.expand_decompose_u(),
+            Rule::DecomposeAU => self.decompose_au(),
+            Rule::DecomposeCU => self.decompose_cu(),
+            Rule::DecomposeACU => self.decompose_acu(),
+            Rule::ExpandUBothDecompose => self.expand_u_both_decompose(),
             Rule::Solve => Ok(vec![self.solve()?]),
             Rule::Recover => Ok(vec![self.recover()?]),
-            /*
             Rule::ExpandULeft=> self.expand_u_left(),
             Rule::ExpandURight=> self.expand_u_right(),
-            Rule::ExpandUSame => self.expand_same(),
-             */
+            Rule::ExpandUBoth=> self.expand_u_both(),
             Rule::ConstrainedSolve => Ok(vec![self.constrained_solve()?]),
             Rule::ConstrainedRecover => Ok(vec![self.constrained_recover()?]),
             Rule::SolveFail=> Err(ConfigurationError::SolveFailed),
+            Rule::GreedySolveFail=> Err(ConfigurationError::SolveFailed),
             _ =>{
                 Err(ConfigurationError::UnknownRule)
             }

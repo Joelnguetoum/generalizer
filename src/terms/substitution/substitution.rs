@@ -3,10 +3,18 @@ use std::fmt;
 use crate::terms::substitution::variable::Variable;
 use crate::terms::term::Term;
 
+
 #[derive(Clone, PartialEq, Debug, Eq)]
 pub struct Substitution{
     pub map: HashMap<Variable, Term>,
 }
+
+/*
+#[derive(Clone, PartialEq, Debug, Eq)]
+pub struct Substitution{
+    pub map: HashMap<Variable, Term>,
+}
+ */
 
 
 impl Substitution {
@@ -14,6 +22,7 @@ impl Substitution {
         Self{ map: HashMap::new()}
     }
 
+    /**/
     pub fn from_map(map: &HashMap<Variable,Term>) -> Substitution{
         Substitution{map: map.clone()}
     }
@@ -25,6 +34,23 @@ impl Substitution {
     pub fn insert(&mut self, var: &Variable, term: &Term) {
         self.map.insert(var.clone(), term.clone());
     }
+
+    pub fn get(&self, var: &Variable) -> Option<&Term> {
+        self.map.get(var)
+    }
+
+
+    /*
+    pub fn insert(&mut self, var: &Variable, term: &Term) {
+        todo!()
+    }
+    pub fn get(&self, var: &Variable) -> Option<&Term> {
+        todo!()
+    }
+
+     */
+
+
 }
 
 

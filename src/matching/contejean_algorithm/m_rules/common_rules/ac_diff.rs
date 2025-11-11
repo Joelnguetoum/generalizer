@@ -6,11 +6,11 @@ impl MConfiguration {
 
     // AC≠ rule - variable in AC pattern with no current assignment
     pub fn can_apply_ac_diff(&self) -> bool {
-        if self.U.is_empty() {
+        if self.u.is_empty() {
             return false;
         }
 
-        let problem = &self.U[0];
+        let problem = &self.u[0];
 
         if let (Term::Function(ref f1), Term::Function(ref f2)) = (&problem.0, &problem.1) {
             if f1.signature == f2.signature
@@ -30,15 +30,15 @@ impl MConfiguration {
 
     pub fn ac_diff(&self) -> Result<Vec<MConfiguration>, MatchingError> {
         let mut new_configs = Vec::new();
-        let problem = self.U[0].clone();
+        let problem = self.u[0].clone();
 
         if let (Term::Function(f1), Term::Function(f2)) = (problem.0, problem.1) {
             if let Term::Variable(ref x) = &f1.args[0] {
                 // Try each non-AC subject term
                 for (idx, s_k) in f2.args.iter().enumerate() {
                     if !s_k.is_head_function_associative_commutative() {
-                        let mut new_U = self.U.clone();
-                        new_U.remove(0);
+                        let mut new_u = self.u.clone();
+                        new_u.remove(0);
 
                         // Create: p_2 + ... + p_m = remaining subject
                         let mut remaining_pattern_args = f1.args[1..].to_vec();
@@ -51,16 +51,16 @@ impl MConfiguration {
                         let pattern_eq = (remaining_pattern, remaining_subject);
 
                         // Add x = s_k to solved part
-                        let mut new_S = self.S.clone();
-                        new_S.push((x.clone(), s_k.clone()));
+                        let mut new_s = self.s.clone();
+                        new_s.push((x.clone(), s_k.clone()));
 
-                        new_U.insert(0, pattern_eq);
+                        new_u.insert(0, pattern_eq);
 
                         let new_conf = MConfiguration::new(
                             self.y.clone(),
-                            new_U,
-                            self.P.clone(),
-                            new_S
+                            new_u,
+                            self.p.clone(),
+                            new_s
                         );
                         new_configs.push(new_conf);
                     }

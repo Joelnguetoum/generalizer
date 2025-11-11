@@ -1,9 +1,6 @@
-use std::collections::{HashMap, HashSet};
 use crate::anti_unification::configuration::configuration::Configuration;
-use crate::anti_unification::configuration::history::History;
 use crate::anti_unification::generaliser::generaliser::Generaliser;
 use crate::anti_unification::generaliser::minimise::minimise_ac;
-use crate::terms::function::{Axioms, Function, FunctionSignature};
 use crate::terms::term::Term;
 
 #[derive(Debug)]
@@ -23,8 +20,7 @@ impl GeneralisationProcess {
         GeneralisationProcess::new(&conf)
     }
 
-
-    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool) {
+    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool,alpuente: bool,verbose: bool) {
         // Check if configuration is already solved
         if config.active.is_empty() {
             self.solved_configurations.push(config);
@@ -33,13 +29,32 @@ impl GeneralisationProcess {
 
 
         // Try to apply m_rules
-        match config.applicable_rule(is_constrained_anti_unification) {
+        match config.applicable_rule(is_constrained_anti_unification,alpuente) {
             Some(rule) => {
-               // println!("Rule applicable {:?}",rule);
+                if verbose {
+                    println!("Rule applicable {:?}",rule);
+                    println!("current number of unsolved configurations: {}", self.unsolved_configurations.len());
+                    println!("Current Configuration:  {}",config.clone());
+
+                }
+
                 match config.apply_rule(rule) {
                     Ok(new_configs) => {
+                        /* BFS
+                        let mut temps = new_configs.clone();
+                        for conf in &self.unsolved_configurations {
+                            temps.push(conf.clone());
+                        }
+                        self.unsolved_configurations = temps;
+
+                        */
+
+
+                        /*DFS */
                         self.unsolved_configurations.extend(new_configs);
-                       // println!("current number of unsolved configurations: {}", self.unsolved_configurations.len());
+
+
+
                     }
                     Err(e) => {
                         //If there is an error, just drop the configuration
@@ -65,9 +80,20 @@ impl GeneralisationProcess {
             })
             .collect();
 
-        let mut filtered = minimise_ac(generalisers);
+        //let mut filtered = minimise_ac(generalisers);
 
-        filtered
+        //filtered
+        generalisers
+    }
+    
+    pub fn print_unsolved_configurations(&self,dir: &str) {
+        for (ct,config) in self.unsolved_configurations.iter().enumerate() {
+            let file = format!("{}/conf {}",dir,ct);
+            let mut conf = config.clone();
+            conf.history.add_config(&config,"");
+
+            conf.history.create_computation_graph(&file).unwrap()
+        }
     }
 
 }
