@@ -1,5 +1,6 @@
 # generaliser
 
+
 ### Sub-commands
 
 This simple tool computes least general generalisation for anti-unification  
@@ -49,8 +50,31 @@ or
 
 if the executable is in the same folder that of the input files.
 
+### Composition
 
-### Visulisation flags
+To compose two interaction models, use the command 'compose' with tree arguments:
+ - a.hsf file
+ - a .hif file
+ - and another .hif file
+
+For example: 
+
+    $  generaliser compose models/sig.hsf models/i1.hif models/i2.hif
+
+The program will compute the composition of the two interactions.
+
+###  Flags
+
+Thoses flags are valid for the lgg, clgg and compose commands.
+However, -d is not available for the compose command.
+
+#### To only use the rules of the algorithme of Alpuente et al (A modular order-sorted equational generalization algorithm,2014)
+
+Use the flag -a or --alpuente
+
+An example is
+
+    $ generaliser lgg example1.txt -a
 
 #### verbose
 
