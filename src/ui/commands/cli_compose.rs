@@ -1,5 +1,7 @@
 use std::fs;
+use std::time::Instant;
 use clap::ArgMatches;
+use colored::Colorize;
 use crate::interactions::io::input::hif::interface::parse_hif_file;
 use crate::interactions::io::input::hsf::interface::parse_hsf_file;
 use crate::interactions::io::output::quick_drawing::draw_model;
@@ -36,7 +38,6 @@ pub fn cli_compose(matches: &ArgMatches) {
 
 
     let verbose = matches.is_present("verbose");
-    let dot = matches.is_present("dot");
     let alpuente = matches.is_present("alpuente");
 
 
@@ -51,13 +52,19 @@ pub fn cli_compose(matches: &ArgMatches) {
     draw_model(&gen_ctx,"j",&inputs_dir,&j);
 
     //Step 1: Composition
-    match Interaction::compose(&i,&j){
+    let time = Instant::now();
+
+    match Interaction::compose(&i,&j,alpuente,verbose){
         Ok(comp_int) =>{
-            println!("Composition successful");
+            let elapsed = time.elapsed().as_secs_f64();
+
+            println!("{}", "Composition successful".to_string().green());
+            println!("Duration: {} s", elapsed);
 
             let result_dir = format!("{}/result",comp_dir);
             let _ = fs::create_dir_all(result_dir.clone()).ok();
             draw_model(&gen_ctx,"result",&result_dir,&comp_int);
+
 
         },
         Err(e)=>{

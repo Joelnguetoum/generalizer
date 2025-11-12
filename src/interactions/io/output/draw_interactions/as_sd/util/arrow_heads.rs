@@ -21,7 +21,7 @@ use imageproc::drawing::draw_cubic_bezier_curve_mut;
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::ARROW_HEAD_LENGTH;
 
 // **********
-
+#[allow(dead_code)]
 pub fn draw_double_half_ellipsis_leftward(image : &mut RgbImage, x_pos : f32, y_pos : f32, my_color : Rgb<u8>) {
     draw_cubic_bezier_curve_mut(image,
                                 (x_pos - 0.5*(ARROW_HEAD_LENGTH as f32), y_pos - 0.5*(ARROW_HEAD_LENGTH as f32)),
@@ -36,7 +36,7 @@ pub fn draw_double_half_ellipsis_leftward(image : &mut RgbImage, x_pos : f32, y_
                                 (x_pos + 1.0*(ARROW_HEAD_LENGTH as f32), y_pos + 0.25*(ARROW_HEAD_LENGTH as f32)),
                                 my_color);
 }
-
+#[allow(dead_code)]
 pub fn draw_double_half_ellipsis_rightward(image : &mut RgbImage, x_pos : f32, y_pos : f32, my_color : Rgb<u8>) {
     draw_cubic_bezier_curve_mut(image,
                                 (x_pos + 0.5*(ARROW_HEAD_LENGTH as f32), y_pos - 0.5*(ARROW_HEAD_LENGTH as f32)),

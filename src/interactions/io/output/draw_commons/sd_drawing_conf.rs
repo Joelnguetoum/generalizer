@@ -15,35 +15,63 @@ limitations under the License.
 */
 
 // **********
+#[allow(dead_code)]
 pub const BASE_HORIZONTAL_SIZE : f32 = 50.0;
+#[allow(dead_code)]
 pub const BASE_VERTICAL_SIZE : f32 = 5.5;
+#[allow(dead_code)]
 pub const BASE_MARGIN : f32 = BASE_VERTICAL_SIZE;
+#[allow(dead_code)]
 pub const BASE_FRAGMENT_PADDING : f32 = 5.0;
+#[allow(dead_code)]
 pub const BASE_FRAGMENT_TITLE_MARGIN : f32 = 1.0;
 // **********
+#[allow(dead_code)]
 pub const BASE_THICKNESS : f32 = 1.0;
+#[allow(dead_code)]
 pub const BASE_FONT_HEIGHT : f32 = 12.4;
+
+#[allow(dead_code)]
 pub const BASE_EVAL_X_PADDING : f32 = BASE_HORIZONTAL_SIZE/3.5;
+#[allow(dead_code)]
 pub const BASE_EVAL_HEIGHT : f32 = BASE_VERTICAL_SIZE/3.0;
+#[allow(dead_code)]
 pub const BASE_ARROW_HEAD_LENGTH : f32 = 5.0;
+#[allow(dead_code)]
 pub const BASE_FRONTIER_CIRCLE_RADIUS : f32 = 5.0;
+#[allow(dead_code)]
 pub const BASE_GATE_SIZE : f32 = 4.0;
 // **********
+#[allow(dead_code)]
 const SCALE_FACTOR : f32 = 2.0;
 // **********
+#[allow(dead_code)]
 pub const MARGIN : f32 = BASE_MARGIN*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const HORIZONTAL_SIZE : f32 = BASE_HORIZONTAL_SIZE*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const VERTICAL_SIZE : f32 = BASE_VERTICAL_SIZE*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const FRAGMENT_PADDING : f32 = BASE_FRAGMENT_PADDING*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const FRAGMENT_TITLE_MARGIN : f32 = BASE_FRAGMENT_TITLE_MARGIN*SCALE_FACTOR;
 // **********
+#[allow(dead_code)]
 pub const THICKNESS : f32 = BASE_THICKNESS*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const FONT_HEIGHT : f32 = BASE_FONT_HEIGHT*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const FONT_X_PROPORTION : f32 = 1.0;
+#[allow(dead_code)]
 pub const FONT_WIDTH : f32 = FONT_HEIGHT*FONT_X_PROPORTION;
+#[allow(dead_code)]
 pub const EVAL_X_PADDING : f32 = BASE_EVAL_X_PADDING*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const EVAL_HEIGHT : f32 = BASE_EVAL_HEIGHT*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const ARROW_HEAD_LENGTH : f32 = BASE_ARROW_HEAD_LENGTH*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const FRONTIER_CIRCLE_RADIUS : f32 = BASE_FRONTIER_CIRCLE_RADIUS*SCALE_FACTOR;
+#[allow(dead_code)]
 pub const GATE_SIZE : f32 = BASE_GATE_SIZE*SCALE_FACTOR;
 // **********

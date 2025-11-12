@@ -29,7 +29,7 @@ use imageproc::rect::Rect;
 
 
 use crate::interactions::io::output::draw_commons::font::{get_font, HIBOU_FONT_SCALE};
-use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_White, HC_Grammar_Symbol, HC_Lifeline};
+use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_WHITE, HC_GRAMMAR_SYMBOL, HC_LIFELINE};
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::{FONT_WIDTH, MARGIN, VERTICAL_SIZE};
 use crate::interactions::io::output::draw_interactions::as_sd::util::lf_coords::DrawingLifelineCoords;
 use crate::interactions::syntax::general_context::GeneralContext;
@@ -37,8 +37,8 @@ use crate::interactions::syntax::general_context::GeneralContext;
 
 // **********
 
-pub fn draw_frame(image : &mut RgbImage, img_width : &f32, img_height : &f32, max_y_shift : usize) {
-    draw_filled_rect_mut(image, Rect::at(0,0).of_size(*img_width as u32,*img_height as u32), Rgb(HCP_White));
+pub fn draw_frame(image : &mut RgbImage, img_width : &f32, img_height : &f32, _max_y_shift: usize) {
+    draw_filled_rect_mut(image, Rect::at(0,0).of_size(*img_width as u32,*img_height as u32), Rgb(HCP_WHITE));
 }
 
 pub fn draw_lifelines(image : &mut RgbImage,
@@ -53,7 +53,7 @@ pub fn draw_lifelines(image : &mut RgbImage,
         let lf_name = gen_ctx.get_lf_name(*lf_id).unwrap();
         let lf_name_span = FONT_WIDTH*(lf_name.chars().count() as f32)/2.0;
         // ***
-        let label = vec![TextToPrint::new(lf_name,Rgb(HC_Lifeline))];
+        let label = vec![TextToPrint::new(lf_name,Rgb(HC_LIFELINE))];
         draw_line_of_colored_text(image,
                                   &DrawCoord::CenteredAround(lf_coords.x_middle),
                                   &DrawCoord::CenteredAround(lifeline_y_start + VERTICAL_SIZE),
@@ -67,12 +67,12 @@ pub fn draw_lifelines(image : &mut RgbImage,
         let actor_x_start : f32 = lf_coords.x_middle - (square_span_with_margin/2.0);
         draw_hollow_rect_mut(image,
                              Rect::at(actor_x_start as i32, lifeline_y_start as i32).of_size(square_span_with_margin as u32, ((yshift as f32)*VERTICAL_SIZE) as u32),
-                             Rgb(HC_Grammar_Symbol));
+                             Rgb(HC_GRAMMAR_SYMBOL));
         // ***
         draw_line_segment_mut(image,
                               (lf_coords.x_middle, lifeline_y_start + (yshift as f32)*VERTICAL_SIZE),
                               (lf_coords.x_middle, lifeline_y_end),
-                              Rgb(HC_Grammar_Symbol));
+                              Rgb(HC_GRAMMAR_SYMBOL));
     }
 }
 

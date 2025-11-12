@@ -14,26 +14,36 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-
+#[allow(dead_code)]
 pub static SYNTAX_EMPTY: &'static str = "∅";
+#[allow(dead_code)]
 pub static SYNTAX_TENSOR: &'static str = "⊠";
-
+#[allow(dead_code)]
 pub static SYNTAX_CONSTANT: &'static str = "□";
-
+#[allow(dead_code)]
 pub static SYNTAX_VARIABLE: &'static str = "#";
+#[allow(dead_code)]
 pub static SYNTAX_SEQ: &'static str = "seq";
+#[allow(dead_code)]
 pub static SYNTAX_PAR: &'static str = "par";
+#[allow(dead_code)]
 pub static SYNTAX_ALT: &'static str = "alt";
+#[allow(dead_code)]
 pub static SYNTAX_LOOP_S: &'static str = "loop";
 
-
+#[allow(dead_code)]
 pub static SYNTAX_EMISSION: &'static str = "!";
+#[allow(dead_code)]
 pub static SYNTAX_EMISSION_SYNCHRONOUS: &'static str = "|!|";
+#[allow(dead_code)]
 pub static SYNTAX_RECEPTION: &'static str = "?";
+#[allow(dead_code)]
 pub static SYNTAX_RECEPTION_SYNCHRONOUS: &'static str = "|?|";
-
+#[allow(dead_code)]
 pub static SYNTAX_POSITION_LEFT: &'static str = "1";
+#[allow(dead_code)]
 pub static SYNTAX_POSITION_RIGHT: &'static str = "2";
+#[allow(dead_code)]
 pub static SYNTAX_POSITION_EPSILON: &'static str = "ε";
 
 

@@ -1,7 +1,7 @@
 use crate::anti_unification::configuration::configuration::Configuration;
 
 impl Configuration {
-
+    #[allow(dead_code)]
     pub fn can_apply_greedy_solve_fail(&self) -> bool{
         for aut in self.active.iter(){
 

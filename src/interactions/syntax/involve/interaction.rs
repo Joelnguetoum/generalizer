@@ -17,7 +17,7 @@ limitations under the License.
 
 
 
-use std::collections::{BTreeSet, HashSet};
+use std::collections::BTreeSet;
 use maplit::btreeset;
 use crate::interactions::syntax::interaction::Interaction;
 use crate::interactions::syntax::involve::involves::InvolvesLifelines;
@@ -57,9 +57,12 @@ impl InvolvesLifelines for Interaction {
             &Interaction::LoopS(i1) => {
                 return i1.involved_lifelines();
             },
+            /*
             _ => {
                 panic!("non-conform interaction");
             }
+
+             */
         }
     }
 
@@ -89,9 +92,12 @@ impl InvolvesLifelines for Interaction {
             &Interaction::LoopS(ref i1) => {
                 return i1.involves_any_of(lf_ids);
             },
+            /*
             _ => {
                 panic!("non-conform interaction");
             }
+
+             */
         }
     }
 }

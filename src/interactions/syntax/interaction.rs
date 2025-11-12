@@ -1,5 +1,5 @@
 use std::cmp::Ordering;
-use std::collections::{HashMap, HashSet};
+use std::collections::HashSet;
 use std::fmt;
 use crate::interactions::syntax::action::Action;
 use crate::interactions::syntax::operators::Operator;
@@ -23,8 +23,8 @@ impl Interaction {
     pub fn head_symbol(&self)->Option<Operator>{
         match self.clone() {
             Interaction::Empty => None,
-            Interaction::Action(act)=>{None},
-            Interaction::Vp(act1,act2)=>{None},
+            Interaction::Action(_act)=>{None},
+            Interaction::Vp(_act1, _act2)=>{None},
             Interaction::LoopS(_)=> {
                 Some(Operator::LoopS)
             },
@@ -258,9 +258,9 @@ impl Interaction {
 
 impl fmt::Display for Interaction {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut result = String::new();
 
-        result = match self.clone() {
+
+        let result = match self.clone() {
             Interaction::Empty =>{
                 "Empty".to_string()
             },

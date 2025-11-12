@@ -49,7 +49,7 @@ pub fn make_interaction_image(gen_ctx : &GeneralContext,
     }
     // ***
     let max_y_shift = get_interaction_max_yshift(interaction);
-    let mut inner_height : f32 = (max_y_shift as f32)*VERTICAL_SIZE;
+    let inner_height : f32 = (max_y_shift as f32)*VERTICAL_SIZE;
     // ***
     let img_width : f32 = current_x;
     let img_height : f32 = inner_height + 2.0*MARGIN;

@@ -1,5 +1,4 @@
 use crate::interactions::composition::guideline::Guideline;
-use crate::interactions::syntax::action::{Action, ActionType};
 use crate::interactions::syntax::interaction::Interaction;
 use crate::terms::function::{Axioms, Function, FunctionSignature};
 use crate::terms::term::Term;

@@ -1,6 +1,6 @@
 
 
-use std::collections::{BTreeSet, HashSet};
+use std::collections::BTreeSet;
 use std::iter::FromIterator;
 
 
@@ -68,11 +68,12 @@ impl GeneralContext {
     // ********** ********** ********** ********** ********** ********** **********
     // ********** ********** ********** ********** ********** ********** **********
     // ********** ********** ********** ********** ********** ********** **********
-
+    #[allow(dead_code)]
     pub fn get_lf_num(&self) -> usize {
         return self.lf_names.len();
     }
 
+    #[allow(dead_code)]
     pub fn get_ms_num(&self) -> usize {
         return self.ms_names.len();
     }
@@ -80,7 +81,7 @@ impl GeneralContext {
     // ********** ********** ********** ********** ********** ********** **********
     // ********** ********** ********** ********** ********** ********** **********
     // ********** ********** ********** ********** ********** ********** **********
-
+    #[allow(dead_code)]
     pub fn get_all_lfs_ids(&self) -> BTreeSet<usize> {
         return BTreeSet::from_iter(0..self.get_lf_num() );
     }

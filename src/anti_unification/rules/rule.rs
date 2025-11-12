@@ -1,29 +1,32 @@
 
 
-#[derive(Clone, Debug)]
+#[derive(Clone, Debug, PartialEq)]
 pub enum Rule {
     Decompose,
     DecomposeC,
     DecomposeA,
     DecomposeAC,
-    DecomposeU,
-    DecomposeCU,
-    DecomposeAU,
-    DecomposeACU,
     Solve,
     Recover,
     ConstrainedSolve,
     ConstrainedRecover,
     SolveFail,
     GreedySolveFail,
+    ExpandULeftDecompose,
+    ExpandURightDecompose,
+    ExpandUSameLeftDecompose,
+    ExpandUSameRightDecompose,
+    //////////////////////
+    /////////////////////
+    /////////////////////
+    //Implicit rules that are not directly applied
     ExpandULeft,
     ExpandURight,
-    ExpandUBoth,
-    ExpandUBothDecompose,
     ExpandUSameLeft,
     ExpandUSameRight,
-    ExpandUSameBoth,
 }
+
+
 
 
 impl Rule {
@@ -33,23 +36,22 @@ impl Rule {
             Rule::DecomposeC => "Decompose_C",
             Rule::DecomposeA => "Decompose_A",
             Rule::DecomposeAC => "Decompose_AC",
-            Rule::DecomposeU => "Decompose_U",
-            Rule::DecomposeCU => "Decompose_CU",
-            Rule::DecomposeAU => "Decompose_AU",
-            Rule::DecomposeACU => "Decompose_ACU",
             Rule::Solve => "Solve",
             Rule::Recover => "Recover",
-            Rule::ExpandULeft => "Expand_U_Left",
-            Rule::ExpandURight => "Expand_U_Right",
             Rule::ConstrainedSolve => "Constrained-Solve",
             Rule::ConstrainedRecover => "Constrained-Recover",
             Rule::SolveFail => "Solve-Fail",
-            Rule::GreedySolveFail => "Solve-Fail",
-            Rule::ExpandUBoth => "Expand_U_Both",
-            Rule::ExpandUBothDecompose => "Expand_U_BothDecompose",
-            Rule::ExpandUSameLeft => "Expand_U_Left",
-            Rule::ExpandUSameRight => "Expand_U_Right",
-            Rule::ExpandUSameBoth => "Expand_U_RightBoth",
+            Rule::GreedySolveFail => "Greedy-Solve-Fail",
+            Rule::ExpandULeftDecompose => "Expand_U_Left_Decompose",
+            Rule::ExpandURightDecompose => "Expand_U_Right_Decompose",
+            Rule::ExpandUSameLeftDecompose => "Expand_U_Same_Left_Decompose",
+            Rule::ExpandUSameRightDecompose => "Expand_U_Same_Right_Decompose",
+            ////////////////////////////////////
+            /////Implicit rules
+            Rule::ExpandULeft => "Expand_U_Left",
+            Rule::ExpandURight => "Expand_U_Right",
+            Rule::ExpandUSameLeft => "Expand_U_Same_Left",
+            Rule::ExpandUSameRight => "Expand_U_Same_Right",
         }
     }
 }

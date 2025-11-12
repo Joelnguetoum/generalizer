@@ -24,7 +24,7 @@ use image_colored_text::draw::single_line::{draw_line_of_colored_text, DrawCoord
 use image_colored_text::ttp::TextToPrint;
 use crate::interactions::io::output::draw_commons::font::{get_font, HIBOU_FONT_SCALE};
 use crate::interactions::io::output::draw_commons::generate_color::generate_color;
-use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_Black, HC_Message};
+use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_BLACK, HC_MESSAGE};
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::VERTICAL_SIZE;
 use crate::interactions::io::output::draw_interactions::as_sd::action_repr::common::draw_line_for_message_exchange;
 use crate::interactions::io::output::draw_interactions::as_sd::util::arrow_heads::draw_arrowhead_rightward;
@@ -48,27 +48,27 @@ pub fn draw_action( image : &mut RgbImage,
         ActionType::Emission => {
 
             // ***
-            let mut min_lf_id : usize = act.lf_id;
-            let mut max_lf_id : usize = act.lf_id;
+            let min_lf_id : usize = act.lf_id;
+            let max_lf_id : usize = act.lf_id;
             // ***
             let msg_to_print : Vec<TextToPrint>;
             {
                 let msg_label = gen_ctx.get_ms_name(act.ms_id).unwrap();
-                msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_Message))];
+                msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_MESSAGE))];
             }
             // ***
             let text_y_pos = get_y_pos_from_yshift(yshift) + VERTICAL_SIZE/2.0;
             let arrow_y_pos = get_y_pos_from_yshift(yshift+2);
-            let msg_to_print_width = TextToPrint::get_text_width(&msg_to_print, &get_font(), &HIBOU_FONT_SCALE);
+            let _msg_to_print_width = TextToPrint::get_text_width(&msg_to_print, &get_font(), &HIBOU_FONT_SCALE);
             // ***
-            let (img_width,_) = image.dimensions();
+            let (_img_width,_) = image.dimensions();
             // ***
             let main_lf_coords = lf_x_widths.get(&act.lf_id).unwrap();
             // ***
 
             let msg_x_left = main_lf_coords.x_middle;
             let msg_x_right= msg_x_left +(main_lf_coords.x_span_inner/2.0);
-            draw_arrowhead_rightward(image,msg_x_right,arrow_y_pos,Rgb(HCP_Black));
+            draw_arrowhead_rightward(image,msg_x_right,arrow_y_pos,Rgb(HCP_BLACK));
             draw_line_for_message_exchange(image,msg_x_left,msg_x_right,arrow_y_pos);
             let msg_x_middle = (msg_x_left + msg_x_right)/2.0;
             draw_line_of_colored_text(image,
@@ -102,16 +102,16 @@ pub fn draw_action( image : &mut RgbImage,
             let msg_to_print : Vec<TextToPrint>;
             {
                 let msg_label = gen_ctx.get_ms_name(act.ms_id).unwrap();
-                msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_Message))];
+                msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_MESSAGE))];
             }
             // ***
             let text_y_pos = get_y_pos_from_yshift(yshift) + VERTICAL_SIZE/2.0;
             let arrow_y_pos = get_y_pos_from_yshift(yshift+2);
-            let msg_to_print_width = TextToPrint::get_text_width(&msg_to_print,
-                                                                 &get_font(),
-                                                                 &HIBOU_FONT_SCALE);
+            let _msg_to_print_width = TextToPrint::get_text_width(&msg_to_print,
+                                                                  &get_font(),
+                                                                  &HIBOU_FONT_SCALE);
             // ***
-            let (img_width,_) = image.dimensions();
+            let (_img_width,_) = image.dimensions();
             // ***
 
             let rcv_lf_id = act.lf_id;
@@ -124,7 +124,7 @@ pub fn draw_action( image : &mut RgbImage,
             // ***
             let tar_x_right = tar_lf_coords.x_middle;
             let tar_x_left= tar_x_right - (tar_lf_coords.x_span_inner/2.0);
-            draw_arrowhead_rightward(image, tar_x_right, arrow_y_pos,Rgb(HCP_Black));
+            draw_arrowhead_rightward(image, tar_x_right, arrow_y_pos,Rgb(HCP_BLACK));
             draw_line_for_message_exchange(image,tar_x_left,tar_x_right,arrow_y_pos);
             let msg_x_middle = (tar_x_left + tar_x_right)/2.0;
             draw_line_of_colored_text(image,

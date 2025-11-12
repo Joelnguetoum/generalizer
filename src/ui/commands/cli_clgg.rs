@@ -17,9 +17,11 @@ pub fn cli_clgg(matches: &ArgMatches) {
     print_file(file,alpuente);
 
     match parse_file(file) {
-        Ok((sig,t1,t2)) => {
+        Ok((_sig,t1,t2)) => {
             let mut process = GeneralisationProcess::init_process(&t1,&t2);
             let time = Instant::now();
+            //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
+
 
             match process.constrained_generalise(alpuente,verbose) {
                 Ok(clggs)=>{

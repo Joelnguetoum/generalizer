@@ -23,11 +23,11 @@ use image_colored_text::ttp::TextToPrint;
 use imageproc::drawing::draw_filled_rect_mut;
 use imageproc::rect::Rect;
 use crate::interactions::io::output::draw_commons::font::{get_font, HIBOU_FONT_SCALE};
-use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_White;
+use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_WHITE;
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::{FONT_HEIGHT, MARGIN};
 
 
-
+#[allow(dead_code)]
 pub fn new_image_with_colored_text(path : &Path,
                                    alignment : &MultiLineTextAlignment,
                                    text_lines : &Vec<Vec<TextToPrint>>) {
@@ -44,7 +44,7 @@ pub fn new_image_with_colored_text(path : &Path,
     let mut image = RgbImage::new( img_width as u32, img_height as u32);
     draw_filled_rect_mut(&mut image,
                          Rect::at(0,0).of_size(img_width as u32,img_height as u32),
-                         Rgb(HCP_White));
+                         Rgb(HCP_WHITE));
     // Draw content text
     draw_multiline_colored_text(&mut image,
                                 &DrawCoord::StartingAt(MARGIN),

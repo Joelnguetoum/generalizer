@@ -2,7 +2,7 @@ use std::collections::HashSet;
 use crate::interactions::syntax::interaction::Interaction;
 
 #[derive(Clone, PartialEq, Debug, Eq, Hash, PartialOrd, Ord)]
-pub(crate) enum Operator {
+pub enum Operator {
     Alt,
     Par,
     Seq,

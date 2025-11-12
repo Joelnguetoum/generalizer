@@ -141,8 +141,7 @@ pub fn parse_comm_act_origin(gen_ctx : &GeneralContext, origin_pair : Pair<Rule>
 pub fn parse_comm_content(gen_ctx : &GeneralContext, comm_content_pair : Pair<Rule>) -> Result<usize,ParsingError> {
     let mut contents = comm_content_pair.into_inner();
     let first_pair = contents.next().unwrap();
-    let mut got_ms_id : Option<usize> = None;
-    match first_pair.as_rule() {
+    let got_ms_id =  match first_pair.as_rule() {
         Rule::STRING => {
             let ms_name : String = first_pair.as_str().chars().filter(|c| !c.is_whitespace()).collect();
             match gen_ctx.get_ms_id( &ms_name ) {
@@ -150,14 +149,14 @@ pub fn parse_comm_content(gen_ctx : &GeneralContext, comm_content_pair : Pair<Ru
                     return Err( ParsingError::MissingMessageDeclarationError( ms_name ) );
                 },
                 Some( ms_id ) => {
-                    got_ms_id = Some(ms_id);
+                     Some(ms_id)
                 }
             }
         },
         _ => {
             panic!("what rule then ? : {:?}", first_pair.as_rule() );
         }
-    }
+    };
     // ***
     match got_ms_id {
         None => {

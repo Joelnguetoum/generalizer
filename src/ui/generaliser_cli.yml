@@ -70,10 +70,6 @@ subcommands:
             long: verbose
             short: v
             help: Print the computation history of clggs
-        - dot:
-            long: dot
-            short: d
-            help: Print the computation history of lggs in a dot file together with an image
         - alpuente:
             long: alpuente
             short: a

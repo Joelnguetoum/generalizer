@@ -1,10 +1,8 @@
 use std::collections::{HashMap, HashSet};
-use maplit::hashset;
 use crate::interactions::composition::error::CompositionError;
 use crate::interactions::composition::error::CompositionError::UniqueGatePropertyUnsatisfied;
 use crate::interactions::syntax::action::Action;
 use crate::interactions::syntax::interaction::Interaction;
-use crate::interactions::syntax::operators::Operator;
 
 pub struct Guideline {
     pub(crate) map: HashMap<usize,(Action, Action)>,
@@ -29,8 +27,8 @@ impl Guideline {
         //Perhaps could be done more efficiently???
         let mut map = HashMap::new();
 
-        let mut actions1 = i1.get_actions();
-        let mut actions2 = i2.get_actions();
+        let actions1 = i1.get_actions();
+        let actions2 = i2.get_actions();
 
 
             for action1 in &actions1{

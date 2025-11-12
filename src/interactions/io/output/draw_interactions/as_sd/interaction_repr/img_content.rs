@@ -15,14 +15,14 @@ limitations under the License.
 */
 
 use std::cmp;
-use std::collections::{BTreeSet, HashMap};
+use std::collections::HashMap;
 
 use image::{Rgb, RgbImage};
 use image_colored_text::draw::single_line::{draw_line_of_colored_text, DrawCoord};
 use image_colored_text::ttp::TextToPrint;
 use imageproc::drawing::draw_line_segment_mut;
 use crate::interactions::io::output::draw_commons::font::{get_font, HIBOU_FONT_SCALE};
-use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_Black;
+use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_BLACK;
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::{FRAGMENT_PADDING, FRAGMENT_TITLE_MARGIN, VERTICAL_SIZE};
 use crate::interactions::io::output::draw_interactions::as_sd::action_repr::draw_action::draw_action;
 use crate::interactions::io::output::draw_interactions::as_sd::action_repr::draw_vp::draw_vp;
@@ -75,7 +75,7 @@ pub fn draw_interaction_rec(    image : &mut RgbImage,
         &Interaction::Strict(ref i1,ref i2) => {
             let mut frags = get_recursive_strict_frags(i1);
             frags.extend( get_recursive_strict_frags(i2) );
-            let label = vec![TextToPrint::new(SYNTAX_STRICT.to_string(),Rgb(HCP_Black))];
+            let label = vec![TextToPrint::new(SYNTAX_STRICT.to_string(),Rgb(HCP_BLACK))];
             return draw_n_ary_combined_fragment(image, gen_ctx,frags,lf_x_widths, lf_num,label, nest_shift, yshift);
         },
 
@@ -83,22 +83,24 @@ pub fn draw_interaction_rec(    image : &mut RgbImage,
         &Interaction::Alt(ref i1,ref i2) => {
             let mut frags = get_recursive_alt_frags(i1);
             frags.extend( get_recursive_alt_frags(i2) );
-            let label = vec![TextToPrint::new(SYNTAX_ALT.to_string(),Rgb(HCP_Black))];
+            let label = vec![TextToPrint::new(SYNTAX_ALT.to_string(),Rgb(HCP_BLACK))];
             return draw_n_ary_combined_fragment(image, gen_ctx,frags,lf_x_widths, lf_num,label, nest_shift, yshift);
         },
         &Interaction::Par(ref i1,ref i2) => {
             let mut frags = get_recursive_par_frags(i1);
             frags.extend( get_recursive_par_frags(i2) );
-            let label = vec![TextToPrint::new(SYNTAX_PAR.to_string(),Rgb(HCP_Black))];
+            let label = vec![TextToPrint::new(SYNTAX_PAR.to_string(),Rgb(HCP_BLACK))];
             return draw_n_ary_combined_fragment(image, gen_ctx,frags,lf_x_widths, lf_num,label, nest_shift, yshift);
         },
         &Interaction::LoopS( ref i1) => {
-            let label = vec![TextToPrint::new(SYNTAX_LOOP_S.to_string(),Rgb(HCP_Black))];
+            let label = vec![TextToPrint::new(SYNTAX_LOOP_S.to_string(),Rgb(HCP_BLACK))];
             return draw_unary_combined_fragment(image,  gen_ctx,i1,lf_x_widths, lf_num,label, nest_shift, yshift);
         },
+        /*
         _ => {
             panic!("non-conform interaction");
         }
+         */
     }
 }
 
@@ -122,7 +124,7 @@ fn draw_unary_combined_fragment(    image : &mut RgbImage,
     let end_y : u32 = *yshift;
     *nest_shift -= 1;
     // draw frame
-    let mut y_drafts : Vec<u32> = [start_y,end_y].to_vec();
+    let y_drafts : Vec<u32> = [start_y,end_y].to_vec();
     draw_combined_fragment_frame(image, label, *nest_shift,lf_x_widths,lr_bounds.0[0],lr_bounds.0[1],y_drafts);
     return (lr_bounds.0,unshift);
 }
@@ -181,24 +183,24 @@ fn draw_combined_fragment_frame(    image : &mut RgbImage,
             draw_line_segment_mut(image,
                                   (x_left, y_start),
                                   (x_left, y_end),
-                                  Rgb(HCP_Black));
+                                  Rgb(HCP_BLACK));
             draw_line_segment_mut(image,
                                   (x_right, y_start),
                                   (x_right, y_end),
-                                  Rgb(HCP_Black));
+                                  Rgb(HCP_BLACK));
             draw_line_segment_mut(image,
                                   (x_left, y_start),
                                   (x_right, y_start),
-                                  Rgb(HCP_Black));
+                                  Rgb(HCP_BLACK));
             draw_line_segment_mut(image,
                                   (x_left, y_end),
                                   (x_right, y_end),
-                                  Rgb(HCP_Black));
+                                  Rgb(HCP_BLACK));
             for y_coord in y_coords {
                 draw_line_segment_mut(image,
                                       (x_left, y_coord),
                                       (x_right, y_coord),
-                                      Rgb(HCP_Black));
+                                      Rgb(HCP_BLACK));
             }
             draw_line_of_colored_text(image,
                                       &DrawCoord::StartingAt(x_left + FRAGMENT_TITLE_MARGIN),

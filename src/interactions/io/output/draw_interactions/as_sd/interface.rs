@@ -29,7 +29,7 @@ pub fn draw_int_as_sd(gen_ctx : &GeneralContext,
     let output_file_name = format!("{:}.png", output_file_name);
     let output_path : PathBuf = [parent_folder, &output_file_name].iter().collect();
     let image = make_interaction_image(gen_ctx,interaction);
-    image.save(output_path.as_path());
+    let _ = image.save(output_path.as_path());
 }
 
 

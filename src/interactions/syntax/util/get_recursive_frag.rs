@@ -48,7 +48,7 @@ pub fn get_recursive_par_frags(interaction : &Interaction) -> Vec<&Interaction> 
     return frags;
 }
 
-
+#[allow(dead_code)]
 pub fn get_recursive_seq_frags(interaction : &Interaction) -> Vec<&Interaction> {
     let mut frags : Vec<&Interaction> = Vec::new();
     match interaction {

@@ -10,16 +10,16 @@ impl Configuration {
 
     pub fn generic_decompose(&self)->Result<Vec<Configuration>, ConfigurationError>{
 
-        if self.relaxed_can_apply_decompose(){
+        if self.can_apply_decompose(){
             self.decompose()
         }
-        else if self.relaxed_can_apply_decompose_a(){
+        else if self.can_apply_decompose_a(){
             self.decompose_a()
         }
-        else if self.relaxed_can_apply_decompose_c(){
+        else if self.can_apply_decompose_c(){
             self.decompose_c()
         }
-        else if self.relaxed_can_apply_decompose_ac(){
+        else if self.can_apply_decompose_ac(){
              self.decompose_ac()
         }
 

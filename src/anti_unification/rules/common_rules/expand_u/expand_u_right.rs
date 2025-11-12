@@ -30,13 +30,13 @@ impl Configuration{
         let u_f = aut.t1.head_symbol_signature().get_unit();
 
         match (aut.t1.clone(), aut.t2.clone()) {
-            (Term::Function(f1), Term::Function(f2)) => {
+            (Term::Function(_f1), Term::Function(_f2)) => {
 
 
                 //Return config 1
                 let mut new_active1 = new_active.clone();
-                let mut new_store1 = self.store.clone();
-                let mut new_sub1 = self.sub.clone();
+                let new_store1 = self.store.clone();
+                let new_sub1 = self.sub.clone();
 
 
                 let t_right_1 = Term::Function(Function::new(&aut.t1.head_symbol_signature(), &vec![u_f.clone(), aut.t2.clone()]));
@@ -51,8 +51,8 @@ impl Configuration{
 
                 //Return config 2
                 let mut new_active2 = new_active.clone();
-                let mut new_store2 = self.store.clone();
-                let mut new_sub2 = self.sub.clone();
+                let new_store2 = self.store.clone();
+                let new_sub2 = self.sub.clone();
 
 
                 let t_left_2 = Term::Function(Function::new(&aut.t1.head_symbol_signature(), &vec![aut.t2.clone(), u_f.clone()]));

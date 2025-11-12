@@ -240,7 +240,7 @@ fn match_a_seq(
             for end in (j + 1)..=s_args.len() {
                 let slice = &s_args[j..end];
                 let term = build_ac_term(signature, slice);
-                let mut save = subst.clone();
+                let save = subst.clone();
 
                 if let Some(existing) = subst.map.get(v) {
                     if existing != &term {

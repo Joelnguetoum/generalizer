@@ -19,7 +19,7 @@ limitations under the License.
 
 
 use crate::interactions::syntax::interaction::Interaction;
-
+#[allow(dead_code)]
 pub fn fold_recursive_alt_frags(frags : &mut Vec<&Interaction>) -> Interaction {
     let frag_num = frags.len();
     if frag_num == 2 {
@@ -35,7 +35,7 @@ pub fn fold_recursive_alt_frags(frags : &mut Vec<&Interaction>) -> Interaction {
         return Interaction::Alt( Box::new(i1.clone()), Box::new( fold_recursive_alt_frags(frags) ) );
     }
 }
-
+#[allow(dead_code)]
 pub fn fold_recursive_tensor_frags(frags : &mut Vec<&Interaction>) -> Interaction {
     let frag_num = frags.len();
     if frag_num == 2 {
@@ -51,7 +51,7 @@ pub fn fold_recursive_tensor_frags(frags : &mut Vec<&Interaction>) -> Interactio
         return Interaction::Tensor( Box::new(i1.clone()), Box::new( fold_recursive_tensor_frags(frags) ) );
     }
 }
-
+#[allow(dead_code)]
 pub fn fold_recursive_seq_frags(frags : &mut Vec<&Interaction>) -> Interaction {
     let frag_num = frags.len();
     if frag_num == 2 {
@@ -67,7 +67,7 @@ pub fn fold_recursive_seq_frags(frags : &mut Vec<&Interaction>) -> Interaction {
         return Interaction::Seq( Box::new(i1.clone()), Box::new( fold_recursive_seq_frags(frags) ) );
     }
 }
-
+#[allow(dead_code)]
 pub fn fold_recursive_par_frags(frags : &mut Vec<&Interaction>) -> Interaction {
     let frag_num = frags.len();
     if frag_num == 2 {

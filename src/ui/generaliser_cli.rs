@@ -9,31 +9,33 @@ pub fn generaliser_cli() -> i32{
     let yaml = load_yaml!("generaliser_cli.yml");
     let matches = App::from_yaml(yaml).get_matches();
 
-    let mut ret_print : Vec<String> = vec![];
-    let mut ret_code : u32 = 1;
+    //let mut ret_print : Vec<String> = vec![];
+    //let mut ret_code : u32 = 1;
 
     print_logo();
 
     if let Some(matches) = matches.subcommand_matches("lgg") {
-        let mut got = cli_lgg(matches);
+        let _got = cli_lgg(matches);
 
     } else if let Some(matches) = matches.subcommand_matches("clgg") {
-        let mut got = cli_clgg(matches);
+        let _got = cli_clgg(matches);
 
 
     }
     else if let Some(matches) = matches.subcommand_matches("compose") {
-        let mut got = cli_compose(matches);
+        let _got = cli_compose(matches);
 
 
     }
     else if let Some(matches) = matches.subcommand_matches("test") {
-        let mut got = cli_test(matches);
+        let _got = cli_test(matches);
 
-    } else {
-        ret_print = vec!["".to_string(),"TYPE help or -h to get a summary of the utilities".to_string()];
-        ret_code = 0
     }
+    /*else {
+        //ret_print = vec!["".to_string(),"TYPE help or -h to get a summary of the utilities".to_string()];
+        //ret_code = 0
+    }
+     */
 
     return 0;
 }

@@ -17,24 +17,13 @@ impl Configuration {
         if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
             && aut.t1.is_head_function_associative()
             && !aut.t2.is_head_function_commutative()
-            //&& !aut.t1.is_head_function_has_unit()
         {
             return true;
         }
         false
     }
 
-    pub fn relaxed_can_apply_decompose_a(&self) -> bool {
-        let aut = self.active[0].clone();
 
-        if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
-            && aut.t1.is_head_function_associative()
-            && !aut.t2.is_head_function_commutative()
-        {
-            return true;
-        }
-        false
-    }
     pub fn decompose_a(&self) -> Result<Vec<Configuration>, ConfigurationError> {
         //println!("decompose_a");
 
@@ -45,12 +34,13 @@ impl Configuration {
         //Since this is decompose, we remove the concerned AUT
         let aut = active.remove(0);
 
-        match (aut.t1.clone().assoc_flatten(), aut.t2.clone().assoc_flatten()) {
+        //match (aut.t1.clone().assoc_flatten(), aut.t2.clone().assoc_flatten()) {
+        match (aut.t1.clone(), aut.t2.clone()) {
             (Term::Function(f1), Term::Function(f2)) => {
 
                 for (t1,t1_prime,t2,t2_prime) in Self::assoc_dec_groups(&f1.signature,&f1.args, &f2.args) {
                     let mut new_active = active.clone();
-                    let mut new_store = self.store.clone();
+                    let new_store = self.store.clone();
                     let mut new_sub = self.sub.clone();
 
 
@@ -87,11 +77,11 @@ impl Configuration {
 
         //Left
         for i in 0..args1.len()-1 {
-            let t1 = Term::assoc_wrap(sig,&Vec::from(&args1[0..=i])).to_associative_form();
+            let t1 = Term::assoc_wrap(sig,&Vec::from(&args1[0..=i]));//.to_associative_form();
             let t1_prime = args2[0].clone();
 
-            let t2 = Term::assoc_wrap(sig,&Vec::from(&args1[i+1..])).to_associative_form();
-            let t2_prime = Term::assoc_wrap(sig,&Vec::from(&args2[1..])).to_associative_form();
+            let t2 = Term::assoc_wrap(sig,&Vec::from(&args1[i+1..]));//.to_associative_form();
+            let t2_prime = Term::assoc_wrap(sig,&Vec::from(&args2[1..]));//.to_associative_form();
 
             quadruples.push((t1,t1_prime,t2,t2_prime));
         }
@@ -99,10 +89,10 @@ impl Configuration {
         //Right
         for i in 0..args2.len()-1 {
             let t1 = args1[0].clone();
-            let t1_prime = Term::assoc_wrap(sig,&Vec::from(&args2[0..=i])).to_associative_form();
+            let t1_prime = Term::assoc_wrap(sig,&Vec::from(&args2[0..=i]));//.to_associative_form();
 
-            let t2 = Term::assoc_wrap(sig,&Vec::from(&args1[1..])).to_associative_form();
-            let t2_prime = Term::assoc_wrap(sig,&Vec::from(&args2[i+1..])).to_associative_form();
+            let t2 = Term::assoc_wrap(sig,&Vec::from(&args1[1..]));//.to_associative_form();
+            let t2_prime = Term::assoc_wrap(sig,&Vec::from(&args2[i+1..]));//.to_associative_form();
 
 
             quadruples.push((t1,t1_prime,t2,t2_prime));
@@ -117,7 +107,7 @@ impl Configuration {
 
 
 impl Term{
-
+    /*
     pub fn to_associative_form(&self) -> Term {
         match self {
             Term::Variable(v) => Term::Variable(v.clone()),
@@ -174,15 +164,17 @@ impl Term{
         }
     }
 
+     */
+
     pub fn assoc_flatten(&self)->Term{
 
         match self.clone(){
-            Term::Variable(x) => self.clone(),
+            Term::Variable(_x) => self.clone(),
             Term::Function(f)=>{
                 let mut new_args = Vec::new();
                 for arg in f.args{
                     match arg.clone(){
-                        Term::Variable(x) => {new_args.push(arg);},
+                        Term::Variable(_x) => {new_args.push(arg);},
                         Term::Function(g)=>{
                             if g.signature== f.signature{
                                 //First we flatten it

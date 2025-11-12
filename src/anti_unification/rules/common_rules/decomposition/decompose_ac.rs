@@ -16,23 +16,13 @@ impl Configuration {
 
         if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
             && aut.t1.is_head_function_associative_commutative()
-        //&& !aut.t1.is_head_function_has_unit()
          {
             return true;
         }
         false
     }
 
-    pub fn relaxed_can_apply_decompose_ac(&self) -> bool {
-        let aut = self.active[0].clone();
 
-        if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
-            && aut.t1.is_head_function_associative_commutative()
-        {
-            return true;
-        }
-        false
-    }
 
     pub fn decompose_ac(&self) -> Result<Vec<Configuration>, ConfigurationError> {
        // println!("decompose_ac");
@@ -49,7 +39,7 @@ impl Configuration {
 
                 for (t1,t1_prime,t2,t2_prime) in Self::assoc_comm_dec_groups(&f1.signature,&f1.args, &f2.args) {
                     let mut new_active = active.clone();
-                    let mut new_store = self.store.clone();
+                    let new_store = self.store.clone();
                     let mut new_sub = self.sub.clone();
 
 
@@ -108,10 +98,10 @@ impl Configuration {
                     let (vec1, vec2) = Combinatorics::split_vector(args1, &combo);
                     let (vec3, vec4) = Combinatorics::split_vector(args2, &[j]);
 
-                    let t1 = Term::assoc_wrap(sig, &vec1).to_associative_form();
-                    let t1_prime = Term::assoc_wrap(sig, &vec3).to_associative_form();
-                    let t2 = Term::assoc_wrap(sig, &vec2).to_associative_form();
-                    let t2_prime = Term::assoc_wrap(sig, &vec4).to_associative_form();
+                    let t1 = Term::assoc_wrap(sig, &vec1);//.to_associative_form();
+                    let t1_prime = Term::assoc_wrap(sig, &vec3);//.to_associative_form();
+                    let t2 = Term::assoc_wrap(sig, &vec2);//.to_associative_form();
+                    let t2_prime = Term::assoc_wrap(sig, &vec4);//.to_associative_form();
 
                     quadruples.push((t1, t1_prime, t2, t2_prime));
                 }
@@ -129,10 +119,10 @@ impl Configuration {
                     let (vec1, vec2) = Combinatorics::split_vector(args1, &[i]);
                     let (vec3, vec4) = Combinatorics::split_vector(args2, &combo);
 
-                    let t1 = Term::assoc_wrap(sig, &vec1).to_associative_form();
-                    let t1_prime = Term::assoc_wrap(sig, &vec3).to_associative_form();
-                    let t2 = Term::assoc_wrap(sig, &vec2).to_associative_form();
-                    let t2_prime = Term::assoc_wrap(sig, &vec4).to_associative_form();
+                    let t1 = Term::assoc_wrap(sig, &vec1);//.to_associative_form();
+                    let t1_prime = Term::assoc_wrap(sig, &vec3);//.to_associative_form();
+                    let t2 = Term::assoc_wrap(sig, &vec2);//.to_associative_form();
+                    let t2_prime = Term::assoc_wrap(sig, &vec4);//.to_associative_form();
 
                     quadruples.push((t1, t1_prime, t2, t2_prime));
                 }

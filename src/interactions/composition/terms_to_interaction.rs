@@ -1,7 +1,6 @@
 use crate::interactions::syntax::action::{Action, ActionType};
 use crate::interactions::syntax::interaction::Interaction;
 use crate::interactions::syntax::operators::Operator;
-use crate::terms::function::Signature;
 use crate::terms::term::Term;
 use crate::utils::misc::{extract_inner, split_binary_op};
 

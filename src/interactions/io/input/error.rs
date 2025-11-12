@@ -2,7 +2,7 @@
 
 
 use std::fmt;
-
+#[allow(dead_code)]
 #[derive(Debug)]
 pub enum ParsingError {
     FileFormatError(String,String),

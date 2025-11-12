@@ -1,11 +1,10 @@
 #[derive(Debug, Clone)]
+#[allow(dead_code)]
 pub enum ConfigurationError {
     SolveFailed,
     ConstrainedGeneralisationFailed,
     NonGroundTerm,
     InvalidRuleApplication,
-    EmptyActiveSet,
-    InvalidState,
     RuleApplicationError,
     UnknownRule,
 }
@@ -17,8 +16,6 @@ impl std::fmt::Display for ConfigurationError {
             ConfigurationError::ConstrainedGeneralisationFailed => write!(f, "Constrained generalisation failed"),
             ConfigurationError::NonGroundTerm => write!(f, "Generalization of non-ground term"),
             ConfigurationError::InvalidRuleApplication => write!(f, "Invalid rule application"),
-            ConfigurationError::EmptyActiveSet => write!(f, "Empty active set"),
-            ConfigurationError::InvalidState => write!(f, "Invalid configuration state"),
             ConfigurationError::RuleApplicationError => write!(f, "Rule application error"),
             ConfigurationError::UnknownRule => write!(f, "Trying to apply an unknown rule"),
         }

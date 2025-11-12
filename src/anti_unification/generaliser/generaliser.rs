@@ -12,6 +12,7 @@ pub struct Generaliser{
 }
 
 impl Generaliser{
+    #[allow(dead_code)]
     pub fn new(t: &Term, sub1: &Substitution, sub2: &Substitution) -> Self {
         Self{t: t.clone(), sub1: sub1.clone(), sub2: sub2.clone(), history: None}
     }

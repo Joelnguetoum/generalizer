@@ -12,7 +12,8 @@ use crate::terms::term::Term;
 
 impl Configuration {
 
-    pub fn can_apply_expand_same_left(&self) -> bool {
+    #[allow(dead_code)]
+    pub fn can_apply_expand_u_same_left(&self) -> bool {
         let aut = self.active[0].clone();
 
         if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
@@ -43,7 +44,7 @@ impl Configuration {
 
 
 
-    pub fn expand_same_left(&self) -> Result<Vec<Configuration>, ConfigurationError>  {
+    pub fn expand_u_same_left(&self) -> Result<Vec<Configuration>, ConfigurationError>  {
 
         // println!("Expand same");
 
@@ -56,7 +57,7 @@ impl Configuration {
         let u_f = aut.t1.head_symbol_signature().get_unit();
 
         match (aut.t1.clone(), aut.t2.clone()) {
-            (Term::Function(f1), Term::Function(f2)) => {
+            (Term::Function(_f1), Term::Function(_f2)) => {
 
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
@@ -65,10 +66,18 @@ impl Configuration {
 
 
                 let mut new_active1 = new_active.clone();
-                let mut new_store1 = self.store.clone();
-                let mut new_sub1 = self.sub.clone();
+                let new_store1 = self.store.clone();
+                let new_sub1 = self.sub.clone();
 
-                let t_left_1 = Term::Function(Function::new(&aut.t2.head_symbol_signature(), &vec![u_f.clone(), aut.t1.clone()]));
+
+                let t_left_1 = if aut.t2.is_head_function_associative(){
+                    let mut new_args = vec![u_f.clone()];
+                    new_args.extend(_f1.args.clone());
+                    Term::Function(Function::new(&aut.t2.head_symbol_signature(), &new_args))
+                }
+                else{
+                    Term::Function(Function::new(&aut.t2.head_symbol_signature(), &vec![u_f.clone(), aut.t1.clone()]))
+                };
 
                 let new_aut1 = AUT::new(aut.x.clone(), t_left_1.clone(), aut.t2.clone());
 
@@ -85,12 +94,19 @@ impl Configuration {
                 ////////////////////////////////////////////////////////////////////////////
                 //Expand_Same_Left_2
                 let mut new_active2 = new_active.clone();
-                let mut new_store2 = self.store.clone();
-                let mut new_sub2 = self.sub.clone();
+                let new_store2 = self.store.clone();
+                let new_sub2 = self.sub.clone();
 
 
 
-                let t_left_2 = Term::Function(Function::new(&aut.t2.head_symbol_signature(), &vec![aut.t1.clone(), u_f.clone()]));
+                let t_left_2 = if aut.t2.is_head_function_associative(){
+                    let mut new_args =_f1.args.clone();
+                    new_args.extend(vec![u_f]);
+                    Term::Function(Function::new(&aut.t2.head_symbol_signature(), &new_args))
+                }
+                else{
+                    Term::Function(Function::new(&aut.t2.head_symbol_signature(), &vec![aut.t1.clone(), u_f.clone()]))
+                };
 
                 let new_aut2 = AUT::new(aut.x.clone(), t_left_2.clone(), aut.t2.clone());
 

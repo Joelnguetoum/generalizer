@@ -19,24 +19,13 @@ impl Configuration {
         if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
             && aut.t1.is_head_function_commutative()
             && !aut.t2.is_head_function_associative()
-            //&& !aut.t1.is_head_function_has_unit()
         {
             return true;
         }
         false
     }
 
-    pub fn relaxed_can_apply_decompose_c(&self) -> bool {
-        let aut = self.active[0].clone();
 
-        if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
-            && aut.t1.is_head_function_commutative()
-            && !aut.t2.is_head_function_associative()
-        {
-            return true;
-        }
-        false
-    }
     pub fn decompose_c(&self) -> Result<Vec<Configuration>, ConfigurationError>  {
        // println!("decompose_c");
 
@@ -51,7 +40,7 @@ impl Configuration {
 
                 //Return config 1
                 let mut new_active1 = new_active.clone();
-                let mut new_store1 = self.store.clone();
+                let new_store1 = self.store.clone();
                 let mut new_sub1 = self.sub.clone();
 
                 let mut sub1 = Substitution::new();
@@ -74,7 +63,7 @@ impl Configuration {
                 //Return config 2
 
                 let mut new_active2 = new_active.clone();
-                let mut new_store2 = self.store.clone();
+                let new_store2 = self.store.clone();
                 let mut new_sub2 = self.sub.clone();
 
                 let mut sub2 = Substitution::new();

@@ -1,14 +1,14 @@
 use std::fmt;
 use std::fmt::{Debug, Formatter};
-
+#[allow(dead_code)]
 pub type Position = String; //Simply String for now, it might change later
-
+#[allow(dead_code)]
 pub fn push_end(position: &Position,c: char) -> Position {
     let mut p = position.clone();
     p.push(c);
     p
 }
-
+#[allow(dead_code)]
 pub fn is_prefix(p: &Position, prefix: &Position) -> bool {
     p.starts_with(prefix)
 }
@@ -22,6 +22,7 @@ pub enum Pos {
     Epsilon(Option<usize>),
     Left(Box<Pos>),
     Right(Box<Pos>),
+    #[allow(dead_code)]
     Both(Box<Pos>,Box<Pos>)
 }
 

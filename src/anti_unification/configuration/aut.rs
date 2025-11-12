@@ -15,6 +15,7 @@ impl AUT {
         AUT { x, t1, t2 }
     }
 
+    #[allow(dead_code)]
     pub fn from_pair(t1: &Term, t2: &Term) -> AUT {
         let x = Variable::fresh_variable();
 

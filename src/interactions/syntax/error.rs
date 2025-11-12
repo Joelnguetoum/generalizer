@@ -10,6 +10,7 @@ use std::fmt;
 pub enum CoreError {
     UnknownLifeline(usize),
     UnknownMessage(usize),
+    #[allow(dead_code)]
     UnknownGate(usize)
 }
 

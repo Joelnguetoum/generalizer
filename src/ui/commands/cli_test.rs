@@ -1,11 +1,8 @@
 use clap::ArgMatches;
-use crate::matching::brute_force::matching_ac::brute_force_match_modulo_ac;
-use crate::terms::substitution::variable::Variable;
-use crate::terms::function::{Axioms, Function, FunctionSignature};
-use crate::terms::term::Term;
 
-pub fn cli_test(matches: &ArgMatches) {
 
+pub fn cli_test(_matches: &ArgMatches) {
+    /*
     let sig_f = FunctionSignature::new("f".to_string(),2,vec![Axioms::A]);
     let sig_a = FunctionSignature::new("a".to_string(),0,vec![]);
     let sig_b = FunctionSignature::new("b".to_string(),0,vec![]);
@@ -39,6 +36,8 @@ pub fn cli_test(matches: &ArgMatches) {
     let verdict = brute_force_match_modulo_ac(&t4, &t7);
 
     println!("{}", verdict);
+
+     */
 
 
 }

@@ -17,7 +17,6 @@ impl Configuration {
             && !aut.t1.is_head_function_commutative()
             && !aut.t1.is_head_function_associative()
             && !aut.t1.is_head_function_associative_commutative()
-            //&& !aut.t1.is_head_function_has_unit()
             {
                 //If arity mismatch, return false
                 if let (Term::Function(f1),Term::Function(f2)) = (aut.t1.clone(), aut.t2.clone()) {
@@ -29,30 +28,14 @@ impl Configuration {
         false
     }
 
-    pub fn relaxed_can_apply_decompose(&self) -> bool {
-        let aut = self.active[0].clone();
 
-        if aut.t1.head_symbol_signature() == aut.t2.head_symbol_signature()
-            && !aut.t1.is_head_function_commutative()
-            && !aut.t1.is_head_function_associative()
-            && !aut.t1.is_head_function_associative_commutative()
-        {
-            //If arity mismatch, return false
-            if let (Term::Function(f1),Term::Function(f2)) = (aut.t1.clone(), aut.t2.clone()) {
-                if f1.args.len() == f2.args.len(){
-                    return true;
-                }
-            }
-        }
-        false
-    }
     pub fn decompose(&self) -> Result<Vec<Configuration>, ConfigurationError> {
 
 
         // println!("decompose");
 
         let mut new_active = self.active.clone();
-        let mut new_store = self.store.clone();
+        let new_store = self.store.clone();
         let mut new_sub = self.sub.clone();
 
 

@@ -23,7 +23,7 @@ use image::{Rgb, RgbImage};
 use image_colored_text::draw::single_line::{draw_line_of_colored_text, DrawCoord};
 use image_colored_text::ttp::TextToPrint;
 use crate::interactions::io::output::draw_commons::font::{get_font, HIBOU_FONT_SCALE};
-use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_Black, HC_Message};
+use crate::interactions::io::output::draw_commons::hibou_color_palette::{HCP_BLACK, HC_MESSAGE};
 use crate::interactions::io::output::draw_commons::sd_drawing_conf::VERTICAL_SIZE;
 use crate::interactions::io::output::draw_interactions::as_sd::action_repr::common::draw_line_for_message_exchange;
 use crate::interactions::io::output::draw_interactions::as_sd::util::arrow_heads::{draw_arrowhead_leftward, draw_arrowhead_rightward};
@@ -68,14 +68,14 @@ pub fn draw_vp( image : &mut RgbImage,
     let msg_to_print : Vec<TextToPrint>;
     {
         let msg_label = gen_ctx.get_ms_name(em_act.ms_id).unwrap();
-        msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_Message))];
+        msg_to_print = vec![TextToPrint::new(msg_label,Rgb(HC_MESSAGE))];
     }
     // ***
     let text_y_pos = get_y_pos_from_yshift(yshift) + VERTICAL_SIZE/2.0;
     let arrow_y_pos = get_y_pos_from_yshift(yshift+2);
-    let msg_to_print_width = TextToPrint::get_text_width(&msg_to_print, &get_font(), &HIBOU_FONT_SCALE);
+    let _msg_to_print_width = TextToPrint::get_text_width(&msg_to_print, &get_font(), &HIBOU_FONT_SCALE);
     // ***
-    let (img_width,_) = image.dimensions();
+    let (_img_width,_) = image.dimensions();
     // ***
     let origin_lf_id = *(&em_act.lf_id);
     let origin_lf_coords = lf_x_widths.get(&origin_lf_id).unwrap();
@@ -89,9 +89,9 @@ pub fn draw_vp( image : &mut RgbImage,
     }
 
     if origin_lf_id < target_lf_id {
-        draw_arrowhead_rightward(image,target_lf_coords.x_middle, arrow_y_pos,Rgb(HCP_Black));
+        draw_arrowhead_rightward(image,target_lf_coords.x_middle, arrow_y_pos,Rgb(HCP_BLACK));
     } else {
-        draw_arrowhead_leftward(image,target_lf_coords.x_middle, arrow_y_pos,Rgb(HCP_Black));
+        draw_arrowhead_leftward(image,target_lf_coords.x_middle, arrow_y_pos,Rgb(HCP_BLACK));
     }
     draw_line_for_message_exchange(image,target_lf_coords.x_middle,origin_lf_coords.x_middle,arrow_y_pos);
     // ***

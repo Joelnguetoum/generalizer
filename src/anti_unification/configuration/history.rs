@@ -15,6 +15,7 @@ impl History {
         Self { configs: vec![]}
     }
 
+    #[allow(dead_code)]
     pub fn from_vec(configs: &Vec<(Configuration,String)>) -> Self {
         Self { configs: configs.clone()}
     }

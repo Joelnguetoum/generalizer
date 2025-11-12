@@ -1,17 +1,20 @@
+use std::collections::VecDeque;
+use colored::Colorize;
 use crate::anti_unification::configuration::configuration::Configuration;
 use crate::anti_unification::generaliser::generaliser::Generaliser;
 use crate::anti_unification::generaliser::minimise::minimise_ac;
+use crate::anti_unification::rules::rule::Rule;
 use crate::terms::term::Term;
 
 #[derive(Debug)]
 pub struct GeneralisationProcess {
     pub solved_configurations: Vec<Configuration>,
-    pub unsolved_configurations: Vec<Configuration>
+    pub unsolved_configurations: VecDeque<Configuration>
 }
 
 impl GeneralisationProcess {
     pub fn new(conf: &Configuration) -> Self {
-        Self{solved_configurations: Vec::new(),unsolved_configurations:vec![conf.clone()]}
+        Self{solved_configurations: Vec::new(),unsolved_configurations:VecDeque::from([conf.clone()])}
     }
 
     pub fn init_process(t1: &Term, t2: &Term) -> GeneralisationProcess {
@@ -20,54 +23,68 @@ impl GeneralisationProcess {
         GeneralisationProcess::new(&conf)
     }
 
-    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool,alpuente: bool,verbose: bool) {
+
+    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool,alpuente: bool,verbose: bool, /*queue: &mut VecDeque<Configuration>*/) {
         // Check if configuration is already solved
         if config.active.is_empty() {
             self.solved_configurations.push(config);
             return;
         }
 
+        let rules = config.get_applicable_rules_first_aut(is_constrained_anti_unification,alpuente);
 
-        // Try to apply m_rules
-        match config.applicable_rule(is_constrained_anti_unification,alpuente) {
-            Some(rule) => {
-                if verbose {
-                    println!("Rule applicable {:?}",rule);
-                    println!("current number of unsolved configurations: {}", self.unsolved_configurations.len());
-                    println!("Current Configuration:  {}",config.clone());
-
-                }
-
-                match config.apply_rule(rule) {
-                    Ok(new_configs) => {
-                        /* BFS
-                        let mut temps = new_configs.clone();
-                        for conf in &self.unsolved_configurations {
-                            temps.push(conf.clone());
-                        }
-                        self.unsolved_configurations = temps;
-
-                        */
-
-
-                        /*DFS */
-                        self.unsolved_configurations.extend(new_configs);
-
-
-
-                    }
-                    Err(e) => {
-                        //If there is an error, just drop the configuration
-                        //Maybe in the case of SolveFail, print the failure??
-                    }
-                }
+        /*
+        if rules.contains(&Rule::SolveFail){
+            if verbose {
+                println!("Rule applicable {}","SolveFail".red());
+                println!("Current Configuration:  {}",config.clone());
+                println!("========================================");
             }
-            None => {
-                // If no rule applies, panic!
-                panic!("No rule applied to the configuration {}: please complete the set of m_rules",config.clone());
+            return;
+        }
+         */
+
+        if rules.contains(&Rule::GreedySolveFail){
+            if verbose {
+                println!("Rule applicable {}","GreedySolveFail".red());
+                println!("Current Configuration:  {}",config.clone());
+                println!("========================================");
+            }
+            return;
+        }
+
+        /*Optimisation
+            if config.can_apply_greedy_solve_fail(){
+                continue;
+            }
+            */
+
+        for rule in rules {
+            // Try to apply m_rules
+            match config.apply_rule(rule.clone()) {
+                Ok(res) => {
+                    if verbose {
+                        println!("Rule applicable {:?}",rule);
+                        println!("current number of unsolved configurations: {}", self.unsolved_configurations.len());
+                         println!("Current Configuration:  {}",config.clone());
+                        println!("========================================");
+
+                    }
+
+                    self.unsolved_configurations.extend(res);
+                    //queue.push_back(res[0].clone());
+
+                }
+                Err(_) => {
+                    //If there is an error, just drop the configuration
+                    //Maybe in the case of SolveFail, print the failure??
+                }
             }
         }
+
     }
+
+
 
 
     pub fn to_generalisers(&self) -> Vec<Generaliser> {
@@ -85,7 +102,20 @@ impl GeneralisationProcess {
         //filtered
         generalisers
     }
-    
+    #[allow(dead_code)]
+    pub fn to_generalisers_with_minimise(&self) -> Vec<Generaliser> {
+        let generalisers: Vec<Generaliser> = self
+            .solved_configurations
+            .iter()
+            .map(|conf| {
+                let  g = conf.to_generaliser();
+                g
+            })
+            .collect();
+
+        minimise_ac(generalisers)
+    }
+    #[allow(dead_code)]
     pub fn print_unsolved_configurations(&self,dir: &str) {
         for (ct,config) in self.unsolved_configurations.iter().enumerate() {
             let file = format!("{}/conf {}",dir,ct);

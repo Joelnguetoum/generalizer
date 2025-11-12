@@ -30,7 +30,7 @@ impl Configuration {
         //Redundancy????
         let mut new_active = self.active.clone();
         let mut new_store = self.store.clone();
-        let mut new_sub = self.sub.clone();
+        let new_sub = self.sub.clone();
 
         let aut = new_active.remove(0);
 

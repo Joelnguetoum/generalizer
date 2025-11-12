@@ -1,2 +1,2 @@
 pub mod brute_force;
-pub mod contejean_algorithm;
+//pub mod contejean_algorithm;

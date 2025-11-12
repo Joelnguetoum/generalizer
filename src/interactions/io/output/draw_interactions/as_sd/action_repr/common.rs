@@ -16,7 +16,7 @@ limitations under the License.
 
 use image::{Rgb, RgbImage};
 use imageproc::drawing::draw_line_segment_mut;
-use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_Black;
+use crate::interactions::io::output::draw_commons::hibou_color_palette::HCP_BLACK;
 
 
 // **********
@@ -26,6 +26,6 @@ pub fn draw_line_for_message_exchange(image : &mut RgbImage, x_left : f32, x_rig
     draw_line_segment_mut(image,
                           (x_left, y_pos),
                           (x_right, y_pos),
-                          Rgb(HCP_Black));
+                          Rgb(HCP_BLACK));
 
 }

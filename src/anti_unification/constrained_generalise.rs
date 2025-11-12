@@ -1,27 +1,44 @@
-
 use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::anti_unification::error::ConfigurationError;
 use crate::anti_unification::generaliser::generaliser::Generaliser;
 
 
-
+/*  */
 impl GeneralisationProcess {
 
     pub fn constrained_generalise(&mut self,alpuente:bool,verbose:bool) -> Result<Vec<Generaliser>, ConfigurationError> {
-        while let Some(config) = self.unsolved_configurations.pop() {
 
-            /*Optimisation*/
-            if config.can_apply_greedy_solve_fail(){
-                continue;
-            }
+        while let Some(config) = self.unsolved_configurations.pop_back() {
 
-            self.process_configuration(config,true,alpuente,verbose);
-
-            /*RETURN A SOLUTION AS SOON AS */
+            /*RETURN A SOLUTION AS SOON AS ONE IS FOUND*/
             if !self.solved_configurations.is_empty() {
                 println!("Solved configuration successfully.");
                 return Ok(self.to_generalisers())
             }
+
+
+
+            self.process_configuration(config,true,alpuente,verbose);
+            /*
+            let mut mini_queue = VecDeque::from([config.clone()]);
+
+            while let Some(conf) = mini_queue.pop_back() {
+                /*RETURN A SOLUTION AS SOON AS ONE IS FOUND*/
+                if !self.solved_configurations.is_empty() {
+                    println!("Solved configuration successfully.");
+                    return Ok(self.to_generalisers())
+                }
+
+
+
+                self.process_configuration(conf,true,alpuente,verbose,&mut mini_queue);
+            }
+
+             */
+
+
+
+
         }
 
         if self.solved_configurations.is_empty() {
@@ -31,9 +48,30 @@ impl GeneralisationProcess {
             Ok(self.to_generalisers())
         }
 
+
+
     }
-
-
 
 }
 
+
+/*
+
+impl GeneralisationEngine{
+    pub fn constrained_generalise(&mut self,alpuente: bool,verbose: bool) -> Result<Vec<Generaliser>, ConfigurationError>{
+
+        self.run(true,alpuente,verbose);
+
+        let generalisers = self.to_generalisers();
+
+        if generalisers.len() == 0{
+            Err(ConfigurationError::ConstrainedGeneralisationFailed)
+        }
+        else{
+            Ok(self.to_generalisers())
+        }
+
+    }
+}
+
+ */

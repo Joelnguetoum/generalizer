@@ -41,8 +41,7 @@ impl Action {
 
 impl fmt::Display for Action {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        let mut result = String::new();
-        result = if let Some(g) = self.gate_id{
+       let  result = if let Some(g) = self.gate_id{
             if self.action_type==ActionType::Emission{
                 format!("l{}!m{}[{}]", self.lf_id+1,self.ms_id+1,g)
             }

@@ -17,12 +17,15 @@ pub fn cli_lgg(matches: &ArgMatches) {
     print_file(file,alpuente);
 
     match parse_file(file) {
-        Ok((sig,t1,t2)) => {
+        Ok((_sig,t1,t2)) => {
             let time = Instant::now();
 
             let mut process = GeneralisationProcess::init_process(&t1,&t2);
-
             let lggs = process.generalise(alpuente,verbose);
+
+           // let mut process = GeneralisationEngine::init_engine(&t1,&t2);
+           // process.generalise(alpuente,verbose);
+           // let lggs = process.to_generalisers();
 
             let elapsed = time.elapsed().as_secs_f64();
 

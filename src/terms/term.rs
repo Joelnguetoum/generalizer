@@ -27,13 +27,13 @@ impl Term {
 
                 false
             },
-            Term::Variable(v)=>false
+            Term::Variable(_)=>false
         }
     }
 
     pub fn is_variable(&self) -> bool {
         match self.clone(){
-            Term::Variable(v)=>{ true },
+            Term::Variable(_)=>{ true },
             _=>false
         }
     }
@@ -49,7 +49,7 @@ impl Term {
 
                 false
             },
-            Term::Variable(v)=>false
+            Term::Variable(_)=>false
         }
     }
     pub fn is_head_function_commutative(&self) -> bool {
@@ -62,7 +62,7 @@ impl Term {
 
                 false
             },
-            Term::Variable(v)=>false
+            Term::Variable(_)=>false
         }
     }
 
@@ -76,7 +76,7 @@ impl Term {
 
                 false
             },
-            Term::Variable(v)=>false
+            Term::Variable(_)=>false
         }
     }
 
@@ -90,13 +90,13 @@ impl Term {
 
                 false
             },
-            Term::Variable(v)=>false
+            Term::Variable(_)=>false
         }
     }
 
     pub fn get_special_constants(&self) -> HashSet<Term> {
         match self.clone() {
-            Term::Variable(v)=>{
+            Term::Variable(_)=>{
                 HashSet::new()
             },
             Term::Function(f)=>{
@@ -145,7 +145,7 @@ impl Term {
 
     pub fn head_symbol_signature(&self) -> FunctionSignature {
         match self.clone() {
-            Term::Variable(v)=> panic!("Applied head_ground to a non-gound term"),
+            Term::Variable(_)=> panic!("Applied head_ground to a non-gound term"),
             Term::Function(f)=> f.signature
         }
     }
