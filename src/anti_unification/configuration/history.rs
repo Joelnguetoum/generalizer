@@ -6,7 +6,7 @@ use std::process::Command;
 use crate::anti_unification::configuration::configuration::Configuration;
 #[derive(Clone, Debug)]
 pub struct History {
-    configs : Vec<(Configuration,String)>,
+    configs : Vec<(String,String,String)>,
 }
 
 
@@ -16,12 +16,13 @@ impl History {
     }
 
     #[allow(dead_code)]
-    pub fn from_vec(configs: &Vec<(Configuration,String)>) -> Self {
+    pub fn from_vec(configs: &Vec<(String,String,String)>) -> Self {
         Self { configs: configs.clone()}
     }
 
-    pub fn add_config(&mut self, c: &Configuration, rule: &str) {
-        self.configs.push((c.clone(),rule.to_string()));
+    pub fn add_config(&mut self, _c: &Configuration, rule: &str) {
+       // self.configs.push((c.to_string(),rule.to_string(),c.to_generaliser().to_string()));
+        self.configs.push((String::from(""),rule.to_string(),String::from("")));
     }
 
 
@@ -41,14 +42,14 @@ impl History {
         dot.push_str("    edge [fontsize=10];\n\n");
 
         // Add nodes (configurations) - nodes are labeled with the Configuration's Display
-        for (i, (config, _)) in self.configs.iter().enumerate() {
-            let node_label = self.escape_dot_string(&config.to_string());
+        for (i, (config_str, _,_)) in self.configs.iter().enumerate() {
+            let node_label = self.escape_dot_string(&config_str);
             dot.push_str(&format!("    config{} [label=\"{}\"];\n", i, node_label));
         }
 
         //Add the generaliser at the end
         if let Some(last_config) = self.configs.last() {
-            let node_label = self.escape_dot_string(&last_config.0.to_generaliser().to_string());
+            let node_label = self.escape_dot_string(&last_config.2);
             dot.push_str(&format!("    config{} [label=\"{}\"];\n", n, node_label));
         }
 
@@ -56,7 +57,7 @@ impl History {
         dot.push_str("\n");
 
         // Add edges (transitions with labels) - edges are labeled with the String from the tuple
-        for (i, (_, arrow_label)) in self.configs.iter().enumerate().take(self.configs.len() - 1) {
+        for (i, (_, arrow_label,_)) in self.configs.iter().enumerate().take(self.configs.len() - 1) {
             let escaped_label = self.escape_dot_string(arrow_label);
             dot.push_str(&format!("    config{} -> config{} [label=\"{}\"];\n",
                                   i, i + 1, escaped_label));
@@ -141,8 +142,8 @@ impl fmt::Display for History {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         let mut result = String::from("");
         let mut count = 0;
-        for (config,rule) in &self.configs {
-            result.push_str(format!("{}\n", config).as_str());
+        for (config_str,rule,_) in &self.configs {
+            result.push_str(format!("{}\n", config_str).as_str());
 
             if count < self.configs.len()-1 {
                 result.push_str("\t | \n");

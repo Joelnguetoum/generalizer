@@ -1,9 +1,9 @@
+
 use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::anti_unification::error::ConfigurationError;
 use crate::anti_unification::generaliser::generaliser::Generaliser;
 
 
-/*  */
 impl GeneralisationProcess {
 
     pub fn constrained_generalise(&mut self,alpuente:bool,verbose:bool) -> Result<Vec<Generaliser>, ConfigurationError> {
@@ -18,25 +18,14 @@ impl GeneralisationProcess {
 
 
 
+
+
+           // println!("WTF1");
+           // println!("WTF2");
             self.process_configuration(config,true,alpuente,verbose);
-            /*
-            let mut mini_queue = VecDeque::from([config.clone()]);
-
-            while let Some(conf) = mini_queue.pop_back() {
-                /*RETURN A SOLUTION AS SOON AS ONE IS FOUND*/
-                if !self.solved_configurations.is_empty() {
-                    println!("Solved configuration successfully.");
-                    return Ok(self.to_generalisers())
-                }
 
 
-
-                self.process_configuration(conf,true,alpuente,verbose,&mut mini_queue);
-            }
-
-             */
-
-
+            self.unsolved_configurations.shrink_to_fit();
 
 
         }

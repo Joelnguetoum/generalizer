@@ -148,15 +148,18 @@ impl Configuration {
             rules.push(Rule::ConstrainedRecover);
         }
         /////////////////////////
-        /*
+
         if self.can_apply_solve_fail() && is_constrained_anti_unification {
             rules.push(Rule::SolveFail);
         }
-         */
+
         ////////////////////////
+        /*
         if self.can_apply_greedy_solve_fail() && is_constrained_anti_unification {
             rules.push(Rule::GreedySolveFail);
         }
+
+         */
 
 
         rules

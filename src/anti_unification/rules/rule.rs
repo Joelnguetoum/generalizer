@@ -1,5 +1,5 @@
 
-
+#[allow(dead_code)]
 #[derive(Clone, Debug, PartialEq)]
 pub enum Rule {
     Decompose,

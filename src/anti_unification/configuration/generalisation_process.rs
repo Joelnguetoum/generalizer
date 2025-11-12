@@ -33,7 +33,7 @@ impl GeneralisationProcess {
 
         let rules = config.get_applicable_rules_first_aut(is_constrained_anti_unification,alpuente);
 
-        /*
+        /* */
         if rules.contains(&Rule::SolveFail){
             if verbose {
                 println!("Rule applicable {}","SolveFail".red());
@@ -42,8 +42,9 @@ impl GeneralisationProcess {
             }
             return;
         }
-         */
 
+
+        /*
         if rules.contains(&Rule::GreedySolveFail){
             if verbose {
                 println!("Rule applicable {}","GreedySolveFail".red());
@@ -52,6 +53,7 @@ impl GeneralisationProcess {
             }
             return;
         }
+         */
 
         /*Optimisation
             if config.can_apply_greedy_solve_fail(){
