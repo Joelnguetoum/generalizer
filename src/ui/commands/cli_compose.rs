@@ -39,7 +39,7 @@ pub fn cli_compose(matches: &ArgMatches) {
 
     let verbose = matches.is_present("verbose");
     let alpuente = matches.is_present("alpuente");
-
+    let greedy_fail = matches.is_present("greedyfail");
 
     let comp_dir = "Composition Output";
     let _ = fs::remove_dir_all(comp_dir).ok();
@@ -54,7 +54,7 @@ pub fn cli_compose(matches: &ArgMatches) {
     //Step 1: Composition
     let time = Instant::now();
 
-    match Interaction::compose(&i,&j,alpuente,verbose){
+    match Interaction::compose(&i,&j,alpuente,verbose,greedy_fail) {
         Ok(comp_int) =>{
             let elapsed = time.elapsed().as_secs_f64();
 

@@ -14,6 +14,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
     let verbose = matches.is_present("verbose");
     let dot = matches.is_present("dot");
     let alpuente = matches.is_present("alpuente");
+    let greedy_fail = matches.is_present("greedyfail");
     print_file(file,alpuente);
 
     match parse_file(file) {
@@ -23,7 +24,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
             //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
 
-            match process.constrained_generalise(alpuente,verbose) {
+            match process.constrained_generalise(alpuente,verbose,greedy_fail) {
                 Ok(clggs)=>{
 
                     let elapsed = time.elapsed().as_secs_f64();

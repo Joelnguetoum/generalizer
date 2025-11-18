@@ -2,6 +2,7 @@ use crate::anti_unification::generaliser::generaliser::Generaliser;
 use crate::interactions::composition::error::CompositionError;
 use crate::interactions::composition::error::CompositionError::MergeFailure;
 use crate::interactions::composition::guideline::Guideline;
+use crate::interactions::syntax::action::ActionType;
 use crate::interactions::syntax::interaction::Interaction;
 use crate::interactions::syntax::operators::Operator;
 use crate::terms::substitution::substitution::Substitution;
@@ -32,8 +33,21 @@ impl Term {
                 if self.is_special_constant(){
                     let g: usize = self.head_symbol_signature().name.parse().unwrap();
 
+
+
                     if let Some((a1,a2)) = guideline.map.get(&g){
-                        Ok(Interaction::Vp(a1.clone(),a2.clone()))
+
+                        //Here, make sure to have Emission-Reception in vp, in this order
+                       let res =  match (&a1.action_type,&a2.action_type){
+                            (ActionType::Emission,ActionType::Reception)=>{
+                                Interaction::Vp(a1.clone(),a2.clone())
+                            },
+                            (ActionType::Reception,ActionType::Emission)=>{
+                                Interaction::Vp(a2.clone(),a1.clone())
+                            },
+                             _ => panic!("{}", MergeFailure)
+                        };
+                        Ok(res)
                     }
                     else{
                          Err(MergeFailure)

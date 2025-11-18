@@ -5,7 +5,8 @@ mod matching;
 mod anti_unification;
 mod utils;
 mod interactions;
-//mod anti_unification_new;
+mod benchmark_fm_26;
+mod maude;
 
 use crate::ui::generaliser_cli::generaliser_cli;
 

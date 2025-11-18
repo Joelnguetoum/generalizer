@@ -10,7 +10,7 @@ impl GeneralisationProcess {
         /**/
         while let Some(config) = self.unsolved_configurations.pop_back() {
 
-            self.process_configuration(config,false,alpuente,verbose);
+            self.process_configuration(config,false,alpuente,verbose,false);
 
         }
 

@@ -1,0 +1,15 @@
+
+
+seq(
+	loopS(
+		seq(
+			l0 -- hag -> l1
+			,
+			l1 -- price -> l0
+		)
+	)
+	,
+	l0 -- happy -> l1
+	,
+	l0 -- info -> l2
+)

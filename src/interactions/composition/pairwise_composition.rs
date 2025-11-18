@@ -5,7 +5,7 @@ use crate::interactions::syntax::interaction::Interaction;
 
 
 impl Interaction {
-    pub fn compose(i1: &Interaction, i2: &Interaction,alpuente:bool,verbose:bool) -> Result<Interaction, CompositionError> {
+    pub fn compose(i1: &Interaction, i2: &Interaction,alpuente:bool,verbose:bool,greedy_fail:bool) -> Result<Interaction, CompositionError> {
         let guideline = Guideline::get_guideline(i1, i2)?;
 
         let t1 = i1.to_term(&guideline);
@@ -14,7 +14,7 @@ impl Interaction {
         let mut process = GeneralisationProcess::init_process(&t1, &t2);
         //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
-        match process.constrained_generalise(alpuente, verbose) {
+        match process.constrained_generalise(alpuente, verbose,greedy_fail) {
             Ok(clggs) => {
                 let gen = clggs[0].clone();
 

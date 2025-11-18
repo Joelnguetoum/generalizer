@@ -99,7 +99,7 @@ impl Configuration {
 
 
 
-    pub fn get_applicable_rules_first_aut(&self,is_constrained_anti_unification: bool,alpuente: bool) -> Vec<Rule> {
+    pub fn get_applicable_rules_first_aut(&self,is_constrained_anti_unification: bool,alpuente: bool,greedy_fail:bool) -> Vec<Rule> {
 
         if self.active.is_empty() {
             return vec![];
@@ -148,18 +148,19 @@ impl Configuration {
             rules.push(Rule::ConstrainedRecover);
         }
         /////////////////////////
-
-        if self.can_apply_solve_fail() && is_constrained_anti_unification {
+        /**/
+        if self.can_apply_solve_fail() && is_constrained_anti_unification && !greedy_fail {
             rules.push(Rule::SolveFail);
         }
 
+
         ////////////////////////
-        /*
-        if self.can_apply_greedy_solve_fail() && is_constrained_anti_unification {
+        /* */
+        if self.can_apply_greedy_solve_fail() && is_constrained_anti_unification && greedy_fail {
             rules.push(Rule::GreedySolveFail);
         }
 
-         */
+
 
 
         rules

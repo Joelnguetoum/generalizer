@@ -2,6 +2,10 @@ use crate::interactions::composition::guideline::Guideline;
 use crate::interactions::syntax::interaction::Interaction;
 use crate::terms::function::{Axioms, Function, FunctionSignature};
 use crate::terms::term::Term;
+
+
+
+
 impl Interaction{
 
 

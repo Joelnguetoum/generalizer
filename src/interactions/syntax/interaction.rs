@@ -253,6 +253,30 @@ impl Interaction {
     }
 
 
+    pub fn size(&self)->usize{
+        match self{
+            Interaction::Empty
+            | Interaction::Action(_)
+            | Interaction::Vp(_,_) =>{
+                1
+            },
+            Interaction::LoopS(box1)=>{
+                let i1 = *box1.clone();
+                1+ i1.size()
+            },
+            Interaction::Seq(box1,box2)
+            |Interaction::Par(box1,box2)
+            |Interaction::Alt(box1,box2)
+            |Interaction::Tensor(box1,box2)=>{
+                let i1 = *box1.clone();
+                let i2 = *box2.clone();
+
+                1 + i1.size() + i2.size()
+            }
+        }
+    }
+
+
 }
 
 

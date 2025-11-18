@@ -61,7 +61,7 @@ impl GeneralisationEngine {
                         continue;
                     }
 
-                    let rules = cfg.get_applicable_rules_first_aut(is_constrained_anti_unification, alpuente);
+                    let rules = cfg.get_applicable_rules_first_aut(is_constrained_anti_unification, alpuente,false);
 
                     // skip SolveFail configs
                     if rules.contains(&Rule::SolveFail) {

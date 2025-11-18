@@ -114,3 +114,29 @@ For example
 or
 
     $ generaliser lgg example1.txt --verbose --dot
+
+
+
+# Benchmark FM 26
+
+To run the benchmark, download the folder Benchmark FM26, and add an excecutable of generaliser.
+
+The subcommand to run the benchmark is "benchmark". It takes:
+
+- the name of the subfolder containing the interactions. In the downloadable folder, it is Benchmark.
+- the number of mutation per cycle
+- the number of cycles of composition.
+
+
+The basic command is: 
+
+    $ generaliser benchmark Benchmark
+
+We can add flags, -m to have the duration in milliseconds, -g to use the rule greedy fail,
+-d to draw the models for visualization.
+
+The command to execute to have the result in the paper is: 
+
+      $ generaliser benchmark Benchmark 5 5 -m -g
+
+

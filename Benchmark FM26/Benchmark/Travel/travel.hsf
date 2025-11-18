@@ -1,0 +1,7 @@
+@message{
+Query;Quote;Dummy;Yes;Payment;Ack;No;Bye
+}
+
+@lifeline{
+    C;A;S
+}

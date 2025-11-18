@@ -1,0 +1,16 @@
+@message{
+login;validateUser;userOk ;
+logged ;chooseClass ;getClosePlanOk;closePlanOk;
+ requestPlan;enterPlan;insertPlan ;
+ enterOption ;opt;getWorkLoad;workLoad;
+getHours;hours;enterClassRecord;insertClassRecord;
+classRecordOk ;
+enterGradeRecord;insertGradeRecord;insertedGradeRecord;
+enterCloseClass;updateCloseClass;closedClass;
+validateChooseClass;chooseClassOk;
+exit;logoff
+}
+
+@lifeline{
+    Teacher;ProfessorOnline;User;Classes;Plan;ClassRecord;GradeRecord;Subject
+}

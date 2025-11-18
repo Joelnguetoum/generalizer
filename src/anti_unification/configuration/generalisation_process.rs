@@ -24,17 +24,18 @@ impl GeneralisationProcess {
     }
 
 
-    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool,alpuente: bool,verbose: bool, /*queue: &mut VecDeque<Configuration>*/) {
+    pub fn process_configuration(&mut self, config: Configuration,is_constrained_anti_unification: bool,alpuente: bool,verbose: bool, greedy_fail: bool) {
         // Check if configuration is already solved
         if config.active.is_empty() {
             self.solved_configurations.push(config);
             return;
         }
 
-        let rules = config.get_applicable_rules_first_aut(is_constrained_anti_unification,alpuente);
+        let rules = config.get_applicable_rules_first_aut(is_constrained_anti_unification,alpuente,greedy_fail);
 
-        /* */
-        if rules.contains(&Rule::SolveFail){
+
+
+        if rules.contains(&Rule::SolveFail) && !greedy_fail {
             if verbose {
                 println!("Rule applicable {}","SolveFail".red());
                 println!("Current Configuration:  {}",config.clone());
@@ -44,8 +45,8 @@ impl GeneralisationProcess {
         }
 
 
-        /*
-        if rules.contains(&Rule::GreedySolveFail){
+        /*  */
+        if rules.contains(&Rule::GreedySolveFail)&& greedy_fail {
             if verbose {
                 println!("Rule applicable {}","GreedySolveFail".red());
                 println!("Current Configuration:  {}",config.clone());
@@ -53,7 +54,7 @@ impl GeneralisationProcess {
             }
             return;
         }
-         */
+
 
         /*Optimisation
             if config.can_apply_greedy_solve_fail(){

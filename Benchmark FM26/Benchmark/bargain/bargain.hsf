@@ -1,0 +1,10 @@
+
+
+@message{
+
+hag;price;happy;info
+}
+
+@lifeline{
+    l0;l1;l2
+}

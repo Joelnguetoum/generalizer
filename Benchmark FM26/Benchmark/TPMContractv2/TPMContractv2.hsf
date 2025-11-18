@@ -1,0 +1,11 @@
+
+
+@message{
+
+send;getTpmStatus;AckStartSend;GetTmpStatus;SendComplete;
+TpmStatus;SendComplete;GetTpmStatus
+}
+
+@lifeline{
+    l0;l1
+}

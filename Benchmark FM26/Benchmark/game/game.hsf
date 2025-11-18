@@ -1,0 +1,10 @@
+
+
+@message{
+
+bwin;cwin;close;blose;busy;msg;sig;free
+}
+
+@lifeline{
+    l0;l1;l2;l3
+}

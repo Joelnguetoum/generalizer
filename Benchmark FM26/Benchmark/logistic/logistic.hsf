@@ -1,0 +1,18 @@
+@message{
+
+PlannedOrderVariations;
+OrderDeliveryVariations;
+DeliverCheckPointRequest;
+ProvideItem;
+ShippingDone;
+UpdatePOandDeliverySchedule;
+POandDeliveryScheduleModes;
+DeliverItem;
+ConfirmationofDeliverySchedule;
+AcceptPOandDeliverySchedule;
+FinalizedPOandDeliverySchedule
+}
+
+@lifeline{
+    l0;l1;l2;l3
+}

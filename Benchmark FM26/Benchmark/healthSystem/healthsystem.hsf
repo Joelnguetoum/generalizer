@@ -1,0 +1,12 @@
+@message{
+
+sendData;subscribed;
+nok;ok;
+notSubscribed;account;
+logCreated;fwd;fwdOk;helpReq;provideService
+
+}
+
+@lifeline{
+    l0;l1;l2;l3;l4;l5
+}

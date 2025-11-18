@@ -10,3 +10,5 @@ pub mod util;
 pub mod position;
 
 pub mod involve;
+
+pub mod iat_canonize;
