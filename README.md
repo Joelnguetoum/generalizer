@@ -44,7 +44,7 @@ To execute one of the example, we can have:
 
     $ generaliser lgg example1.txt
 
-or 
+or
 
     $ generaliser clgg example1.txt
 
@@ -53,17 +53,46 @@ if the executable is in the same folder that of the input files.
 ### Composition
 
 To compose two interaction models, use the command 'compose' with tree arguments:
- - a.hsf file
+ - a .hsf file
  - a .hif file
  - and another .hif file
 
 For example: 
 
-    $  generaliser compose models/sig.hsf models/i1.hif models/i2.hif
+    $  generaliser compose sig.hsf i1.hif i2.hif
 
 The program will compute the composition of the two interactions.
+###  Flags specific for the composition
 
-###  Flags
+We can specify the theory under which the composition will happen. 
+There are many possibilities. By default the theory considered is 
+ACU (associativity-commutativity-unit). We can restrict the theory by 
+providing one of the following flags:
+
+--S for syntactic generalization (no equations)
+
+--A or -A for generalization modulo associativity
+
+--C or -C for generalization modulo commutativity
+
+--U or -U for generalization modulo unit
+
+--AC  for generalization modulo associativity and commutativity
+
+--AU  for generalization modulo associativity and unit
+
+--CU for generalization modulo commutativity and unit
+
+--ACU (optional, the theory is ACU by default) for generalization modulo associativity-commutativity-unit.
+
+Those flags are mutually exclusive.
+
+
+For example, to compose modulo AU, we can use the following command
+
+    $  generaliser compose sig.hsf i1.hif i2.hif --AU
+
+###  General Flag
 
 Thoses flags are valid for the lgg, clgg and compose commands.
 However, -d is not available for the compose command.
@@ -121,22 +150,31 @@ or
 
 To run the benchmark, download the folder Benchmark FM26, and add an excecutable of generaliser.
 
-The subcommand to run the benchmark is "benchmark". It takes:
+The subcommand to run the benchmark is "benchmark". It takes as arguments:
 
 - the name of the subfolder containing the interactions. In the downloadable folder, it is Benchmark.
-- the number of mutation per cycle
-- the number of cycles of composition.
+- the number of mutation  per cycle
+- the number of random partitions extracted by global interaction.
+- Timout in seconds
 
 
-The basic command is: 
-
-    $ generaliser benchmark Benchmark
-
-We can add flags, -m to have the duration in milliseconds, -g to use the rule greedy fail,
+We can add flags, -m to have the duration in milliseconds, 
 -d to draw the models for visualization.
+
+The theory for the composition is ACU by default. We can restrict the theory  with 
+the same flags as the composition: --A, --C, --U, --AC, --AU, --CU, --S.
+
+The flag -g is not valid for the benchmark, since both composition with and 
+without the rule Greedy-Fail are evaluated.
 
 The command to execute to have the result in the paper is: 
 
-      $ generaliser benchmark Benchmark 5 5 -m -g
+      $ generaliser benchmark Benchmark 7 5 60 -m 
 
+It means: 
 
+For each global interaction, 5 partitions of its lifelines will be extracted;
+after projection onto the partitions, 7 random mutations are operated 
+in the local interactions. The timout threshold is of 60s. the flag -m means that 
+in the output csv file, the duration will be given in milliseconds.
+The theory for the composition is ACU (all the rules are used).

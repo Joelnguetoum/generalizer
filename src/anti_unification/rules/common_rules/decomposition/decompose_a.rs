@@ -107,65 +107,6 @@ impl Configuration {
 
 
 impl Term{
-    /*
-    pub fn to_associative_form(&self) -> Term {
-        match self {
-            Term::Variable(v) => Term::Variable(v.clone()),
-            Term::Function(f) => {
-                // Only transform if the function has associative axiom and more arguments than arity
-                if f.signature.axioms.contains(&Axioms::A) && f.args.len() > f.signature.arity {
-                    Self::build_associative_tree(&f.signature, &f.args)
-                } else {
-                    // Recursively transform arguments but keep this node as is
-                    let transformed_args: Vec<Term> = f.args.iter()
-                        .map(|arg| arg.to_associative_form())
-                        .collect();
-                    Term::Function(Function::new(&f.signature, &transformed_args))
-                }
-            }
-        }
-    }
-
-    /// Helper function to build the associative tree structure
-    fn build_associative_tree(signature: &FunctionSignature, args: &[Term]) -> Term {
-        if args.is_empty() {
-            panic!("Cannot build associative tree from empty arguments");
-        }
-
-        // Recursively transform the arguments first
-        let transformed_args: Vec<Term> = args.iter()
-            .map(|arg| arg.to_associative_form())
-            .collect();
-
-        // Build right-associative tree: f(a1, f(a2, f(a3, ... f(an-1, an)...))
-        Self::build_right_associative(signature, &transformed_args)
-    }
-
-    /// Builds a right-associative tree from a list of arguments
-    fn build_right_associative(signature: &FunctionSignature, args: &[Term]) -> Term {
-        match args.len() {
-            0 => panic!("Empty argument list"),
-            1 => args[0].clone(),
-            2 => {
-                Term::Function(Function::new(
-                    signature,
-                    &vec![args[0].clone(), args[1].clone()]
-                ))
-            },
-            _ => {
-                // Recursively build: f(first, build_right_associative(rest))
-                let first = args[0].clone();
-                let rest_tree = Self::build_right_associative(signature, &args[1..]);
-                Term::Function(Function::new(
-                    signature,
-                    &vec![first, rest_tree]
-                ))
-            }
-        }
-    }
-
-     */
-
     pub fn assoc_flatten(&self)->Term{
 
         match self.clone(){
@@ -201,9 +142,6 @@ impl Term{
 
     }
 
-    pub fn assoc_unflatten(&self)->Term{
-        todo!()
-    }
     pub fn assoc_wrap(sig: &FunctionSignature,args: &Vec<Term>)->Term{
         if sig.axioms.contains(&Axioms::A) && args.len() == 1{
             return args[0].clone();

@@ -4,6 +4,7 @@ pub enum CompositionError {
     CompositionTimeout,
     UniqueGatePropertyUnsatisfied,
     MergeFailure,
+    TimedOut,
 }
 
 
@@ -15,6 +16,7 @@ impl std::fmt::Display for CompositionError {
             CompositionError::CompositionTimeout => write!(f, "Composition timeout"),
             CompositionError::UniqueGatePropertyUnsatisfied => write!(f, "Unique gate property unsatisfied"),
             CompositionError::MergeFailure => write!(f, "Failed to merge gates"),
+            CompositionError::TimedOut => write!(f, "Timed out"),
         }
     }
 }

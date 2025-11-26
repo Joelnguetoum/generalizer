@@ -1,7 +1,7 @@
 
 pub mod configuration;
 pub mod generaliser;
-mod error;
+pub mod error;
 mod rules;
 pub mod constrained_generalise;
 pub mod generalise;

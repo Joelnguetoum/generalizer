@@ -51,13 +51,13 @@ pub fn action_as_hif_encoding(gen_ctx : &GeneralContext,
 
 }
 
-pub fn vp_as_hif_encoding(_gen_ctx: &GeneralContext,
+pub fn vp_as_hif_encoding(gen_ctx: &GeneralContext,
                           em_act : &Action, rec_act: &Action) -> String {
 
-    let em_lf = em_act.lf_id;
-    let ms_name = em_act.ms_id;
-    let rec_lf = rec_act.lf_id;
+    let em_lf_name = gen_ctx.get_lf_name(em_act.lf_id).unwrap();
+    let ms_name = gen_ctx.get_ms_name(em_act.ms_id).unwrap();
+    let rec_lf_name = gen_ctx.get_lf_name(rec_act.lf_id).unwrap();
 
-    return format!("{} -- {} -> {}", &em_lf, &ms_name,&rec_lf);
+    return format!("{} -- {} -> {}", &em_lf_name, &ms_name,&rec_lf_name);
 
 }

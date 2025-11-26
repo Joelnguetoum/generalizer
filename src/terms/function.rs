@@ -59,6 +59,9 @@ impl Function {
 }
 
 
+
+
+
 impl fmt::Display for Function {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
         if self.signature.arity == 0 {
@@ -68,6 +71,27 @@ impl fmt::Display for Function {
             let args_str = self.args.iter().map(|arg| arg.to_string()).collect::<Vec<String>>().join(", ");
 
             write!(f, "{}({})", self.signature.name, args_str)
+        }
+    }
+}
+
+
+
+impl fmt::Display for Axioms {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match self {
+            Axioms::SpecialConst=>{
+                write!(f, "{}", "SpecialConst")
+            },
+            Axioms::A=>{
+                write!(f, "{}", "A")
+            },
+            Axioms::C=>{
+                write!(f, "{}", "C")
+            },
+            Axioms::U=>{
+                write!(f, "{}", "U")
+            }
         }
     }
 }

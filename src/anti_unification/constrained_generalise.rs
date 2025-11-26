@@ -1,4 +1,4 @@
-
+use std::time::Instant;
 use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::anti_unification::error::ConfigurationError;
 use crate::anti_unification::generaliser::generaliser::Generaliser;
@@ -6,7 +6,8 @@ use crate::anti_unification::generaliser::generaliser::Generaliser;
 
 impl GeneralisationProcess {
 
-    pub fn constrained_generalise(&mut self,alpuente:bool,verbose:bool,greedy_fail:bool) -> Result<Vec<Generaliser>, ConfigurationError> {
+    pub fn constrained_generalise(&mut self,alpuente:bool,verbose:bool,greedy_fail:bool,timeout_secs: Option<f64>) -> Result<Vec<Generaliser>, ConfigurationError> {
+        let start = Instant::now();
 
         while let Some(config) = self.unsolved_configurations.pop_back() {
 
@@ -15,6 +16,15 @@ impl GeneralisationProcess {
                 //println!("Solved configuration successfully.");
                 return Ok(self.to_generalisers())
             }
+
+            /*Kill the function if timeout*/
+            if let Some(timeout) = timeout_secs {
+                let elapsed = start.elapsed().as_secs_f64();
+                if elapsed >= timeout {
+                    return Err(ConfigurationError::TimedOut);
+                }
+            }
+
 
             self.process_configuration(config,true,alpuente,verbose,greedy_fail);
 

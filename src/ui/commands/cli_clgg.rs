@@ -11,10 +11,21 @@ pub fn cli_clgg(matches: &ArgMatches) {
     reset_counter();
 
     let file = matches.value_of("file").unwrap();
+
     let verbose = matches.is_present("verbose");
     let dot = matches.is_present("dot");
     let alpuente = matches.is_present("alpuente");
     let greedy_fail = matches.is_present("greedyfail");
+
+    /*
+    let timout = if matches.is_present("timeout_secs"){
+        Some(matches.value_of("timeout_secs").unwrap().parse::<f64>().unwrap())
+    }else{
+        None
+    };
+     */
+
+
     print_file(file,alpuente);
 
     match parse_file(file) {
@@ -24,7 +35,7 @@ pub fn cli_clgg(matches: &ArgMatches) {
             //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
 
-            match process.constrained_generalise(alpuente,verbose,greedy_fail) {
+            match process.constrained_generalise(alpuente,verbose,greedy_fail,None) {
                 Ok(clggs)=>{
 
                     let elapsed = time.elapsed().as_secs_f64();

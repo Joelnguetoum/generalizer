@@ -1,52 +1,85 @@
 use std::fs::File;
 
-use crate::interactions::syntax::general_context::GeneralContext;
-use crate::interactions::syntax::interaction::Interaction;
 
 
 #[derive(Clone,Debug)]
 pub struct Line{
     pub global_interaction_name: String,
     pub global_interaction_size: usize,
-    pub nb_gates_locals: usize,
-    pub av_composition_duration: f64,
-    pub verdict:bool
+    pub gates_range: (usize,usize),
+    pub av_composition_duration_with_greedy_fail: Option<f64>,
+    pub av_composition_duration_without_greedy_fail: Option<f64>,
 }
 
 
 impl Line{
     pub fn new(global_interaction_name: &String,
                global_interaction_size: usize,
-               nb_gates_locals: usize,
-               av_composition_duration: f64,
-              verdict:bool)->Self{
-        Line{global_interaction_name: global_interaction_name.clone(),global_interaction_size,nb_gates_locals,av_composition_duration,verdict}
+               gates_range: (usize,usize),
+               av_composition_duration_with_greedy_fail: Option<f64>,
+               av_composition_duration_without_greedy_fail: Option<f64>
+              //verdict:bool
+    )->Self{
+        Line{global_interaction_name: global_interaction_name.clone(),
+            global_interaction_size,
+            gates_range,
+            av_composition_duration_with_greedy_fail,
+            av_composition_duration_without_greedy_fail}
     }
 
 
 
-   pub  fn av_duration(gen_ctx: &GeneralContext,global: &Interaction,vec: &Vec<(Interaction,f64)>,millis:bool)->(f64,bool){
-        let mut verdict = true;
-        let mut av = 0.0;
-       let global_canon = global.iat_canonize(gen_ctx);
+   pub  fn averaging_results(vec: &Vec<(Option<f64>, Option<f64>)>, millis:bool) ->(Option<f64>, Option<f64>){
 
-        for (interaction,duration) in vec{
-            av+= duration;
+       let mut av1 = Some(0.0);
+       let mut av2 = Some(0.0);
+       for (b,c) in vec{
 
-            if interaction.iat_canonize(gen_ctx) != global_canon{
-                verdict = false;
-            }
-        }
+           av1 = match (&av1, &b){
+               (Some(x),Some(y)) =>{
+                    Some(x + y)
+               },
+               _ => None
+           };
 
-        av = av/vec.len() as f64;
-
-       if millis{
-           av = av*1000.0;
+           av2 = match (&av2, &c){
+               (Some(x),Some(y)) =>{
+                   Some(x + y)
+               },
+               _ => None
+           };
        }
 
-       let av_rounded = (av * 1000.0).round() / 1000.0;
 
-        (av_rounded,verdict)
+       av1 = if let Some(v) = av1 {
+           if millis{
+               let v1 = (v/(vec.len() as f64)) *1000.0; //Average + Conversion to ms
+               Some((v1*1000.0).round() / 1000.0)  //Rounding
+           }
+           else{
+               let v1 = v/(vec.len() as f64); //Average
+               Some((v1*1000.0).round() / (vec.len() as f64 *1000.0))
+           }
+       }
+       else{
+           None
+       };
+
+       av2 = if let Some(v) = av2 {
+           if millis{
+               let v1 = (v/(vec.len() as f64)) *1000.0; //Average + Conversion to ms
+               Some((v1*1000.0).round() / 1000.0)  //Rounding
+           }
+           else{
+               let v1 = v/(vec.len() as f64); //Average
+               Some((v1*1000.0).round() / (vec.len() as f64 *1000.0))
+           }
+       }
+       else{
+           None
+       };
+
+       (av1, av2)
     }
 }
 #[derive(Clone,Debug)]
@@ -82,30 +115,51 @@ impl BenchmarkOutput{
             .from_writer(file);
 
         //Writing
-        let mut duration_str =  String::from("Av.Composition duration");
+        let mut duration1_str =  String::from("Av.Composition duration with GF");
+        let mut duration2_str =  String::from("Av.Composition duration without GF");
         if millis {
-            duration_str.push_str("(ms)");
+            duration1_str.push_str("(ms)");
+            duration2_str.push_str("(ms)");
         }
         else{
-            duration_str.push_str("(s)");
+            duration1_str.push_str("(s)");
+            duration2_str.push_str("(s)");
         }
         let _ = wtr.write_record(&["Global interaction",
             "Size of the global interaction",
-            "Nb of gates locals",
-            &duration_str,
-            "Success verdict"]);
+            "Gates range",
+            &duration1_str,
+            &duration2_str]);
 
         for line in &self.results_benchmark{
             let _ = wtr.write_record(&[line.global_interaction_name.clone(),
                 line.global_interaction_size.to_string(),
-                line.nb_gates_locals.to_string(),
-                line.av_composition_duration.to_string(),
-                line.verdict.to_string()]);
+                Self::custom_interval_string(line.gates_range), //line.gates_range.to_string(),
+                Self::custom_expect(&line.av_composition_duration_with_greedy_fail),
+                format!("{}\\\\",Self::custom_expect(&line.av_composition_duration_without_greedy_fail))]);
         }
 
         let _ = wtr.flush();
 
 
+    }
+
+    fn custom_interval_string(interval: (usize,usize))->String{
+        if interval.0 < interval.1{
+            format!("[{}, {}]", interval.0, interval.1)
+        }
+        else if interval.1 < interval.0{
+            format!("[{}, {}]", interval.0, interval.1)
+        }
+        else{
+            format!("{}", interval.0)
+        }
+    }
+    pub fn custom_expect(op: &Option<f64>)->String{
+        match op{
+            Some(x) => format!("{}(\\greencheck)",x),
+            None => "timeout".to_string(),
+        }
     }
 
 

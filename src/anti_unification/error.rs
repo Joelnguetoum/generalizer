@@ -7,6 +7,7 @@ pub enum ConfigurationError {
     InvalidRuleApplication,
     RuleApplicationError,
     UnknownRule,
+    TimedOut,
 }
 
 impl std::fmt::Display for ConfigurationError {
@@ -18,6 +19,7 @@ impl std::fmt::Display for ConfigurationError {
             ConfigurationError::InvalidRuleApplication => write!(f, "Invalid rule application"),
             ConfigurationError::RuleApplicationError => write!(f, "Rule application error"),
             ConfigurationError::UnknownRule => write!(f, "Trying to apply an unknown rule"),
+            ConfigurationError::TimedOut => write!(f, "Timed out"),
         }
     }
 }

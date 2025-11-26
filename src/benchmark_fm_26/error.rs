@@ -8,4 +8,5 @@ pub enum BenchmarkError{
     HsfFileError(String),
     HifFileError(String),
     CompositionError(String),
+    CompositionResultMismatch
 }

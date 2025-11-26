@@ -6,8 +6,14 @@ use crate::interactions::io::input::hif::interface::parse_hif_file;
 use crate::interactions::io::input::hsf::interface::parse_hsf_file;
 use crate::interactions::io::output::quick_drawing::draw_model;
 use crate::interactions::syntax::interaction::Interaction;
+use crate::terms::function::Axioms;
+use crate::ui::utils::print_axioms::print_axioms;
 
 pub fn cli_compose(matches: &ArgMatches) {
+
+
+
+
     let hsf_file = matches.value_of("hsf").unwrap();
     let int1_file = matches.value_of("hif1").unwrap();
     let int2_file = matches.value_of("hif2").unwrap();
@@ -18,6 +24,7 @@ pub fn cli_compose(matches: &ArgMatches) {
     else{
         panic!("Could not parse HSF file");
     };
+
 
     let i = if let Ok(int) = parse_hif_file(&gen_ctx,int1_file){
         int
@@ -41,6 +48,43 @@ pub fn cli_compose(matches: &ArgMatches) {
     let alpuente = matches.is_present("alpuente");
     let greedy_fail = matches.is_present("greedyfail");
 
+
+    //let axioms = vec![Axioms::A, Axioms::U];
+
+    let axioms = if matches.is_present("A") {
+        vec![Axioms::A]
+    }
+    else if matches.is_present("C") {
+        vec![Axioms::C]
+    }
+    else if matches.is_present("U") {
+        vec![Axioms::U]
+    }
+    else if matches.is_present("AC") {
+        vec![Axioms::A, Axioms::C]
+    }
+    else if matches.is_present("AU") {
+        vec![Axioms::A, Axioms::U]
+    }
+    else if matches.is_present("CU") {
+        vec![Axioms::C, Axioms::U]
+    }
+    else if matches.is_present("ACU") {
+        vec![Axioms::A,Axioms::C, Axioms::U]
+    }
+    else if matches.is_present("S") {
+        vec![]
+    }
+    else{ //By default ACU
+        vec![Axioms::A, Axioms::C, Axioms::U]
+    };
+
+
+    //Printing of the axioms considered
+    print_axioms(&axioms);
+
+
+
     let comp_dir = "Composition Output";
     let _ = fs::remove_dir_all(comp_dir).ok();
     let _ = fs::create_dir_all(comp_dir).ok();
@@ -54,7 +98,7 @@ pub fn cli_compose(matches: &ArgMatches) {
     //Step 1: Composition
     let time = Instant::now();
 
-    match Interaction::compose(&i,&j,alpuente,verbose,greedy_fail) {
+    match Interaction::compose(&i,&j,alpuente,verbose,greedy_fail,None,&axioms) {
         Ok(comp_int) =>{
             let elapsed = time.elapsed().as_secs_f64();
 
