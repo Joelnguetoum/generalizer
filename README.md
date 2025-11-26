@@ -153,7 +153,7 @@ To run the benchmark, download the folder Benchmark FM26, and add an excecutable
 The subcommand to run the benchmark is "benchmark". It takes as arguments:
 
 - the name of the subfolder containing the interactions. In the downloadable folder, it is Benchmark.
-- the number of mutation  per cycle
+- the number of mutation  per partition
 - the number of random partitions extracted by global interaction.
 - Timout in seconds
 
