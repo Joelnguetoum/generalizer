@@ -12,6 +12,11 @@ use crate::interactions::syntax::interaction::Interaction;
 use crate::terms::function::Axioms;
 
 #[derive(Clone,Debug)]
+pub struct Locals{
+    normalized: Vec<Interaction>,
+    mutated: Vec<Interaction>,
+}
+#[derive(Clone,Debug)]
 pub struct Benchmark{
     pub global_interactions: Vec<(String,GeneralContext,Interaction)>,
     pub nb_local_rewrites: usize,
@@ -92,6 +97,22 @@ impl Benchmark {
 
     }
 
+    fn get_local_interactions(gen_ctx: &GeneralContext,global_interaction: &Interaction,nb_local_rewrites:usize)->Locals{
+        let locals = global_interaction.random_decompose(2);
+
+        let mut local_normalized: Vec<Interaction> = Vec::new();
+        let mut local_mutated: Vec<Interaction> = Vec::new();
+
+        for local in locals.iter(){
+            local_normalized.push(local.iat_canonize(gen_ctx));
+        }
+
+        for local in locals.iter(){
+            local_mutated.push(local.random_rewrites(nb_local_rewrites).unwrap());
+        }
+
+        Locals{normalized: local_normalized,mutated: local_mutated,}
+    }
 
     pub fn run(&mut self,draw:bool,alpuente:bool, verbose:bool, /*greedy_fail:bool, */millis:bool)->Result<(), BenchmarkError>{
         let output_dir = "Benchmark Output";
@@ -123,21 +144,28 @@ impl Benchmark {
             for ct_partition in 0..self.nb_lifelines_partitions { // CYCLE
 
                 let partition_dir = format!("{}/ Partition {}", int_dir, ct_partition);
+                let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
+                let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
+                let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);
+                let norm_result_non_gf = format!("{}/result without greedy fail",&normalized_int_dir);
+                let mutated_int_dir = format!("{}/with mutated locals",&partition_dir);
+                let mutated_local_dir = format!("{}/mutated local interactions",&mutated_int_dir);
+                let mut_result_gf = format!("{}/result with greedy fail",&mutated_int_dir);
+                let mut_result_non_gf = format!("{}/result without greedy fail",&mutated_int_dir);
 
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
                 //// RANDOM DECOMPOSITION
-                let mut locals = global_interaction.random_decompose(2);
+                let locals = Self::get_local_interactions(gen_ctx,global_interaction,self.nb_local_rewrites);
 
-                gates_vec.push(locals[0].free_gates().len());
+                //Recording of the number of gates for the partition
+                gates_vec.push(locals.normalized[0].free_gates().len());
 
                 if draw { // If draw flag is provided
-                    let input_local_dir = format!("{}/local_interactions", &partition_dir);
-
-                    for (ct, local) in locals.iter().enumerate() {
+                    for (ct, local) in locals.normalized.iter().enumerate() {
                         let local_name = format!("i{}", ct + 1);
-                        draw_model(gen_ctx, &local_name, &input_local_dir, local);
+                        draw_model(gen_ctx, &local_name, &norm_input_local_dir, local);
                     }
                 }
 
@@ -145,24 +173,24 @@ impl Benchmark {
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
                 //// MUTATION
-                for ct in 0..locals.len() {
-                    locals[ct] = locals[ct].random_rewrites(self.nb_local_rewrites).unwrap()
-                }
+
 
                 if draw { // If draw flag is provided
-                    let input_local_dir = format!("{}/mutated_local_interactions", &partition_dir);
-
-                    for (ct, local) in locals.iter().enumerate() {
+                    for (ct, local) in locals.mutated.iter().enumerate() {
                         let local_name = format!("i{}", ct + 1);
-                        draw_model(gen_ctx, &local_name, &input_local_dir, local);
+                        draw_model(gen_ctx, &local_name, &mutated_local_dir, local);
                     }
                 }
+
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////
+                //// NORMALIZED LOCALS
+
                 ////////////////////////////////////////////////////////////////////////////
                 //// COMPOSITION WITH GREEDY-FAIL
                 let time = Instant::now();
-                let duration1 = match Interaction::compose(&locals[0], &locals[1], alpuente, verbose, true,self.timout_secs,&self.axioms) {
+                let duration_norm_1 = match Interaction::compose(&locals.normalized[0], &locals.normalized[1], alpuente, verbose, true,self.timout_secs,&self.axioms) {
                     Ok(result_int) => {
                         let elapsed = time.elapsed().as_secs_f64();
 
@@ -171,17 +199,11 @@ impl Benchmark {
                         }
                         //Drawing of the result
                         /////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////
-                        /////////////////////////////////////////////////////////////////
 
                         if draw {
-                            let result_dir = format!("{}/Result", partition_dir);
-                            let _ = fs::create_dir_all(result_dir.clone()).ok();
-                            draw_model(gen_ctx, "result", &result_dir, &result_int.iat_canonize(gen_ctx));
+                            draw_model(gen_ctx, "result", &norm_result_gf, &result_int.iat_canonize(gen_ctx));
                         }
 
-                        //////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////
                         //////////////////////////////////////////////////////////////////
                         Some(elapsed)
                     },
@@ -195,13 +217,10 @@ impl Benchmark {
 
                 };
 
-
-                ////////////////////////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
                 //// COMPOSITION WITHOUT GREEDY-FAIL
                 let time = Instant::now();
-                let duration2 = match Interaction::compose(&locals[0], &locals[1], alpuente, verbose, false,self.timout_secs,&self.axioms) {
+                let duration_norm_2 = match Interaction::compose(&locals.normalized[0], &locals.normalized[1], alpuente, verbose, false,self.timout_secs,&self.axioms) {
                     Ok(result_int) => {
                         let elapsed = time.elapsed().as_secs_f64();
 
@@ -210,18 +229,14 @@ impl Benchmark {
                         }
 
                         //Drawing of the result
-                        /////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////
+
                         /////////////////////////////////////////////////////////////////
 
                         if draw {
-                            let result_dir = format!("{}/Result", partition_dir);
-                            let _ = fs::create_dir_all(result_dir.clone()).ok();
-                            draw_model(gen_ctx, "result", &result_dir, &result_int.iat_canonize(gen_ctx));
+                            draw_model(gen_ctx, "result", &norm_result_non_gf, &result_int.iat_canonize(gen_ctx));
                         }
 
-                        //////////////////////////////////////////////////////////////////
-                        //////////////////////////////////////////////////////////////////
+
                         //////////////////////////////////////////////////////////////////
                         Some(elapsed)
                     },
@@ -235,7 +250,74 @@ impl Benchmark {
 
                 };
 
-                result_vec_per_partition.push((duration1, duration2));
+
+                ////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////
+                ////////////////////////////////////////////////////////////////////////////
+                //// MUTATED LOCALS
+                ////////////////////////////////////////////////////////////////////////////
+                //// COMPOSITION WITH GREEDY-FAIL
+                let time = Instant::now();
+                let duration_mut_1 = match Interaction::compose(&locals.mutated[0], &locals.mutated[1], alpuente, verbose, true,self.timout_secs,&self.axioms) {
+                    Ok(result_int) => {
+                        let elapsed = time.elapsed().as_secs_f64();
+
+                        if result_int.iat_canonize(gen_ctx) != canon_global {
+                            return Err(BenchmarkError::CompositionResultMismatch);
+                        }
+                        //Drawing of the result
+                        /////////////////////////////////////////////////////////////////
+
+                        if draw {
+                            draw_model(gen_ctx, "result", &mut_result_gf, &result_int.iat_canonize(gen_ctx));
+                        }
+
+                        //////////////////////////////////////////////////////////////////
+                        Some(elapsed)
+                    },
+                    Err(CompositionError::TimedOut)=>{
+                        None
+                    }
+                    Err(e) => {
+                        return Err(BenchmarkError::CompositionError(e.to_string()));
+                    }
+
+
+                };
+
+                ////////////////////////////////////////////////////////////////////////////
+                //// COMPOSITION WITHOUT GREEDY-FAIL
+                let time = Instant::now();
+                let duration_mut_2 = match Interaction::compose(&locals.mutated[0], &locals.mutated[1], alpuente, verbose, false,self.timout_secs,&self.axioms) {
+                    Ok(result_int) => {
+                        let elapsed = time.elapsed().as_secs_f64();
+
+                        if result_int.iat_canonize(gen_ctx) != canon_global {
+                            return Err(BenchmarkError::CompositionResultMismatch);
+                        }
+
+                        //Drawing of the result
+
+                        /////////////////////////////////////////////////////////////////
+
+                        if draw {
+                            draw_model(gen_ctx, "result", &mut_result_non_gf, &result_int.iat_canonize(gen_ctx));
+                        }
+
+
+                        //////////////////////////////////////////////////////////////////
+                        Some(elapsed)
+                    },
+                    Err(CompositionError::TimedOut)=>{
+                        None
+                    }
+                    Err(e) => {
+                        return Err(BenchmarkError::CompositionError(e.to_string()));
+                    }
+
+
+                };
+                result_vec_per_partition.push((duration_norm_1, duration_norm_2, duration_mut_1, duration_mut_2));
 
             }
 
@@ -244,8 +326,18 @@ impl Benchmark {
             let min_gate = gates_vec.iter().min().unwrap().clone();
             let max_gate = gates_vec.iter().max().unwrap().clone();
 
-            let (av_composition_duration1, av_composition_duration2) = Line::averaging_results(&result_vec_per_partition, millis);
-            let line = Line::new(name, global_interaction.size(), (min_gate,max_gate), av_composition_duration1, av_composition_duration2);
+            let (av_composition_duration_norm_1,
+                av_composition_duration_norm_2,
+                av_composition_duration_mut_1,
+                av_composition_duration_mut_2) = Line::averaging_results(&result_vec_per_partition, millis);
+            let line = Line::new(name,
+                                 global_interaction.size(),
+                                 (min_gate,max_gate),
+                                 av_composition_duration_norm_1,
+                                 av_composition_duration_norm_2,
+                                 av_composition_duration_mut_1,
+                                 av_composition_duration_mut_2);
+
             self.output.add_line(&line);
 
 
@@ -278,16 +370,26 @@ impl Benchmark {
 
                 for ct_partition in 0..self.nb_lifelines_partitions{
                     let partition_dir = format!("{}/ Partition {}",int_dir,ct_partition);
-                    let input_local_dir = format!("{}/local_interactions",&partition_dir);
-                    let mutated_local_dir = format!("{}/mutated_local_interactions",&partition_dir);
 
-                    fs::create_dir_all(&input_local_dir)?;
+                    let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
+                    let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
+                    let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);
+                    let norm_result_non_gf = format!("{}/result without greedy fail",&normalized_int_dir);
+                    fs::create_dir_all(&normalized_int_dir)?;
+                    fs::create_dir_all(&norm_input_local_dir)?;
+                    fs::create_dir_all(&norm_result_gf)?;
+                    fs::create_dir_all(&norm_result_non_gf)?;
+
+                    let mutated_int_dir = format!("{}/with mutated locals",&partition_dir);
+                    let mutated_local_dir = format!("{}/mutated local interactions",&mutated_int_dir);
+                    let mut_result_gf = format!("{}/result with greedy fail",&mutated_int_dir);
+                    let mut_result_non_gf = format!("{}/result without greedy fail",&mutated_int_dir);
+                    fs::create_dir_all(&mutated_int_dir)?;
                     fs::create_dir_all(&mutated_local_dir)?;
+                    fs::create_dir_all(&mut_result_gf)?;
+                    fs::create_dir_all(&mut_result_non_gf)?;
+
                 }
-
-
-
-
 
             }
         }
