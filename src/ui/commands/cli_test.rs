@@ -1,13 +1,9 @@
 use clap::ArgMatches;
+use crate::interactions::syntax::interaction::Interaction;
 
 pub fn cli_test(_matches: &ArgMatches) {
 
-    /*
-    let mut benchmark = Benchmark::init("Benchmark",4,2);
+    let p = Interaction::partitions_at_least_half(&vec![1,2,3]);
 
-    let _ = benchmark.unwrap().run(true,false,true);
-
-     */
-
-
+    println!("{:?}",p);
 }

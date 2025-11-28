@@ -1,109 +1,64 @@
 use std::collections::HashSet;
-use rand::{rng, Rng};
-use rand::seq::index::sample;
-use rand::seq::SliceRandom;
+use itertools::Itertools;
 use crate::interactions::syntax::interaction::Interaction;
 
 impl Interaction {
-
-    pub fn random_decompose(&self, nb_local_models: usize) ->Vec<Interaction> {
+    pub fn random_decompose_into_two_ints(&self,max_number_of_partitions:usize) -> Vec<Vec<Interaction>> {
         let mut local_interactions = Vec::new();
 
 
-        let mut lifelines:Vec<usize> = self.get_lifelines().into_iter().collect();
-        lifelines.sort();
-
-        let partitions = if nb_local_models==2{
-            /*If the number of desired local models is 2, then wu partition by
-            doing the following:
-            we shuffle the set of lifelines;
-            the fist sets takes the fists floor(|lifelines|) elements of lifeline;
-            the next set takes the remaining elements;
-             */
-            Self:: random_partition_two_equal(&lifelines)
-        }
-        else{
-            Self::random_partition_sorted_vec(&lifelines, nb_local_models)
-        };
+        let lifelines: Vec<usize> = self.get_lifelines().into_iter().collect();
 
 
+        let partitions = Self::partitions_at_least_half(&lifelines);
 
-        for partition in partitions{
 
-            local_interactions.push(self.project(&HashSet::from_iter(partition)));
+        for (ct,(lifelines_1, lifelines_2)) in partitions.iter().enumerate() {
+
+            if ct>=max_number_of_partitions{
+                break;
+            }
+
+            let i1 = self.project(&HashSet::from_iter(lifelines_1.clone()));
+            let i2 = self.project(&HashSet::from_iter(lifelines_2.clone()));
+
+            local_interactions.push(vec![i1,i2]);
         }
 
         local_interactions
     }
 
+    pub fn partitions_at_least_half(v: &Vec<usize>) -> Vec<(Vec<usize>, Vec<usize>)> {
+        let n = v.len();
+        let min_size = n / 2; // floor(L/2)
+        let max_size = n - min_size;
 
-    //To modify to allow the partitions to not be contiguous
-    pub fn random_partition_sorted_vec(vec: &Vec<usize>, chunks: usize) -> Vec<Vec<usize>> {
-        assert!(chunks > 0 && chunks <= vec.len());
+        let mut results = Vec::new();
 
-        let mut rng = rng();
+        // Loop through allowed subset sizes
+        for k in min_size..=max_size {
+            for combo in v.iter().copied().combinations(k) {
+                // Mark which elements were selected
+                let mut used = vec![false; n];
+                for &c in &combo {
+                    // mark by index lookup
+                    if let Some(pos) = v.iter().position(|&x| x == c) {
+                        used[pos] = true;
+                    }
+                }
 
-        // Pick `chunks - 1` unique cut points between 1 and vec.len() - 1
-        let mut cut_points: Vec<usize> = sample(&mut rng, vec.len() - 1, chunks - 1)
-            .iter()
-            .map(|i| i + 1)
-            .collect();
+                // Construct the complementary subset
+                let other: Vec<usize> = v
+                    .iter()
+                    .enumerate()
+                    .filter_map(|(i, &x)| if !used[i] { Some(x) } else { None })
+                    .collect();
 
-        cut_points.sort_unstable();
-
-        let mut result = Vec::with_capacity(chunks);
-        let mut start = 0;
-
-        for &cut in &cut_points {
-            result.push(vec[start..cut].to_vec());
-            start = cut;
+                results.push((combo, other));
+            }
         }
 
-        result.push(vec[start..].to_vec());
-
-        result
+        results
     }
 
-
-    pub fn random_partition_unconstrained(vec: &Vec<usize>, chunks: usize) -> Vec<Vec<usize>> {
-        assert!(chunks > 0 && chunks <= vec.len());
-
-        let mut rng = rand::rng();
-
-        // Initialize `chunks` empty buckets
-        let mut result: Vec<Vec<usize>> = vec![Vec::new(); chunks];
-
-        // Step 1: Ensure no bucket is empty by placing one random element into each
-        let mut indices: Vec<usize> = (0..vec.len()).collect();
-        indices.shuffle(&mut rng);
-
-        for (bucket, &idx) in result.iter_mut().zip(&indices) {
-            bucket.push(vec[idx]);
-        }
-
-        // Step 2: Assign remaining elements to a random bucket
-        for &idx in &indices[chunks..] {
-            let bucket_idx = rng.random_range(0..chunks);
-            result[bucket_idx].push(vec[idx]);
-        }
-
-        result
-    }
-
-    pub fn random_partition_two_equal(vec: &Vec<usize>) -> Vec<Vec<usize>> {
-        assert!(vec.len() >= 2);
-
-        let mut rng = rand::rng();
-
-        // Make a shuffled copy
-        let mut shuffled = vec.clone();
-        shuffled.shuffle(&mut rng);
-
-        let mid = vec.len() / 2; // floor(len/2)
-
-        let left = shuffled[..mid].to_vec();
-        let right = shuffled[mid..].to_vec();
-
-        vec![left, right]
-    }
 }

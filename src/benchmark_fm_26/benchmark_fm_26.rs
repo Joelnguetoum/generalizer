@@ -97,17 +97,16 @@ impl Benchmark {
 
     }
 
-    fn get_local_interactions(gen_ctx: &GeneralContext,global_interaction: &Interaction,nb_local_rewrites:usize)->Locals{
-        let locals = global_interaction.random_decompose(2);
+    fn get_local_interactions(gen_ctx: &GeneralContext,local: &Vec<Interaction>,nb_local_rewrites:usize)->Locals{
 
         let mut local_normalized: Vec<Interaction> = Vec::new();
         let mut local_mutated: Vec<Interaction> = Vec::new();
 
-        for local in locals.iter(){
+        for local in local.iter(){
             local_normalized.push(local.iat_canonize(gen_ctx));
         }
 
-        for local in locals.iter(){
+        for local in local.iter(){
             local_mutated.push(local.random_rewrites(nb_local_rewrites).unwrap());
         }
 
@@ -137,11 +136,15 @@ impl Benchmark {
                 let input_global_dir = format!("{}/input_global_interaction", &int_dir);
                 draw_model(gen_ctx, name, &input_global_dir, global_interaction);
             }
-
+            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////
+            ////////////////////////////////////////////////////////////////////////////
+            //// RANDOM DECOMPOSITION
+            let all_locals = global_interaction.random_decompose_into_two_ints(self.nb_lifelines_partitions);
 
             //Random decomposition
 
-            for ct_partition in 0..self.nb_lifelines_partitions { // CYCLE
+            for (ct_partition,locals) in all_locals.iter().enumerate() { // CYCLE
 
                 let partition_dir = format!("{}/ Partition {}", int_dir, ct_partition);
                 let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
@@ -152,12 +155,19 @@ impl Benchmark {
                 let mutated_local_dir = format!("{}/mutated local interactions",&mutated_int_dir);
                 let mut_result_gf = format!("{}/result with greedy fail",&mutated_int_dir);
                 let mut_result_non_gf = format!("{}/result without greedy fail",&mutated_int_dir);
+                if draw{
+                    fs::create_dir_all(&normalized_int_dir).ok();
+                    fs::create_dir_all(&norm_input_local_dir).ok();
+                    fs::create_dir_all(&norm_result_gf).ok();
+                    fs::create_dir_all(&norm_result_non_gf).ok();
 
-                ////////////////////////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////////////////////////
-                ////////////////////////////////////////////////////////////////////////////
-                //// RANDOM DECOMPOSITION
-                let locals = Self::get_local_interactions(gen_ctx,global_interaction,self.nb_local_rewrites);
+                    fs::create_dir_all(&mutated_int_dir).ok();
+                    fs::create_dir_all(&mutated_local_dir).ok();
+                    fs::create_dir_all(&mut_result_gf).ok();
+                    fs::create_dir_all(&mut_result_non_gf).ok();
+                }
+                //Normalization + Mutation
+                let locals = Self::get_local_interactions(gen_ctx,locals,self.nb_local_rewrites);
 
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());
@@ -349,6 +359,7 @@ impl Benchmark {
         }
 
         //creating the csv file
+        self.output.sort();
         self.output.to_csv(output_dir,millis);
 
         Ok(())
@@ -367,7 +378,7 @@ impl Benchmark {
             if draw{
                 let input_global_dir = format!("{}/input_global_interaction",&int_dir);
                 fs::create_dir_all(&input_global_dir)?;
-
+                /*
                 for ct_partition in 0..self.nb_lifelines_partitions{
                     let partition_dir = format!("{}/ Partition {}",int_dir,ct_partition);
 
@@ -390,6 +401,8 @@ impl Benchmark {
                     fs::create_dir_all(&mut_result_non_gf)?;
 
                 }
+
+                 */
 
             }
         }

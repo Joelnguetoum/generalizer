@@ -112,7 +112,10 @@ impl BenchmarkOutput{
         self.results_benchmark.push(line.clone());
     }
 
-
+    pub fn sort(&mut self) {
+        self.results_benchmark
+            .sort_by(|a, b| a.global_interaction_name.cmp(&b.global_interaction_name));
+    }
 
     pub fn to_csv(&self,parent_dir: &str,millis:bool){
         let file_name = format!("{}/results.csv",parent_dir);

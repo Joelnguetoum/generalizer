@@ -14,17 +14,14 @@ m = maude.getCurrentModule()
 t = m.parseTerm(sys.argv[1])
 nb_rewrites = int(sys.argv[2])
 
-rules = ['R1','R2','R3','R4','R5','R6']
+strat_str = 'R1 | R2'
+strat = m.parseStrategy(strat_str)
+
+solutions = None
 
 for n in range(1,nb_rewrites+1):
-     t1 = t
-     while t == t1:
-     	r = random.choice(rules)
-     	strat = m.parseStrategy(r)
-     	solutions = list(t1.srewrite(strat,False))
-     	if len(solutions) != 0:
-     		t1 = (random.choice(solutions))[0]
+    solutions = t.srewrite(strat,False)
+    (t,temp) = random.choice(list(solutions))
 
-     t = t1
 
 print(t)

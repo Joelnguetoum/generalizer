@@ -27,14 +27,9 @@ mod INTERACTION-RULES is
 	var I : Interaction .
 
 	*** Neutral element rules ***
-	rl [R1] : X => seq(X,Empty) .
-	rl [R2] : X => seq(Empty,X) .
 
-	rl [R3] : X => par(X,Empty) .
-	rl [R4] : X => par(Empty,X) .
-
-	rl [R5] : par(X,Y) => par(Y,X) .
-	rl [R6] : alt(X,Y) => alt(Y,X) .
+	rl [R1] : par(X,Y) => par(Y,X) .
+	rl [R2] : alt(X,Y) => alt(Y,X) .
 
 
 endm
