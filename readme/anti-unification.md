@@ -1,0 +1,102 @@
+### Sub-commands
+
+This simple tool computes least general generalisation for anti-unification  
+and constrained anti-unification problems. For now only the empty theory is supported.
+
+The basic syntax of the command is:
+
+    $ generaliser lgg file.txt
+
+or
+
+    $ generaliser clgg file.txt
+
+
+where file.txt (path to the file actually) contains
+the specification of the problem.
+
+The subcommand **lgg** is used to solve anti-unification problems and **clgg**
+for constrained anti-unification problems.
+
+### Specification of the problem
+
+In the file given to argument to the program, all the function symbols (including constant symbols)
+must be declared. The syntax to do it is:
+
+    Function: <name> <arity> S?
+
+The name is string that must start with a letter, the arity is an integer.
+Constant symbols are of arity 0. The 'S' is added to declare special constants for
+the constrained anti-unification.
+
+A problem is declared as follows:
+
+    Problem: x t t'
+
+where t and t' are the terms to generalise. Each of the function symbols
+appearing in t and t' must be declared.
+For examples of problem specification, see the Example folder.
+
+To execute one of the example, we can have:
+
+    $ generaliser lgg example1.txt
+
+or
+
+    $ generaliser clgg example1.txt
+
+if the executable is in the same folder that of the input files.
+
+
+
+###  General Flag
+
+Thoses flags are valid for the lgg, clgg and compose commands.
+However, -d is not available for the compose command.
+
+#### To only use the rules of the algorithme of Alpuente et al (A modular order-sorted equational generalization algorithm,2014)
+
+Use the flag -a or --alpuente
+
+An example is
+
+    $ generaliser lgg example1.txt -a
+
+#### verbose
+
+The flag verbose print in command line the computation history of each least general generalisations.
+
+An example is
+
+    $ generaliser lgg example1.txt -v
+
+or
+
+    $ generaliser lgg example1.txt --verbose
+
+The same flag remain available for the command clgg.
+
+#### dot
+
+The flag dot creates a .dot file and a png depicting the computation history of the least general generalisations.
+
+An example is
+
+    $ generaliser lgg example1.txt -d
+
+or
+
+    $ generaliser lgg example1.txt --dot
+
+#### verbose and dot can be used together
+
+The flags can obviously be combined.
+
+For example
+
+
+    $ generaliser lgg example1.txt -v -d
+
+or
+
+    $ generaliser lgg example1.txt --verbose --dot
