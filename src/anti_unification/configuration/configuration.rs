@@ -3,7 +3,7 @@ use crate::anti_unification::configuration::aut::AUT;
 use crate::anti_unification::configuration::history::History;
 use crate::anti_unification::rules::rule::Rule;
 use crate::anti_unification::error::ConfigurationError;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 use crate::terms::substitution::substitution::Substitution;
 use crate::terms::substitution::variable::Variable;
 use crate::terms::term::Term;
@@ -36,7 +36,7 @@ impl Configuration {
         Self::new(init_active,Vec::new(),sub,x0,History::new())
     }
 
-    pub fn to_generaliser(&self) -> Generaliser{
+    pub fn to_generaliser(&self) -> Generalizer {
         let mut sub1 = Substitution::new();
         let mut sub2 = Substitution::new();
 
@@ -65,7 +65,7 @@ impl Configuration {
         println!("sub2: {}", sub2);
 
          */
-        Generaliser::new_with_history(&t,&sub1,&sub2,&self.update_history(""))
+        Generalizer::new_with_history(&t, &sub1, &sub2, &self.update_history(""))
     }
 
     pub fn update_history(&self,rule: &str)->History{

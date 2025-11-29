@@ -18,11 +18,11 @@ pub fn print_file(file: &str,alpuente: bool) {
             );
 
             if alpuente{
-                println!("Generalisation using the rules of Alpuente et al.");
+                println!("Generalization using the rules of Alpuente et al.");
                 println!("CAVEAT: The rules of Alpuente et al. as implemented compute only linear generalisations modulo unit, and is incomplete");
             }
             else {
-                println!("Generalisation using custom rules inspired from the work of Alpuente et al.");
+                println!("Generalization using custom rules inspired from the work of Alpuente et al.");
             }
             println!(
                 "\n========================================\n\

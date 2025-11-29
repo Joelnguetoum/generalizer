@@ -1,16 +1,16 @@
 use std::fs;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 
-pub fn print_generalisers(gen_vec: &Vec<Generaliser>,verbose: bool, dot: bool) {
+pub fn print_generalizers(gen_vec: &Vec<Generalizer>, verbose: bool, dot: bool) {
 
-    let output_dir = "generaliser_output";
+    let output_dir = "generalizer_output";
     fs::remove_dir_all(output_dir).ok();
 
     fs::create_dir(output_dir).ok();
 
     println!("========================================");
     for (ct,gen) in gen_vec.iter().enumerate() {
-        println!("Generaliser {}",ct);
+        println!("Generalizer {}",ct);
         println!("{}",gen);
 
         if verbose {

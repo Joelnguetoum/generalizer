@@ -1,3 +1,3 @@
-pub mod generaliser_cli;
+pub mod generalizer_cli;
 mod commands;
 mod utils;

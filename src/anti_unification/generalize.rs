@@ -1,10 +1,10 @@
 use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 
 /*  */
 impl GeneralisationProcess {
-    pub fn generalise(&mut self,alpuente: bool,verbose: bool) -> Vec<Generaliser> {
+    pub fn generalize(&mut self, alpuente: bool, verbose: bool) -> Vec<Generalizer> {
 
 
         /**/

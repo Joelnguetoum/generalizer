@@ -1,4 +1,4 @@
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 use crate::interactions::composition::error::CompositionError;
 use crate::interactions::composition::error::CompositionError::MergeFailure;
 use crate::interactions::composition::guideline::Guideline;
@@ -9,7 +9,7 @@ use crate::terms::substitution::substitution::Substitution;
 use crate::terms::term::Term;
 
 
-impl Generaliser {
+impl Generalizer {
     pub fn merge(&self,guideline: &Guideline)->Result<Interaction,CompositionError>{
         self.t.merge_rec(&self.sub1,&self.sub2,guideline)
     }

@@ -1,9 +1,9 @@
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 use crate::matching::brute_force::matching_ac::brute_force_match_modulo_ac;
 /* WITH BRUTE FORCE MATCHING */
 /**/
-pub fn minimise_ac(generalisers: Vec<Generaliser>) -> Vec<Generaliser> {
-    let mut r: Vec<Generaliser> = Vec::new();
+pub fn minimise_ac(generalisers: Vec<Generalizer>) -> Vec<Generalizer> {
+    let mut r: Vec<Generalizer> = Vec::new();
 
     // -----------------------------
     // Step 1: Remove duplicates
@@ -34,7 +34,7 @@ pub fn minimise_ac(generalisers: Vec<Generaliser>) -> Vec<Generaliser> {
         println!("{}", el.t);
     }
      */
-    let mut s_min: Vec<Generaliser> = Vec::new();
+    let mut s_min: Vec<Generalizer> = Vec::new();
 
     for s in &r {
 

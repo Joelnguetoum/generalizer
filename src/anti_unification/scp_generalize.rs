@@ -1,12 +1,12 @@
 use std::time::Instant;
 use crate::anti_unification::configuration::generalisation_process::GeneralisationProcess;
 use crate::anti_unification::error::ConfigurationError;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
 
 
 impl GeneralisationProcess {
 
-    pub fn constrained_generalise(&mut self,alpuente:bool,verbose:bool,greedy_fail:bool,timeout_secs: Option<f64>) -> Result<Vec<Generaliser>, ConfigurationError> {
+    pub fn scp_generalize(&mut self, alpuente:bool, verbose:bool, greedy_fail:bool, timeout_secs: Option<f64>) -> Result<Vec<Generalizer>, ConfigurationError> {
         let start = Instant::now();
 
         while let Some(config) = self.unsolved_configurations.pop_back() {

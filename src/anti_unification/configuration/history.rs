@@ -47,7 +47,7 @@ impl History {
             dot.push_str(&format!("    config{} [label=\"{}\"];\n", i, node_label));
         }
 
-        //Add the generaliser at the end
+        //Add the generalizer at the end
         if let Some(last_config) = self.configs.last() {
             let node_label = self.escape_dot_string(&last_config.2);
             dot.push_str(&format!("    config{} [label=\"{}\"];\n", n, node_label));

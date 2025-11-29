@@ -5,9 +5,9 @@ use crate::anti_unification::configuration::generalisation_process::Generalisati
 use crate::global_counter::counter::reset_counter;
 use crate::terms::parsing::interface::parse_file;
 use crate::ui::utils::print_file::print_file;
-use crate::ui::utils::print_generalisers::print_generalisers;
+use crate::ui::utils::print_generalizers::print_generalizers;
 
-pub fn cli_clgg(matches: &ArgMatches) {
+pub fn cli_sclgg(matches: &ArgMatches) {
     reset_counter();
 
     let file = matches.value_of("file").unwrap();
@@ -35,15 +35,15 @@ pub fn cli_clgg(matches: &ArgMatches) {
             //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
 
-            match process.constrained_generalise(alpuente,verbose,greedy_fail,None) {
+            match process.scp_generalize(alpuente, verbose, greedy_fail, None) {
                 Ok(clggs)=>{
 
                     let elapsed = time.elapsed().as_secs_f64();
 
-                    println!("{}", "Constrained generalisation successful".to_string().green());
+                    println!("{}", "Special constant-preserving generalization successful".to_string().green());
                     println!("Duration: {} s", elapsed);
 
-                    print_generalisers(&clggs,verbose,dot);
+                    print_generalizers(&clggs, verbose, dot);
 
                 },
                 Err(e)=>{

@@ -1,13 +1,13 @@
 use clap::{load_yaml, App};
 use crate::ui::commands::cli_benchmark::cli_benchmark;
-use crate::ui::commands::cli_clgg::cli_clgg;
+use crate::ui::commands::cli_sclgg::cli_sclgg;
 use crate::ui::commands::cli_compose::cli_compose;
 use crate::ui::commands::cli_lgg::cli_lgg;
 use crate::ui::commands::cli_test::cli_test;
 use crate::ui::utils::logo::print_logo;
 
 pub fn generaliser_cli() -> i32{
-    let yaml = load_yaml!("generaliser_cli.yml");
+    let yaml = load_yaml!("generalizer_cli.yml");
     let matches = App::from_yaml(yaml).get_matches();
 
     //let mut ret_print : Vec<String> = vec![];
@@ -18,8 +18,8 @@ pub fn generaliser_cli() -> i32{
     if let Some(matches) = matches.subcommand_matches("lgg") {
         let _got = cli_lgg(matches);
 
-    } else if let Some(matches) = matches.subcommand_matches("clgg") {
-        let _got = cli_clgg(matches);
+    } else if let Some(matches) = matches.subcommand_matches("sclgg") {
+        let _got = cli_sclgg(matches);
 
 
     }

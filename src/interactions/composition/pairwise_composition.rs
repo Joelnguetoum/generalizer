@@ -15,7 +15,7 @@ impl Interaction {
         let mut process = GeneralisationProcess::init_process(&t1, &t2);
         //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
-        match process.constrained_generalise(alpuente, verbose,greedy_fail,timeout_secs) {
+        match process.scp_generalize(alpuente, verbose, greedy_fail, timeout_secs) {
             Ok(clggs) => {
                 let gen = clggs[0].clone();
 

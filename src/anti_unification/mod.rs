@@ -1,7 +1,7 @@
 
 pub mod configuration;
-pub mod generaliser;
+pub mod generalizer;
 pub mod error;
 mod rules;
-pub mod constrained_generalise;
-pub mod generalise;
+pub mod scp_generalize;
+pub mod generalize;

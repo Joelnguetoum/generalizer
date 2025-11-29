@@ -5,7 +5,7 @@ use crate::anti_unification::configuration::generalisation_process::Generalisati
 use crate::global_counter::counter::reset_counter;
 use crate::terms::parsing::interface::parse_file;
 use crate::ui::utils::print_file::print_file;
-use crate::ui::utils::print_generalisers::print_generalisers;
+use crate::ui::utils::print_generalizers::print_generalizers;
 
 pub fn cli_lgg(matches: &ArgMatches) {
     reset_counter();
@@ -21,7 +21,7 @@ pub fn cli_lgg(matches: &ArgMatches) {
             let time = Instant::now();
 
             let mut process = GeneralisationProcess::init_process(&t1,&t2);
-            let lggs = process.generalise(alpuente,verbose);
+            let lggs = process.generalize(alpuente, verbose);
 
            // let mut process = GeneralisationEngine::init_engine(&t1,&t2);
            // process.generalise(alpuente,verbose);
@@ -29,10 +29,10 @@ pub fn cli_lgg(matches: &ArgMatches) {
 
             let elapsed = time.elapsed().as_secs_f64();
 
-            println!("{}", "Generalisation successful".to_string().green());
+            println!("{}", "Generalization successful".to_string().green());
             println!("Duration: {} s", elapsed);
 
-            print_generalisers(&lggs,verbose,dot);
+            print_generalizers(&lggs, verbose, dot);
 
         },
         Err(e) => {

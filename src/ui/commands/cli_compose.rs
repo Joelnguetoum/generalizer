@@ -11,9 +11,6 @@ use crate::ui::utils::print_axioms::print_axioms;
 
 pub fn cli_compose(matches: &ArgMatches) {
 
-
-
-
     let hsf_file = matches.value_of("hsf").unwrap();
     let int1_file = matches.value_of("hif1").unwrap();
     let int2_file = matches.value_of("hif2").unwrap();

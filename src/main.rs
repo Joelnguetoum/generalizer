@@ -8,7 +8,7 @@ mod interactions;
 mod benchmark_fm_26;
 mod maude;
 
-use crate::ui::generaliser_cli::generaliser_cli;
+use crate::ui::generalizer_cli::generaliser_cli;
 
 fn main() {
 

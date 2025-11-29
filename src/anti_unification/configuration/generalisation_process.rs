@@ -1,8 +1,8 @@
 use std::collections::VecDeque;
 use colored::Colorize;
 use crate::anti_unification::configuration::configuration::Configuration;
-use crate::anti_unification::generaliser::generaliser::Generaliser;
-use crate::anti_unification::generaliser::minimise::minimise_ac;
+use crate::anti_unification::generalizer::generalizer::Generalizer;
+use crate::anti_unification::generalizer::minimise::minimise_ac;
 use crate::anti_unification::rules::rule::Rule;
 use crate::terms::term::Term;
 
@@ -90,8 +90,8 @@ impl GeneralisationProcess {
 
 
 
-    pub fn to_generalisers(&self) -> Vec<Generaliser> {
-        let generalisers: Vec<Generaliser> = self
+    pub fn to_generalisers(&self) -> Vec<Generalizer> {
+        let generalisers: Vec<Generalizer> = self
             .solved_configurations
             .iter()
             .map(|conf| {
@@ -106,8 +106,8 @@ impl GeneralisationProcess {
         generalisers
     }
     #[allow(dead_code)]
-    pub fn to_generalisers_with_minimise(&self) -> Vec<Generaliser> {
-        let generalisers: Vec<Generaliser> = self
+    pub fn to_generalisers_with_minimise(&self) -> Vec<Generalizer> {
+        let generalisers: Vec<Generalizer> = self
             .solved_configurations
             .iter()
             .map(|conf| {
