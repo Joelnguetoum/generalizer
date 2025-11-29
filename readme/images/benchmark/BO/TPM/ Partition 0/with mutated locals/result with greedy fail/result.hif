@@ -1,0 +1,22 @@
+loopS(
+	alt(
+		seq(
+			l0 -- send -> l1,
+			l1 -- AckStartSend -> l0,
+			loopS(
+				seq(
+					l0 -- GetTpmStatus -> l1,
+					alt(
+						∅,
+						l1 -- TpmStatus -> l0
+					)
+				)
+			),
+			l1 -- SendComplete -> l0
+		),
+		seq(
+			l0 -- GetTpmStatus -> l1,
+			l1 -- TpmStatus -> l0
+		)
+	)
+)

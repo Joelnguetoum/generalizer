@@ -1,0 +1,15 @@
+seq(
+	loopS(
+		alt(
+			cancel -> b [46],
+			seq(
+				split -> b [48],
+				alt(
+					b -- no ->| [51],
+					b -- yes ->| [49]
+				)
+			)
+		)
+	),
+	done -> b [54]
+)

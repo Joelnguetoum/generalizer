@@ -1,0 +1,14 @@
+seq(
+	Dummy -> S [112],
+	loopS(
+		Dummy -> S [115]
+	),
+	alt(
+		No -> S [121],
+		seq(
+			Yes -> S [117],
+			Payment -> S [118],
+			S -- Ack ->| [119]
+		)
+	)
+)

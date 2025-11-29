@@ -1,9 +1,49 @@
-# Generaliser
+# Generalizer
 
-*Generaliser* provides an implementation for special-constant preserving anti-unification 
+*Generalizer* provides an implementation for special-constant 
+preserving anti-unification and  
 interaction models composition.
 
-We have implemented anti-unification modulo any combination of associative commutative and unit element equations.
+We have implemented anti-unification modulo
+any combination of associative commutative and
+unit element equations.
+
+## How to build 
+
+You can build the project with cargo using 
+
+    $ cargo build --release
+
+An executable will be generated in "./target/release".
+
+## Anti-unification
+
+There are two commands dedicated for anti-unification:
+
+- lgg: for anti-unification modulo ACU (associativity+commutativity+unit element)
+
+- sclgg: for special constant-preserving anti-unification modulo ACU.
+
+We provide a section describing the details for those two commands:
+
+[Anti-unification commands](readme/anti-unification.md)
+
+## Interaction composition
+
+The command for the composition of interactions is .
+We also provide a short tutorial on the syntax of interactions
+based on [HIBOU](https://github.com/erwanM974/hibou_label):
+
+[Interaction composition command](readme/composition.md)
+
+## A Benchmark for interaction composition 
+
+In the final section, we provide a simple benchmark to validate our 
+implementation of interaction composition:
+
+[Execution of the benchmark](readme/benchmark.md)
+
+
 
 
 

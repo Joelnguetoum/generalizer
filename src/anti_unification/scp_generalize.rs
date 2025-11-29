@@ -6,15 +6,15 @@ use crate::anti_unification::generalizer::generalizer::Generalizer;
 
 impl GeneralisationProcess {
 
-    pub fn scp_generalize(&mut self, alpuente:bool, verbose:bool, greedy_fail:bool, timeout_secs: Option<f64>) -> Result<Vec<Generalizer>, ConfigurationError> {
+    pub fn scp_generalize(&mut self, return_first:bool, alpuente:bool, verbose:bool, greedy_fail:bool, timeout_secs: Option<f64>) -> Result<Vec<Generalizer>, ConfigurationError> {
         let start = Instant::now();
 
         while let Some(config) = self.unsolved_configurations.pop_back() {
 
             /*RETURN A SOLUTION AS SOON AS ONE IS FOUND*/
-            if !self.solved_configurations.is_empty() {
+            if !self.solved_configurations.is_empty() && return_first {
                 //println!("Solved configuration successfully.");
-                return Ok(self.to_generalisers())
+                return Ok(self.to_generalizers())
             }
 
             /*Kill the function if timeout*/
@@ -35,7 +35,7 @@ impl GeneralisationProcess {
             Err(ConfigurationError::ConstrainedGeneralisationFailed)
         }
         else{
-            Ok(self.to_generalisers())
+            Ok(self.to_generalizers())
         }
 
 

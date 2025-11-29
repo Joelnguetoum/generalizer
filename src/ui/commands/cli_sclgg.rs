@@ -35,7 +35,7 @@ pub fn cli_sclgg(matches: &ArgMatches) {
             //let mut process = GeneralisationEngine::init_engine(&t1,&t2);
 
 
-            match process.scp_generalize(alpuente, verbose, greedy_fail, None) {
+            match process.scp_generalize(false,alpuente, verbose, greedy_fail, None) {
                 Ok(clggs)=>{
 
                     let elapsed = time.elapsed().as_secs_f64();

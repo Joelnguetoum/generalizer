@@ -1,0 +1,29 @@
+seq(
+	loopS(
+		seq(
+			query -> s [44],
+			s -- price ->| [45],
+			alt(
+				seq(
+					split -> b [48],
+					alt(
+						seq(
+							b -- yes ->| [49],
+							buy -> s [50]
+						),
+						seq(
+							b -- no ->| [51],
+							no -> s [52]
+						)
+					)
+				),
+				seq(
+					cancel -> b [46],
+					no -> s [47]
+				)
+			)
+		)
+	),
+	done -> s [53],
+	done -> b [54]
+)

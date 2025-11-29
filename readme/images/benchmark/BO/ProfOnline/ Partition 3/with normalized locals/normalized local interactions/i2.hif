@@ -1,0 +1,33 @@
+loopS(
+	seq(
+		getClosePlanOk -> Plan [75],
+		Plan -- closePlanOk ->| [76],
+		alt(
+			seq(
+				insertPlan -> Plan [79],
+				Plan -- closePlanOk ->| [80]
+			),
+			loopS(
+				seq(
+					getWorkLoad -> Subject [83],
+					Subject -- workLoad ->| [84],
+					getHours -> ClassRecord [85],
+					ClassRecord -- hours ->| [86],
+					alt(
+						∅,
+						seq(
+							updateCloseClass -> Classes [94],
+							Classes -- closedClass ->| [95]
+						),
+						seq(
+							insertClassRecord -> ClassRecord [88],
+							ClassRecord -- classRecordOk ->| [89]
+						)
+					)
+				)
+			)
+		),
+		validateChooseClass -> Classes [99],
+		Classes -- chooseClassOk ->| [100]
+	)
+)

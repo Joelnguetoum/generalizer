@@ -1,0 +1,29 @@
+seq(
+	loopS(
+		seq(
+			∅,
+			∅,
+			alt(
+				seq(
+					split -> b [48],
+					alt(
+						seq(
+							b -- yes ->| [49],
+							∅
+						),
+						seq(
+							b -- no ->| [51],
+							∅
+						)
+					)
+				),
+				seq(
+					cancel -> b [46],
+					∅
+				)
+			)
+		)
+	),
+	∅,
+	done -> b [54]
+)

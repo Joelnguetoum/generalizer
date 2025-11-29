@@ -1,0 +1,20 @@
+loopS(
+	seq(
+		par(
+			l2 -- busy ->| [5],
+			alt(
+				seq(
+					bwin -> l1 [1],
+					l1 -- close -> l2
+				),
+				seq(
+					cwin -> l2 [3],
+					l2 -- blose -> l1
+				)
+			)
+		),
+		l2 -- msg ->| [6],
+		l1 -- sig ->| [7],
+		∅
+	)
+)

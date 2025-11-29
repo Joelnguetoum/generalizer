@@ -90,7 +90,7 @@ impl GeneralisationProcess {
 
 
 
-    pub fn to_generalisers(&self) -> Vec<Generalizer> {
+    pub fn to_generalizers(&self) -> Vec<Generalizer> {
         let generalisers: Vec<Generalizer> = self
             .solved_configurations
             .iter()
@@ -100,10 +100,8 @@ impl GeneralisationProcess {
             })
             .collect();
 
-        //let mut filtered = minimise_ac(generalisers);
-
-        //filtered
-        generalisers
+        minimise_ac(generalisers)
+        //generalisers
     }
     #[allow(dead_code)]
     pub fn to_generalisers_with_minimise(&self) -> Vec<Generalizer> {

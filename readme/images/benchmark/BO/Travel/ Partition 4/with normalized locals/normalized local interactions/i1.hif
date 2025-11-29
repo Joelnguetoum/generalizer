@@ -1,0 +1,25 @@
+seq(
+	Query -> A [110],
+	A -- Quote ->| [111],
+	A -- Dummy -> S,
+	loopS(
+		seq(
+			Query -> A [113],
+			A -- Quote ->| [114],
+			A -- Dummy -> S
+		)
+	),
+	alt(
+		seq(
+			Yes -> A [116],
+			A -- Yes -> S,
+			Payment -> S [118],
+			S -- Ack ->| [119]
+		),
+		seq(
+			No -> A [120],
+			A -- No -> S
+		)
+	),
+	Bye -> A [122]
+)

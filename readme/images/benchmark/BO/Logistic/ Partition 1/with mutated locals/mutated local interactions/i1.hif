@@ -1,0 +1,23 @@
+seq(
+	l0 -- PlannedOrderVariations ->| [26],
+	OrderDeliveryVariations -> l0 [27],
+	DeliverCheckPointRequest -> l0 [28],
+	loopS(
+		par(
+			seq(
+				l0 -- ProvideItem -> l3,
+				l3 -- DeliverItem -> l0
+			),
+			seq(
+				l0 -- ProvideItem ->| [29],
+				DeliverItem -> l0 [30]
+			)
+		)
+	),
+	l0 -- ShippingDone -> l3,
+	l0 -- UpdatePOandDeliverySchedule ->| [34],
+	POandDeliveryScheduleModes -> l0 [35],
+	∅,
+	AcceptPOandDeliverySchedule -> l0 [37],
+	l0 -- FinalizedPOandDeliverySchedule ->| [38]
+)

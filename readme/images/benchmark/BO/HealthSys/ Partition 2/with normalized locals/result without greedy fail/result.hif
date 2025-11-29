@@ -1,0 +1,21 @@
+loopS(
+	seq(
+		l1 -- sendData -> l0,
+		l0 -- subscribed -> l2,
+		alt(
+			seq(
+				l2 -- nok -> l0,
+				l0 -- notSubscribed -> l1
+			),
+			seq(
+				l2 -- ok -> l0,
+				l0 -- account -> l3,
+				l3 -- logCreated -> l0,
+				l0 -- fwd -> l4,
+				l4 -- fwdOk -> l0,
+				l4 -- helpReq -> l5,
+				l5 -- provideService -> l1
+			)
+		)
+	)
+)

@@ -6,8 +6,6 @@ use crate::anti_unification::generalizer::generalizer::Generalizer;
 impl GeneralisationProcess {
     pub fn generalize(&mut self, alpuente: bool, verbose: bool) -> Vec<Generalizer> {
 
-
-        /**/
         while let Some(config) = self.unsolved_configurations.pop_back() {
 
             self.process_configuration(config,false,alpuente,verbose,false);
@@ -15,14 +13,8 @@ impl GeneralisationProcess {
         }
 
 
-        /*
-        while !self.unsolved_configurations.is_empty(){
 
-            self.unsolved_configurations.par_iter_mut().map(|x| self.process_configuration(x.clone(), false,alpuente,verbose));
-        }
-         */
-
-        self.to_generalisers()
+        self.to_generalizers()
     }
 
 }
@@ -30,14 +22,3 @@ impl GeneralisationProcess {
 
 
 
-//Work in progress
-/*
-impl GeneralisationEngine{
-    pub fn generalise(&mut self,alpuente: bool,verbose: bool) -> Vec<Generaliser> {
-
-        self.run(false,alpuente,verbose);
-
-        self.to_generalisers()
-    }
-}
- */

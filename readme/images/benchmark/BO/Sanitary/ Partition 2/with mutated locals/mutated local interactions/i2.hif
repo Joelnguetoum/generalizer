@@ -1,0 +1,31 @@
+loopS(
+	seq(
+		l0 -- request ->| [55],
+		askInfo -> l0 [56],
+		l0 -- provInf ->| [57],
+		alt(
+			refusal -> l0 [58],
+			seq(
+				acceptance -> l0 [59],
+				req -> l2 [60],
+				alt(
+					seq(
+						l2 -- provM -> l0,
+						l2 -- recMoneyPossM ->| [62],
+						paymentM -> l2 [63]
+					),
+					seq(
+						l2 -- provT -> l0,
+						l2 -- recMoneyPossT ->| [65],
+						paymentT -> l2 [66]
+					)
+				),
+				par(
+					∅,
+					l0 -- paymentPrivateFee ->| [67]
+				),
+				∅
+			)
+		)
+	)
+)

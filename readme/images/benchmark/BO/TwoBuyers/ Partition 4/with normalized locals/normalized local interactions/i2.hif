@@ -1,0 +1,14 @@
+seq(
+	loopS(
+		seq(
+			query -> s [44],
+			s -- price ->| [45],
+			alt(
+				no -> s [47],
+				no -> s [52],
+				buy -> s [50]
+			)
+		)
+	),
+	done -> s [53]
+)

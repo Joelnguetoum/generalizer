@@ -1,0 +1,61 @@
+seq(
+	loopS(
+		seq(
+			Teacher -- login -> ProfessorOnline,
+			ProfessorOnline -- validateUser -> User,
+			User -- userOk -> ProfessorOnline
+		)
+	),
+	ProfessorOnline -- logged -> Teacher,
+	Teacher -- chooseClass -> ProfessorOnline,
+	loopS(
+		seq(
+			ProfessorOnline -- getClosePlanOk -> Plan,
+			Plan -- closePlanOk -> ProfessorOnline,
+			alt(
+				seq(
+					ProfessorOnline -- requestPlan -> Teacher,
+					Teacher -- enterPlan -> ProfessorOnline,
+					ProfessorOnline -- insertPlan -> Plan,
+					Plan -- closePlanOk -> ProfessorOnline
+				),
+				seq(
+					Teacher -- enterOption -> ProfessorOnline,
+					ProfessorOnline -- opt -> Teacher,
+					loopS(
+						seq(
+							ProfessorOnline -- getWorkLoad -> Subject,
+							Subject -- workLoad -> ProfessorOnline,
+							ProfessorOnline -- getHours -> ClassRecord,
+							ClassRecord -- hours -> ProfessorOnline,
+							alt(
+								seq(
+									Teacher -- enterClassRecord -> ProfessorOnline,
+									ProfessorOnline -- insertClassRecord -> ClassRecord,
+									ClassRecord -- classRecordOk -> ProfessorOnline
+								),
+								seq(
+									Teacher -- enterGradeRecord -> ProfessorOnline,
+									ProfessorOnline -- insertGradeRecord -> GradeRecord,
+									GradeRecord -- insertedGradeRecord -> ProfessorOnline
+								),
+								seq(
+									Teacher -- enterCloseClass -> ProfessorOnline,
+									ProfessorOnline -- updateCloseClass -> Classes,
+									Classes -- closedClass -> ProfessorOnline
+								)
+							),
+							Teacher -- enterOption -> ProfessorOnline,
+							ProfessorOnline -- opt -> Teacher
+						)
+					)
+				)
+			),
+			Teacher -- chooseClass -> ProfessorOnline,
+			ProfessorOnline -- validateChooseClass -> Classes,
+			Classes -- chooseClassOk -> ProfessorOnline
+		)
+	),
+	Teacher -- exit -> ProfessorOnline,
+	ProfessorOnline -- logoff -> Teacher
+)

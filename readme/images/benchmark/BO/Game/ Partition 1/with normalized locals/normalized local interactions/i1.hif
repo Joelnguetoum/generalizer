@@ -1,0 +1,14 @@
+loopS(
+	seq(
+		par(
+			busy -> l3 [5],
+			alt(
+				l0 -- bwin ->| [1],
+				l0 -- cwin ->| [3]
+			)
+		),
+		msg -> l0 [6],
+		sig -> l0 [7],
+		l0 -- free -> l3
+	)
+)

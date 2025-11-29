@@ -1,0 +1,16 @@
+loopS(
+	seq(
+		par(
+			l2 -- busy -> l3,
+			alt(
+				close -> l2 [2],
+				seq(
+					cwin -> l2 [3],
+					l2 -- blose ->| [4]
+				)
+			)
+		),
+		l2 -- msg ->| [6],
+		free -> l3 [8]
+	)
+)
