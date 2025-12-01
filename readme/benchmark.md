@@ -11,22 +11,22 @@ and .hif(HIBOU interaction file) files.
 ## Protocol
 
 We use the interactions in the folder [Benchmark](../Benchmark%20Composition/Benchmark) 
-as our starting global models. For each global interaction $r$, we extract 
+as our starting global models. For each global interaction $k$, we extract 
 at most $N_p$ partitions of its set of lifelines $L$ into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.  
 
 For each partition $(L_1,L_2)$ of a set of lifelines of a global interaction $r$:
 
-- project $r$ onto $L_1$ and $L_2$ to obtain local interactions $s$ and $t$;
-- we normalize $s$ and $t$ using HIBOU to obtain $s_\text{norm}$ and $t_\text{norm}$
+- project $r$ onto $L_1$ and $L_2$ to obtain local interactions $i$ and $j$;
+- we normalize $i$ and $j$ using HIBOU to obtain $i_\text{norm}$ and $j_\text{norm}$
 respectively.
-- we apply mutation operations to $s$ and $t$, with consists of successively
+- we apply mutation operations to $i$ and $i$, with consists of successively
 applying $N_m$ times one of the following rewrite operation selected uniformly
 at random: $\textsf{alt}(x,y) \rightarrow \textsf{alt}(y,x)$ and $\textsf{par}(x,y) \rightarrow \textsf{par}(y,x)$.
-We obtain the interactions $s_\text{mut}$ and $t_\text{mut}$ from $s$ and $t$ respectively.
+We obtain the interactions $i_\text{mut}$ and $j_\text{mut}$ from $s$ and $t$ respectively.
 The mutations are done with [Maude](https://maude.cs.illinois.edu/).
-- We compose the pairs $(s_\text{norm},t_\text{norm})$ and $(s_\text{mut},t_\text{mut})$.
+- We compose the pairs $(i_\text{norm},j_\text{norm})$ and $(i_\text{mut},j_\text{mut})$.
 The result of the composition is normalized with HIBOU an compared to the normal form of 
-the starting interaction $r$.
+the starting interaction $k$.
 
 The table below summarizes experiments 
 conducted on interactions adapted from the 
