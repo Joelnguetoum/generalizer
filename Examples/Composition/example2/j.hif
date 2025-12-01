@@ -1,0 +1,14 @@
+seq(	
+	query -> proxy [1],
+	seq(
+		seq(
+			proxy -- in -> calc2,
+			calc2 -- out -> proxy
+		),
+		seq(
+			proxy -- msg -> | [2],
+			sig -> proxy [4]
+		)
+		
+	)
+)

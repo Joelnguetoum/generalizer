@@ -1,0 +1,17 @@
+seq(
+	par(
+		seq(
+			center -- in -> calc1,
+			calc1 -- out -> center
+		),
+		seq(
+			center -- query -> | [1],
+			msg -> center [2]
+		)
+	
+	),
+	seq(
+		center -- result -> | [3],
+		center -- sig -> | [4]
+	)
+)

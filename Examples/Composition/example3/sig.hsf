@@ -1,0 +1,14 @@
+@message{
+query;
+price;
+done;
+no;
+split;
+cancel;
+yes;
+buy
+}
+
+@lifeline{
+    s;a;b
+}

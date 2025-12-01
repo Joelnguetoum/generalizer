@@ -1,0 +1,2 @@
+@message{in;out;query;msg;result;sig}
+@lifeline{center;calc1;proxy;calc2}
