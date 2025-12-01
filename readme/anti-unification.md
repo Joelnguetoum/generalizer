@@ -87,9 +87,19 @@ special constants 'a' and 'b'.
 
     $ generalizer lgg example6.txt
 
-or
+We obtain the output:
+
+![lgg](images/anti-unification/lgg.png)
+
+
+Similarly, for the special-constant preserving anti-unification,
+we execute the command:
 
     $ generalizer sclgg example6.txt
+
+We obtain the following output:
+
+![sclgg](images/anti-unification/sclgg.png)
 
 if the executable is in the same folder that of the input files.
 
