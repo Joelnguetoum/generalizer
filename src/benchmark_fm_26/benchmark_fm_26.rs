@@ -144,9 +144,10 @@ impl Benchmark {
 
             //Random decomposition
 
-            for (ct_partition,locals) in all_locals.iter().enumerate() { // CYCLE
+            for (ct_partition,locals_original) in all_locals.iter().enumerate() { // CYCLE
 
-                let partition_dir = format!("{}/ Partition {}", int_dir, ct_partition);
+                let partition_dir = format!("{}/Partition {}", int_dir, ct_partition);
+                let locals_dir = format!("{}/original locals", partition_dir);
                 let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
                 let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
                 let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);
@@ -156,6 +157,13 @@ impl Benchmark {
                 let mut_result_gf = format!("{}/result with greedy fail",&mutated_int_dir);
                 let mut_result_non_gf = format!("{}/result without greedy fail",&mutated_int_dir);
                 if draw{
+                    fs::create_dir_all(&locals_dir).ok();
+                    //Drawing locals
+                    for (ct, local) in locals_original.iter().enumerate() {
+                        let local_name = format!("i{}", ct + 1);
+                        draw_model(gen_ctx, &local_name, &locals_dir, local);
+                    }
+
                     fs::create_dir_all(&normalized_int_dir).ok();
                     fs::create_dir_all(&norm_input_local_dir).ok();
                     fs::create_dir_all(&norm_result_gf).ok();
@@ -167,7 +175,7 @@ impl Benchmark {
                     fs::create_dir_all(&mut_result_non_gf).ok();
                 }
                 //Normalization + Mutation
-                let locals = Self::get_local_interactions(gen_ctx,locals,self.nb_local_rewrites);
+                let locals = Self::get_local_interactions(gen_ctx,locals_original,self.nb_local_rewrites);
 
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());

@@ -66,7 +66,7 @@ appearing in t and t' must be declared.
 For examples of problem specification, see the Example folder.
 
 To execute , we have:
-The file the file [example6.txt](../Examples/exemple6.txt) in the [Example](../Examples) folder
+The file the file [example6.txt](../Examples/Anti-unification/exemple6.txt) in the [Example/Anti-unification](../Examples/Anti-unification) folder
 contains the following problem:
 
 ~~~
@@ -85,11 +85,11 @@ special constants 'a' and 'b'.
 
 
 
-    $ generaliser lgg example6.txt
+    $ generalizer lgg example6.txt
 
 or
 
-    $ generaliser sclgg example6.txt
+    $ generalizer sclgg example6.txt
 
 if the executable is in the same folder that of the input files.
 
@@ -114,7 +114,7 @@ Use the flag -a or --alpuente
 
 An example is
 
-    $ generaliser lgg example1.txt -a
+    $ generalizer lgg example1.txt -a
 
 #### verbose
 
@@ -122,24 +122,19 @@ The flag verbose print in command line the computation history of each least gen
 
 An example is
 
-    $ generaliser lgg example1.txt -v
+    $ generalizer lgg example1.txt -v
 
 or
 
-    $ generaliser lgg example1.txt --verbose
+    $ generalizer lgg example1.txt --verbose
 
 The same flag remain available for the command clgg.
 
-#### dot
+#### Rule Fail for the computation sclgg
 
-The flag dot creates a .dot file and a png depicting the computation history of the least general generalisations.
+To use the rule $\textsf{Fail}$ for the anti-unification,
+use the flag -f.
 
-An example is
 
-    $ generaliser lgg example1.txt -d
-
-or
-
-    $ generaliser lgg example1.txt --dot
 
 

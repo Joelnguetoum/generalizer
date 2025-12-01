@@ -22,7 +22,7 @@ sharing the same signature.
 
 For example:
 
-    $  generaliser compose sig.hsf i1.hif i2.hif
+    $  generalizer compose sig.hsf i.hif j.hif
 
 The program will compute the composition of the two interactions, and draw the 
 result in a folder called "Composition Output".
@@ -58,7 +58,7 @@ Those flags are mutually exclusive.
 
 For example, to compose modulo AU, we can use the following command
 
-    $  generaliser compose sig.hsf i1.hif i2.hif --AU
+    $  generalizer compose sig.hsf i.hif j.hif --AU
 
 
 ### To only use the rules of the algorithme of [Alpuente et al(2014)](https://doi.org/10.1016/j.ic.2014.01.006)
@@ -67,7 +67,7 @@ Use the flag -a or --alpuente
 
 An example is
 
-    $  generaliser compose sig.hsf i1.hif i2.hif -a
+    $  generalizer compose sig.hsf i1.hif i2.hif -a
 
 ### verbose
 
@@ -78,12 +78,135 @@ The flag is -v or --verbose
 
 An example is
 
-    $  generaliser compose sig.hsf i1.hif i2.hif -v
+    $  generalizer compose sig.hsf i1.hif i2.hif -v
 
+### Rule Fail for the special constant-preserving anti-unification
 
+To use the rule $\textsf{Fail}$ for the anti-unification,
+use the flag -f.
 # Example 
 
-### todo
+As an example, we describe the execution of 
+an  [example](../Examples/Composition/example1).
+
+### Common signature file (.hsf)
+The two local interaction share 
+the same signature file [sig.hsf](../Examples/Composition/example1/sig.hsf).
 
 
 
+~~~
+@message{
+    bwin;cwin;close;blose;busy;msg;sig;free
+}
+
+@lifeline{
+    l0;l1;l2;l3
+}
+~~~
+### Local interaction $i$
+
+We give below the first local 
+interaction [i.hif](../Examples/Composition/example1/i.hif)
+and its sequence diagram representation.
+
+~~~
+loopS(
+	seq(
+		par(
+			alt(
+				seq(
+					l0 -- cwin ->| [3],
+					∅
+				),
+				seq(
+					l0 -- bwin ->| [1],
+					∅
+				)
+			),
+			busy -> l3 [5]
+		),
+		msg -> l0 [6],
+		sig -> l0 [7],
+		l0 -- free -> l3
+	)
+)
+~~~
+
+![i](images/composition/i.png)
+
+### Local interaction $j$
+
+The second local interaction [j](../Examples/Composition/example1/j.hif) and its graphical 
+representation is as follows.  
+
+
+
+~~~
+loopS(
+	seq(
+		par(
+			l2 -- busy ->| [5],
+			alt(
+				seq(
+					bwin -> l1 [1],
+					l1 -- close -> l2
+				),
+				seq(
+					cwin -> l2 [3],
+					l2 -- blose -> l1
+				)
+			)
+		),
+		l2 -- msg ->| [6],
+		l1 -- sig ->| [7],
+		∅
+	)
+)
+~~~
+
+
+![j](images/composition/j.png)
+
+### Composition
+
+We compose the interaction $i$ and $j$
+with the following command:
+
+    $  generalizer compose sig.hsf i.hif j.hif
+
+The result is the following interaction.
+
+~~~
+loopS(
+	seq(
+		par(
+			∅,
+			l2 -- busy -> l3,
+			alt(
+				seq(
+					l0 -- bwin -> l1,
+					∅,
+					l1 -- close -> l2,
+					∅
+				),
+				seq(
+					l0 -- cwin -> l2,
+					l2 -- blose -> l1,
+					∅,
+					∅
+				)
+			)
+		),
+		l2 -- msg -> l0,
+		l1 -- sig -> l0,
+		∅,
+		∅,
+		∅,
+		l0 -- free -> l3,
+		∅
+	)
+)
+~~~
+
+![result](images/composition/result.png)

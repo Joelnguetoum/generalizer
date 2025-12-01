@@ -14,7 +14,7 @@ We use the interactions in the folder [Benchmark](../Benchmark%20Composition/Ben
 as our starting global models. For each global interaction $r$, we extract 
 at most $N_p$ partitions of its set of lifelines $L$ into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.  
 
-For each partition $(L_1,l_2)$ of a set of lifelines of a global interaction $r$:
+For each partition $(L_1,L_2)$ of a set of lifelines of a global interaction $r$:
 
 - project $r$ onto $L_1$ and $L_2$ to obtain local interactions $s$ and $t$;
 - we normalize $s$ and $t$ using HIBOU to obtain $s_\text{norm}$ and $t_\text{norm}$
@@ -35,7 +35,7 @@ The second column indicates the size of each interaction,
 while the third column shows the range of the number of gates
 in local interactions with respect to partitions of lifelines.
 The last four columns represent the average composition duration
-across partitions, with and without the rule $\textsf{Greedy-Fail}$.
+across partitions, with and without the rule $\textsf{Fail}$.
 In particular, the fourth and fifth columns report the average duration
 for the composition of normalized local interactions,
 and the last two columns report the average duration for the mutated
@@ -67,7 +67,7 @@ The theory for the composition is ACU by default. We can restrict the theory  wi
 the same flags as the composition: --A, --C, --U, --AC, --AU, --CU, --S.
 
 The flag -g is not valid for the benchmark, since both composition with and
-without the rule Greedy-Fail are evaluated.
+without the rule Fail are evaluated.
 
 The command to execute to have the result in the table above is:
 
@@ -108,7 +108,9 @@ the literature.
 | Two Buyers protocol      | ![Two](images/benchmark/BO/TwoBuyers/input_global_interaction/TwoBuyers.png)    | [Honda et al.](https://doi.org/10.1145/2827695)             |
 
 
-## An example of projection + composition
+## An example of the workflow for the interaction Game
 
+The following figure illustrates our protocol with the 
+Game global interaction, with only the mutation scenario.
 
-### todo
+![workflow](images/benchmark/workflow_example.png)

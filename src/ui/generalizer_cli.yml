@@ -51,7 +51,7 @@ subcommands:
             help: Use the computation rules of the work of Alpuente et al.
         - greedyfail:
             long: greedyfail
-            short: g
+            short: f
             help: Use the rule GreedySolveFail instead of SolveFail
   - compose:
       about: Composition of two interaction models
@@ -80,7 +80,7 @@ subcommands:
             help: Use the computation rules of the work of Alpuente et al.
         - greedyfail:
             long: greedyfail
-            short: g
+            short: f
             help: Use the rule GreedySolveFail instead of SolveFail
         - S:
             long: S
