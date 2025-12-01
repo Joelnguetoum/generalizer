@@ -38,7 +38,7 @@ impl Interaction{
 
                 }
                 else{
-                     FunctionSignature::new(self.to_string(),0,vec![])
+                     FunctionSignature::new(a.action_label(),0,vec![])
                 };
 
 

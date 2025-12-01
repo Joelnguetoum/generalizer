@@ -17,6 +17,11 @@ pub fn cli_benchmark(matches: &ArgMatches) {
     let draw = matches.is_present("draw");
     let millis = matches.is_present("milliseconds");
 
+
+    println!("Max number of partitions {}",nb_lifelines_partitions);
+    println!("Number of mutations {}",nb_mutations);
+    println!("Composition timout {}",timeout);
+
     let axioms = if matches.is_present("A") {
         vec![Axioms::A]
     }

@@ -33,9 +33,12 @@ impl Guideline {
 
             for action1 in &actions1{
                 for action2 in &actions2{
-                    if action1.gate_id.unwrap() == action2.gate_id.unwrap() && shared_gates.contains(&action1.gate_id.unwrap()) {
-                        map.insert(action1.gate_id.unwrap(),(action1.clone(),action2.clone()));
+                    if let (Some(g1),Some(g2)) = (action1.gate_id, action2.gate_id){
+                        if g1 == g2 && shared_gates.contains(&g1) {
+                            map.insert(g1,(action1.clone(),action2.clone()));
+                        }
                     }
+
                 }
 
         }
