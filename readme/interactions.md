@@ -37,12 +37,15 @@ loopS(
 
 By using the draw command of HIBOU as follows:
 
-    $ hibou_label draw sig.hsf i.hif
+```
+hibou_label draw sig.hsf i.hif
+```
 
 We obtain the image: 
 
 ![i0](images/interactions/i0_repr.png)
 
+#### Gates
 
  We introduce *gates* in our implementation 
  to mark complementary

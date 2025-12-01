@@ -4,8 +4,7 @@
 
 We propose a simple experiment to validate our implementation of interaction composition.
 
-As an introduction to interaction, we propose short [tutorial](interactions.md) on
-the syntax of interaction with gates, and their representation as .hsf (HIBOU Signature file)
+As an introduction to interaction, we propose a short [tutorial](interactions.md) on the syntax of interaction with gates, and their representation as .hsf (HIBOU Signature file)
 and .hif(HIBOU interaction file) files.
 
 ## Protocol
@@ -52,7 +51,7 @@ the normal form of the original interaction before projections.
 
 To run the benchmark, download the folder [Benchmark Composition](../Benchmark%20Composition), and add an executable of the project.
 
-The subcommand to run the benchmark is "benchmark". It takes as arguments:
+The subcommand to run the benchmark is `benchmark`. It takes as arguments:
 
 - the name of the subfolder containing the interactions. In the downloadable folder, it is Benchmark.
 - the number of mutation  per partition
@@ -60,18 +59,20 @@ The subcommand to run the benchmark is "benchmark". It takes as arguments:
 - Timout in seconds
 
 
-We can add flags, -m to have the duration in milliseconds,
--d to draw the models for visualization.
+We can add flags, `-m` to have the duration in milliseconds,
+`-d` to draw the models for visualization.
 
 The theory for the composition is ACU by default. We can restrict the theory  with
-the same flags as the composition: --A, --C, --U, --AC, --AU, --CU, --S.
+the same flags as the composition: `--A`, `--C`, `--U`, `--AC`, `--AU`, `--CU`, `--S`.
 
-The flag -g is not valid for the benchmark, since both composition with and
+The flag `-g` is not valid for the benchmark, since both composition with and
 without the rule Fail are evaluated.
 
 The command to execute to have the result in the table above is:
 
-      $ generaliser benchmark Benchmark 3 5 60 -m 
+```
+generaliser benchmark Benchmark 3 5 60 -m 
+```
 
 It means:
 
@@ -81,7 +82,7 @@ in the local interactions. The timout threshold is of 60s. the flag -m means tha
 in the output csv file, the duration will be given in milliseconds.
 The theory for the composition is ACU (all the rules are used).
 
-To draw the interactions involved in the process, we can use the flag -d.
+To draw the interactions involved in the process, we can use the flag `-d`.
 
 
 ## Interactions of the benchmark

@@ -12,17 +12,19 @@ unit element equations.
 
 You can build the project with cargo using 
 
-    $ cargo build --release
+```
+cargo build --release
+```
 
 An executable will be generated in "./target/release".
 
 ## Anti-unification
 
-There are two commands dedicated for anti-unification:
+There are two dedicated commands for anti-unification:
 
-- lgg: for anti-unification modulo ACU (associativity+commutativity+unit element)
+- `lgg`: for anti-unification modulo ACU (associativity+commutativity+unit element)
 
-- sclgg: for special constant-preserving anti-unification modulo ACU.
+- `sclgg`: for special constant preserving anti-unification modulo ACU.
 
 We provide a section describing the details for those two commands:
 
@@ -30,15 +32,22 @@ We provide a section describing the details for those two commands:
 
 ## Interaction composition
 
-The command for the composition of interactions is .
-We also provide a short tutorial on the syntax of interactions
-based on [HIBOU](https://github.com/erwanM974/hibou_label):
+The command for the composition of interactions is :
+- `compose`
+
+The following section describes this command in details:
 
 [Interaction composition command](readme/composition.md)
 
+We also provide a short tutorial on the syntax of interactions
+based on [HIBOU](https://github.com/erwanM974/hibou_label):
+
+[Tutorial on interactions](readme/interactions.md)
+
+
 ## A Benchmark for interaction composition 
 
-In the final section, we provide a simple benchmark to validate our 
+We also provide a simple benchmark to validate our 
 implementation of interaction composition:
 
 [Execution of the benchmark](readme/benchmark.md)
