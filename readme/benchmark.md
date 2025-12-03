@@ -41,7 +41,9 @@ and the last two columns report the average duration for the mutated
 local interactions. A success ($\checkmark$) confirms
 that the normal form  of the result
 of each composition across partitions matches with
-the normal form of the original interaction before projections.
+the normal form of the original interaction before projections. We 
+did $N_m = 7$ local mutation, extracted at most $N_p = 5$ partitions of lifelines and 
+a computation timout of $60$ seconds.
 
 ![benchmark_table](images/benchmark/benchmark_table.png "Benchmark table")
 
@@ -71,13 +73,13 @@ without the rule Fail are evaluated.
 The command to execute to have the result in the table above is:
 
 ```
-generaliser benchmark Benchmark 3 5 60 -m 
+generaliser benchmark Benchmark 7 5 60 -m 
 ```
 
 It means:
 
 For each global interaction, at most 5 partitions of its lifelines will be extracted;
-after projection onto the partitions, 3 random mutations are operated
+after projection onto the partitions, 7 random mutations are operated
 in the local interactions. The timout threshold is of 60s. the flag -m means that
 in the output csv file, the duration will be given in milliseconds.
 The theory for the composition is ACU (all the rules are used).
@@ -95,18 +97,20 @@ the literature.
 
 
 
-| Name                     | Interaction graphical representation                                            | Reference                                                   |
-|--------------------------|---------------------------------------------------------------------------------|-------------------------------------------------------------|
-| Alternating3Bit Protocol | ![alt3bit](images/benchmark/BO/Alt3bit/input_global_interaction/Alt3bit.png)    | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Filter collaboration     | ![filter](images/benchmark/BO/FilterCo/input_global_interaction/FilterCo.png)   | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Game                     | ![game](images/benchmark/BO/Game/input_global_interaction/Game.png)             | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Health System            | ![HS](images/benchmark/BO/HealthSys/input_global_interaction/HealthSys.png)     | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Logistic                 | ![Log](images/benchmark/BO/Logistic/input_global_interaction/Logistic.png)      | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Professor Online         | ![prof](images/benchmark/BO/ProfOnline/input_global_interaction/ProfOnline.png) | [Rocha et al.](https://doi.org/10.1007/s11219-020-09531-0)  |
-| Sanitary Agency          | ![San](images/benchmark/BO/Sanitary/input_global_interaction/Sanitary.png)      | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| TPM Contract v2          | ![TPM](images/benchmark/BO/TPM/input_global_interaction/TPM.png)                | [Lange et al.](https://doi.org/10.1145/2676726.2676964)     |
-| Travel                   | ![Trav](images/benchmark/BO/Travel/input_global_interaction/Travel.png)         | [Bouma et al.](https://doi.org/10.1007/978-3-031-30820-8_3) |
-| Two Buyers protocol      | ![Two](images/benchmark/BO/TwoBuyers/input_global_interaction/TwoBuyers.png)    | [Honda et al.](https://doi.org/10.1145/2827695)             |
+| Name                     | Interaction graphical representation                             | Reference                                        |
+|--------------------------|------------------------------------------------------------------|--------------------------------------------------|
+| Alternating3Bit Protocol | ![alt3bit](images/benchmark/BO/Alt3bit/input_global_interaction/Alt3bit.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Filter collaboration     | ![filter](images/benchmark/BO/FilterCo/input_global_interaction/FilterCo.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Game                     | ![game](images/benchmark/BO/Game/input_global_interaction/Game.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Health System            | ![HS](images/benchmark/BO/HealthSys/input_global_interaction/HealthSys.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Logistic                 | ![Log](images/benchmark/BO/Logistic/input_global_interaction/Logistic.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Professor Online         | ![prof](images/benchmark/BO/ProfOnline/input_global_interaction/ProfOnline.png) | [Rocha et al.](https://doi.org/10.1007/s11219-020-09531-0) |
+| Sanitary Agency          | ![San](images/benchmark/BO/Sanitary/input_global_interaction/Sanitary.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| TPM Contract v2          | ![TPM](images/benchmark/BO/TPM/input_global_interaction/TPM.png) | [Lange et al.](https://doi.org/10.1145/2676726.2676964) |
+| Travel                   | ![Trav](images/benchmark/BO/Travel/input_global_interaction/Travel.png) | [Bouma et al.](https://doi.org/10.1007/978-3-031-30820-8_3) |
+| Two Buyers protocol      | ![Two](images/benchmark/BO/TwoBuyers/input_global_interaction/TwoBuyers.png) | [Honda et al.](https://doi.org/10.1145/2827695)  |
+| ATM                      | ![ATM](images/benchmark/BO/ATM/input_global_interaction/ATM.png) | [Edixhoven et al.](https://doi.org/10.1016/j.jlamp.2023.100919) |
+| Distributed Voting       | ![DistVot](images/benchmark/BO/DistVoting/input_global_interaction/DistVoting.png) |  [Edixhoven et al.](https://doi.org/10.1016/j.jlamp.2023.100919)|
 
 
 ## An example of the workflow for the interaction Game

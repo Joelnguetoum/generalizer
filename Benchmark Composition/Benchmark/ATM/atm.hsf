@@ -1,0 +1,9 @@
+@message{
+
+auth;authReq;denied;authFailed;granted;quit;checkBalance;advert;
+getBalance;balance;withdraw;authWithdrawal;allow;money;deny;bye
+}
+
+@lifeline{
+    a;b;c
+}

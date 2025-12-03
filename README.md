@@ -52,7 +52,9 @@ implementation of interaction composition:
 
 [Execution of the benchmark](readme/benchmark.md)
 
-
+## License
+This project is licensed under the GNU GPL version 3 or later (GPL-3.0-or-later).  
+See the LICENSE file for details.
 
 
 

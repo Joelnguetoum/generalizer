@@ -24,7 +24,8 @@ impl Interaction{
             );
 
         let canon_param = CanonizationParameterization::from_default(
-            DefaultCanonizationProcess::FivePhases,
+            //DefaultCanonizationProcess::FivePhases,
+            DefaultCanonizationProcess::Basic,
             canon_opts.search_all
         );
 

@@ -1,0 +1,7 @@
+@message{
+	y;n
+}
+
+@lifeline{
+    a;b;c
+}

@@ -1,0 +1,52 @@
+seq(
+
+	c -- auth -> a,
+	seq(
+		a -- authReq -> b,
+		alt(
+			seq(
+				b -- denied -> a,
+				a -- authFailed -> c
+			),
+			seq(
+				b -- granted -> a,
+				alt(
+					alt(
+						c -- quit -> a,
+						seq(
+							c -- checkBalance -> a,
+							par(
+								a -- advert -> c,
+								seq(
+									par(
+										a -- advert -> c,
+										b -- getBalance -> a
+								  	),
+								  	a -- balance -> c
+								
+								)
+								
+							)
+						)
+					),
+					seq(
+						c -- withdraw -> a,
+						seq(
+							a -- authWithdrawal -> b,
+							alt(
+								seq(
+									b -- allow -> a,
+									a -- money -> c
+								),
+								seq(
+									b -- deny -> a,
+									a -- bye -> c
+								)
+							)
+						)
+					)
+				)
+			)
+		)
+	)
+)

@@ -15,30 +15,32 @@ pub fn cli_compose(matches: &ArgMatches) {
     let int1_file = matches.value_of("hif1").unwrap();
     let int2_file = matches.value_of("hif2").unwrap();
 
-    let gen_ctx = if let Ok(sig) = parse_hsf_file(hsf_file){
-        sig
-    }
-    else{
-        panic!("Could not parse HSF file");
+    let gen_ctx = match parse_hsf_file(hsf_file){
+        Ok(sig) => sig,
+        Err(e) =>{
+            println!("Error parsing hsf file: {}",e);
+            panic!("Could not parse HSF file");
+        }
     };
 
-
-    let i = if let Ok(int) = parse_hif_file(&gen_ctx,int1_file){
-        int
-    }
-    else{
-        panic!("Could not parse HIF file");
-    };
-
-    let j = match parse_hif_file(&gen_ctx,int2_file) {
-        Ok(int)=>{
-            int.clone()
-        },
+    let i = match parse_hif_file(&gen_ctx,int1_file){
+        Ok(int) => int,
         Err(e)=>{
-            println!("{}",e);
+            println!("Error parsing hsf file: {}",e);
             panic!("Could not parse HIF file");
         }
     };
+
+
+    let j = match parse_hif_file(&gen_ctx,int2_file){
+        Ok(int) => int,
+        Err(e)=>{
+            println!("Error parsing hif file: {}",e);
+            panic!("Could not parse HIF file");
+        }
+    };
+
+
 
 
     let verbose = matches.is_present("verbose");

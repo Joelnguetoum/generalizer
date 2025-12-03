@@ -1,0 +1,36 @@
+par(
+	par(
+		alt(
+			par(
+				a -- y ->b,
+				a -- y -> c
+			),
+			par(
+				a -- n -> b,
+				a -- n -> c
+			)
+		),
+		alt(
+			par(
+				b -- y -> a,
+				b -- y -> c
+			),
+			par(
+				b -- n -> a,
+				b -- n -> c
+			)
+		)
+	),
+	alt(
+		par(
+			c -- y -> a,
+			c -- y -> b
+		),
+		par(
+			c -- n -> a,
+			c -- n -> b
+		)
+	)
+
+
+)

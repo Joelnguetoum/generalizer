@@ -20,7 +20,7 @@ pub fn cli_benchmark(matches: &ArgMatches) {
 
     println!("Max number of partitions {}",nb_lifelines_partitions);
     println!("Number of mutations {}",nb_mutations);
-    println!("Composition timout {}",timeout);
+    println!("Composition timout {}s",timeout);
 
     let axioms = if matches.is_present("A") {
         vec![Axioms::A]

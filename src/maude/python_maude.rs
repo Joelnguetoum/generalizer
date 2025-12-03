@@ -32,37 +32,6 @@ impl Interaction {
         Some(result_interaction)
     }
 
-    /*
-    pub fn normalise(&self,order:bool)->Option<Interaction>{
-        let int_str = to_maude_interaction(self);
-
-        let mut process = if let Ok(c) = Command::new("python3")
-            .arg(INTERACTION_NORMALIZATION_PYTHON_FILE)
-            .arg(int_str.as_str())
-            .stdin(Stdio::piped())
-            .stdout(Stdio::piped())
-            .spawn(){
-            c
-        }
-        else {
-            return None;
-        };
-
-        let output = process.wait_with_output().expect("Failed to read stdout");
-
-        let result_str  = String::from_utf8_lossy(&output.stdout);
-
-
-
-        let result_interaction = parse_maude_interaction(&result_str,order);
-
-        Some(result_interaction)
-    }
-
-     */
-
-
-
 
 }
 

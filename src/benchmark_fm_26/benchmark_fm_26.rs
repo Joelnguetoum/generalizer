@@ -88,7 +88,7 @@ impl Benchmark {
 
                 }
 
-                Ok(Benchmark{ global_interactions,nb_local_rewrites, nb_lifelines_partitions,timout_secs,output: BenchmarkOutput::new(), axioms })
+                Ok(Benchmark{ global_interactions, nb_local_rewrites, nb_lifelines_partitions,timout_secs,output: BenchmarkOutput::new(), axioms })
             },
             Err(e)=>{
                     Err(BenchmarkError::FolderAccessError(e.to_string()))
@@ -106,8 +106,8 @@ impl Benchmark {
             local_normalized.push(local.iat_canonize(gen_ctx));
         }
 
-        for local in local.iter(){
-            local_mutated.push(local.random_rewrites(nb_local_rewrites).unwrap());
+        for (ct,local) in local.iter().enumerate(){
+            local_mutated.push(local.random_rewrites(nb_local_rewrites+ct).unwrap());
         }
 
         Locals{normalized: local_normalized,mutated: local_mutated,}
