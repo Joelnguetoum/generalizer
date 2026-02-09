@@ -7,6 +7,12 @@ We propose a simple experiment to validate our implementation of interaction com
 As an introduction to interaction, we propose a short [tutorial](interactions.md) on the syntax of interaction with gates, and their representation as .hsf (HIBOU Signature file)
 and .hif(HIBOU interaction file) files.
 
+To be able to run the benchmark, you need to install Maude.
+
+```
+python3 -m pip install maude
+```
+
 ## Protocol
 
 We use the interactions in the folder [Benchmark](../Benchmark%20Composition/Benchmark) 
