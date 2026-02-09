@@ -36,6 +36,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
     let mut name = String::from("");
     let mut arity: usize = 0;
     let mut axioms = Vec::new();
+    let mut unit_symbol = None;
 
     for pair in pairs_inner {
         if pair.as_rule() == Rule::DCL_NAME{
@@ -45,7 +46,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
             let arity_str = pair.as_str().trim();
             arity = arity_str.parse().unwrap();
         }
-        //axioms later...
+
 
         if pair.as_rule() == Rule::DCL_AXIOMS{
             let axiom_str = pair.as_str().trim();
@@ -77,6 +78,14 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
                 if arity<2{
                     panic!("Functions having unit element must be of arity greater or equal than 2");
                 }
+                let start = axiom_str.find("U<").expect("Unit symbol not found");
+                let unit = axiom_str[start+2..].to_string();
+                if unit.is_empty(){
+                    panic!("Unit symbol not found");
+                }
+                let end = unit[start..].find(">").expect("Unit symbol not found");
+                unit_symbol = Some(unit[..end].to_string());
+
                 axioms.push(Axioms::U);
             }
 
@@ -84,7 +93,7 @@ pub fn parse_function(unparsed_function: &Pair<Rule>) -> Result<FunctionSignatur
 
 
     }
-    Ok(FunctionSignature::new(name, arity, axioms))
+    Ok(FunctionSignature::new(name, arity, axioms, unit_symbol))
 }
 
 pub fn parse_problem(unparsed_problem: &Pair<Rule>) -> Result<(String,String),String> {

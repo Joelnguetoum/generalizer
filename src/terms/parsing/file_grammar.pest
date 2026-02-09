@@ -1,6 +1,6 @@
 WHITESPACE = _{ " " | "\t" | "\r" }
 END_FILE = _{ " " | "\r\n" | "\n" | "\t" | "\r" }
-STRING = @{ LETTER ~ (LETTER | ASCII_DIGIT | "_" | "(" | ")" | ",")* }
+STRING = @{ LETTER ~ (LETTER | ASCII_DIGIT | "_" | "(" | ")" | "," | "<" | ">")* }
 
 DCL_ARITY = { ASCII_DIGIT+ }
 DCL_NAME = { STRING }

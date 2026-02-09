@@ -52,7 +52,7 @@ provide a more precise specification of binary operators (of `<arity>` 2) or con
 For a binary function symbol `f`, the `<Axioms>` field can be a string that contains a subset of the letters in `{A,C,U}`. If it contains:
 - `A`, then the operator `f` is associative i.e., one considers the axiom `f(x,f(y,z))≈ f(f(x,y),z)`.
 - `C`, then the operator `f` is commutative i.e., one considers the axiom `f(x,y)≈ f(y,x)`.
-- `U`, then the operator `f` has a neutral element (TODO:how is the neutral element denoted ? can two different operators have the same neutral element ?) i.e., one considers the axiom `f(x,e)≈x` and `f(e,x)≈ x`.
+- `U<e>`, then the operator `f` has a neutral element `e` (which is a string representing a constant that may or may not be declared. In case `e` is not declared, then `U<e>` count as a declaration of the constant symbol `e`) i.e., one considers the axiom `f(x,e)≈x` and `f(e,x)≈ x`.
 
 
 For example to declare a function symbol `f` which is associative, we write:
@@ -64,7 +64,7 @@ Function: f 2 A
 An for a function `g` that is associative, commutative with unit, we write:
 
 ```
-Function: g 2 ACU
+Function: g 2 ACU<e_g>
 ```
 
 Other combinations like AU (associative-unit) or CU(commutative-unit) are also possible. The order of the charaters `A`, `C` or `U` do not matter.
@@ -101,7 +101,7 @@ contains the following problem:
 
 ```
 Function: f 2 AC
-Function: g 2 U
+Function: g 2 U<e_g>
 Function: a 0 S
 Function: b 0 S
 Function: c 0

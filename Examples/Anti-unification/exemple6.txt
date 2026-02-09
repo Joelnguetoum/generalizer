@@ -1,5 +1,5 @@
 Function: f 2 AC
-Function: g 2 U
+Function: g 2 U<e_g>
 Function: a 0 S
 Function: b 0 S
 Function: c 0

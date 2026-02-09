@@ -1,4 +1,4 @@
-Function: f 2 U
+Function: f 2 U<O>
 Function: a 0 S
 Function: b 0
 Function: c 0

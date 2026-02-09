@@ -14,6 +14,7 @@ pub struct FunctionSignature {
     pub name: String,
     pub arity: usize,
     pub axioms: Vec<Axioms>,
+    pub unit_symbol: Option<String>
 }
 #[derive(Clone, PartialEq, Debug, Eq, Hash)]
 pub struct Function {
@@ -25,11 +26,13 @@ pub type Signature = Vec<FunctionSignature>;
 
 
 impl FunctionSignature {
-    pub fn new(name: String, arity: usize,axioms: Vec<Axioms>) -> FunctionSignature {
-        FunctionSignature{name, arity,axioms}
+    pub fn new(name: String, arity: usize,axioms: Vec<Axioms>,unit: Option<String>) -> FunctionSignature {
+        FunctionSignature{name, arity,axioms, unit_symbol: unit}
     }
 
+    /*
     pub fn get_unit(&self)->Term{
+
 
         match self.name.as_str(){
             "seq"|"par"|"tensor"=>{
@@ -44,6 +47,24 @@ impl FunctionSignature {
             }
         }
 
+    }
+
+     */
+
+    pub fn get_unit(&self)->Term{
+
+        match &self.unit_symbol {
+            Some(unit)=>{
+                let name = format!("{}", unit);
+                let sig = FunctionSignature::new(name,0,vec![],None);
+                Term::Function(Function::new(&sig,&vec![]))
+            },
+            None=>{
+                let name = format!("U_{}", self.name);
+                let sig = FunctionSignature::new(name,0,vec![],None);
+                Term::Function(Function::new(&sig,&vec![]))
+            }
+        }
     }
 
 }
