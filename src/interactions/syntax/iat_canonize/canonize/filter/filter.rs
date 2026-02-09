@@ -28,7 +28,7 @@ impl fmt::Display for CanonizationFilterCriterion {
         write!(f,"")
     }
 }
-
+#[allow(dead_code)]
 pub enum CanonizationFilter {}
 
 impl fmt::Display for CanonizationFilter {
