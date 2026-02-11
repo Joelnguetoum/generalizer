@@ -15,7 +15,7 @@ python3 -m pip install maude
 
 ## Protocol
 
-We use the interactions in the folder [Benchmark](../Benchmark%20Composition/Benchmark) 
+We use the interactions in the folder [Benchmark](../Benchmark/Benchmark) 
 as our starting global models. For each global interaction $k$, we extract 
 at most $N_p$ partitions of its set of lifelines $L$ into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.  
 
@@ -57,7 +57,7 @@ a computation timout of $60$ seconds.
 
 ## How to run the benchmark
 
-To run the benchmark, download the folder [Benchmark Composition](../Benchmark%20Composition), and add an executable of the project.
+To run the benchmark, download the folder [Benchmark Composition](../Benchmark), and add an executable of the project.
 
 The subcommand to run the benchmark is `benchmark`. It takes as arguments:
 
@@ -97,7 +97,7 @@ To draw the interactions involved in the process, we can use the flag `-d`.
 
 We present in the following table sequence diagram
 representation of the interactions of the benchmark, 
-which files are in the folder [Benchmark](../Benchmark%20Composition/Benchmark).
+which files are in the folder [Benchmark](../Benchmark/Benchmark).
 Those interaction were adapted from examples and experiments from 
 the literature.
 

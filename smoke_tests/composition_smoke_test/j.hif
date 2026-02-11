@@ -1,0 +1,13 @@
+seq(
+    seq(
+        dc -- dia -> ss,
+        ss -- not -> | [1]
+    ),
+    alt(
+        seq(
+            con -> dc [2],
+            dc -- ack -> | [3]
+        ),
+        o
+    )
+)

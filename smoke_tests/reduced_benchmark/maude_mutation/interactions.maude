@@ -1,0 +1,35 @@
+
+
+fmod INTERACTION is
+	including NAT .
+
+	sort Interaction .
+
+	op Empty : -> Interaction [ctor] .
+	op Action : Nat Nat Nat Nat -> Interaction [ctor frozen] .
+	op Vp : Interaction Interaction -> Interaction [ctor frozen] .
+
+	op seq : Interaction Interaction -> Interaction .
+	op tensor : Interaction Interaction -> Interaction .
+	op par : Interaction Interaction -> Interaction .
+	op alt : Interaction Interaction -> Interaction .
+	op loopS : Interaction -> Interaction .	 
+
+endfm
+
+mod INTERACTION-RULES is 
+	
+	including INTERACTION .
+
+	var X : Interaction .
+	var Y : Interaction .
+	var Z : Interaction .
+	var I : Interaction .
+
+	*** Neutral element rules ***
+
+	rl [R1] : par(X,Y) => par(Y,X) .
+	rl [R2] : alt(X,Y) => alt(Y,X) .
+
+
+endm

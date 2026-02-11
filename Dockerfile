@@ -1,14 +1,8 @@
 # ---------- Stage 1: Build ----------
 #FROM rust:1.92.0 as builder
-FROM rust:latest as builder
+FROM rust:latest AS builder
 
 WORKDIR /app
-
-
-# --- Make Cargo networking more reliable ---
-ENV CARGO_REGISTRIES_CRATES_IO_PROTOCOL=sparse
-ENV CARGO_NET_RETRY=10
-ENV CARGO_HTTP_TIMEOUT=600
 
 # System deps sometimes needed for crates
 RUN apt-get update && apt-get -y install curl \
@@ -17,12 +11,6 @@ RUN apt-get update && apt-get -y install curl \
     libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
-
-# Cache dependencies
-COPY Cargo.toml Cargo.lock ./
-RUN mkdir src && echo "fn main() {}" > src/main.rs
-RUN cargo build --release
-RUN rm -rf src
 
 # Copy full project
 COPY . .
@@ -40,6 +28,8 @@ FROM ubuntu:24.04
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
+        zip \
+        nano \
         bash \
         python3 \
         python3-pip \
@@ -57,11 +47,18 @@ RUN python3 -m pip install maude
 RUN useradd -m fm
 WORKDIR /home/fm/generalizer
 
+
+
 COPY --from=builder /app ./
 
-RUN cp /home/fm/generalizer/target/release/generalizer "Benchmark Composition" && \
-    cp /home/fm/generalizer/target/release/generalizer Examples && \
-    chown -R fm:fm /home/fm
+RUN mkdir "Executable"
+RUN cp /home/fm/generalizer/target/release/generalizer "Executable"
+RUN zip -r generalizer_sources.zip src readme Cargo.lock Cargo.toml Dockerfile LICENCE.txt README.txt
+RUN rm Cargo.lock Cargo.toml README.md
+RUN rm -r readme src target
+RUN mv README_FM.md README.md
+
+RUN chown -R fm:fm /home/fm
 
 USER fm
 CMD ["/bin/bash"]
