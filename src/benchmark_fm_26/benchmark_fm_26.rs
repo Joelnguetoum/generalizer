@@ -13,8 +13,8 @@ use crate::terms::function::Axioms;
 
 #[derive(Clone,Debug)]
 pub struct Locals{
-    normalized: Vec<Interaction>,
-    mutated: Vec<Interaction>,
+    pub normalized: Vec<Interaction>,
+    pub mutated: Vec<Interaction>,
 }
 #[derive(Clone,Debug)]
 pub struct Benchmark{
@@ -97,7 +97,7 @@ impl Benchmark {
 
     }
 
-    fn get_local_interactions(gen_ctx: &GeneralContext,local: &Vec<Interaction>,nb_local_rewrites:usize)->Locals{
+    pub fn get_local_interactions(gen_ctx: &GeneralContext,local: &Vec<Interaction>,nb_local_rewrites:usize)->Locals{
 
         let mut local_normalized: Vec<Interaction> = Vec::new();
         let mut local_mutated: Vec<Interaction> = Vec::new();
@@ -113,8 +113,8 @@ impl Benchmark {
         Locals{normalized: local_normalized,mutated: local_mutated,}
     }
 
-    pub fn run(&mut self,draw:bool,alpuente:bool, verbose:bool, /*greedy_fail:bool, */millis:bool)->Result<(), BenchmarkError>{
-        let output_dir = "Benchmark Output";
+    pub fn run(&mut self,draw:bool,alpuente:bool, verbose:bool,millis:bool)->Result<(), BenchmarkError>{
+        let output_dir = "Benchmark_Output";
         fs::remove_dir_all(output_dir).ok();
         fs::create_dir(output_dir).ok();
 
@@ -375,7 +375,7 @@ impl Benchmark {
 
 
     pub fn create_dir_tree(&self,draw:bool)->Result<(),std::io::Error>{
-        let output_dir = "Benchmark Output";
+        let output_dir = "Benchmark_Output";
         //fs::remove_dir_all(output_dir).ok();
         //fs::create_dir(output_dir).ok();
 

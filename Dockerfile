@@ -30,6 +30,7 @@ RUN apt-get update && \
         ca-certificates \
         zip \
         nano \
+        less \
         bash \
         python3 \
         python3-pip \
@@ -42,7 +43,7 @@ RUN python3 -m venv $VIRTUAL_ENV
 ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 
 # Install Maude Python package
-RUN python3 -m pip install maude
+RUN python3 -m pip install maude csvkit
 
 RUN useradd -m fm
 WORKDIR /home/fm/generalizer

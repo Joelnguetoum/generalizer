@@ -199,6 +199,73 @@ subcommands:
             - CU
             - ACU
           multiple: false
+  - benchmark_step_1:
+      about: Step 1 of the Benchmark for the paper FM 26
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - folder:
+            required: true
+            index: 1
+            help: Folder containing the global models
+        - nb_mutations:
+            required: true
+            index: 2
+            help: Number of local mutations
+        - nb_lifelines_partitions:
+            required: true
+            index: 3
+            help: Number of random partitions computed per global interaction
+        - draw:
+            long: draw
+            short: d
+            help: Draw the models for visualisation
+        - milliseconds:
+            long: milliseconds
+            short: m
+            help: Display durations in milliseconds
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of clggs
+  - benchmark_step_2:
+      about: Step 2 of the Benchmark for the paper FM 26
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - folder:
+            required: true
+            index: 1
+            help: Folder containing the global models
+        - timout_secs:
+            required: true
+            index: 4
+            help: Timout of computations in seconds
+        - draw:
+            long: draw
+            short: d
+            help: Draw the models for visualisation
+        - milliseconds:
+            long: milliseconds
+            short: m
+            help: Display durations in milliseconds
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of clggs
+  - benchmark_step_3:
+      about: Step 3 of the Benchmark for the paper FM 26
+      version: "0.0.0"
+      author: Joel Nguetoum
+      args:
+        - folder:
+            required: true
+            index: 1
+            help: Folder containing the global models
+        - verbose:
+            long: verbose
+            short: v
+            help: Print the computation history of clggs
   - test:
       about: Various tests
       version: "0.0.0"

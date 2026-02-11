@@ -1,5 +1,8 @@
 use clap::{load_yaml, App};
 use crate::ui::commands::cli_benchmark::cli_benchmark;
+use crate::ui::commands::cli_benchmark_step_1::cli_benchmark_step_1;
+use crate::ui::commands::cli_benchmark_step_2::cli_benchmark_step_2;
+use crate::ui::commands::cli_benchmark_step_3::cli_benchmark_step_3;
 use crate::ui::commands::cli_sclgg::cli_sclgg;
 use crate::ui::commands::cli_compose::cli_compose;
 use crate::ui::commands::cli_lgg::cli_lgg;
@@ -30,6 +33,18 @@ pub fn generaliser_cli() -> i32{
     }
     else if let Some(matches) = matches.subcommand_matches("benchmark") {
         let _got = cli_benchmark(matches);
+
+    }
+    else if let Some(matches) = matches.subcommand_matches("benchmark_step_1") {
+        let _got = cli_benchmark_step_1(matches);
+
+    }
+    else if let Some(matches) = matches.subcommand_matches("benchmark_step_2") {
+        let _got = cli_benchmark_step_2(matches);
+
+    }
+    else if let Some(matches) = matches.subcommand_matches("benchmark_step_3") {
+        let _got = cli_benchmark_step_3(matches);
 
     }
     else if let Some(matches) = matches.subcommand_matches("test") {

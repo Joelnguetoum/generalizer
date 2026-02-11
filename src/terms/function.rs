@@ -8,7 +8,11 @@ pub enum Axioms {
     C,
     U
 }
-
+impl Axioms {
+    pub fn acu()->Vec<Axioms>{
+        vec![Axioms::A,Axioms::C,Axioms::U]
+    }
+}
 #[derive(Clone, PartialEq,Eq, Debug, Hash)]
 pub struct FunctionSignature {
     pub name: String,
