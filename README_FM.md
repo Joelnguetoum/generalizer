@@ -68,7 +68,7 @@ Our implementation of Interactions models is based on the work of
 We follow the notation of HIBOU for signature files (.hsf)
 and interaction files (.hif).
 
-with the signature (sig.hsf):
+Let us consider the signature (sig.hsf):
 ~~~
 @message{
 	bwin;cwin;close;blose;busy;msg;sig;free
@@ -176,7 +176,7 @@ two smoke tests: a composition smoke test and a reduced benchmark smoke test.
 
 To check whether the composition of two interactions works, we check that 
 with the example in the introduction of the paper. It is located in 
-`generalizer/smoke_tests`. The folder contains:
+`generalizer/smoke_tests/composition_smoke_test`. The folder contains:
 - `signature.hsf`: the signature file of the interactions containing the declaration of lifelines and messages.
 - `i.hif`: the first interaction.
 - `j.hif`: the second interaction.
@@ -377,7 +377,7 @@ local interactions.
 In this step, we check whether the normal form of the  results of compositions
 in the previous step is the same as the normal form of the original interactions.
 
-It is accomplished by applying the normal form checking algorithm of [Hibou](https://github.com/erwanM974/hibou_label)
+It is accomplished by applying the normal form checking algorithm of [HIBOU](https://github.com/erwanM974/hibou_label)
 to the interactions obtained in the previous step.
 
 We execute the following command:
@@ -394,7 +394,8 @@ the normal form of the original interaction before projections.
 The final table should be similar to the one in the 
 experiment section of the paper (up to some small differences in numbers,
 due to the randomness of the mutation operations and different 
-execution environments).
+execution environments). The `Ok` in the csv files are represented 
+by green checkmarks in the table of the paper.
 
 ![benchmark_table](readme/images/benchmark/benchmark_table.png "Benchmark table")
 
