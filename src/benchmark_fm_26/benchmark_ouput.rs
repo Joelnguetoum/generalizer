@@ -35,7 +35,6 @@ impl Line{
     }
 
 
-
    pub  fn averaging_results(vec: &Vec<(Option<f64>, Option<f64>,Option<f64>, Option<f64>)>, millis:bool) ->(Option<f64>, Option<f64>,Option<f64>, Option<f64>){
 
        let mut av1 = Some(0.0);
@@ -116,6 +115,61 @@ impl BenchmarkOutput{
         self.results_benchmark
             .sort_by(|a, b| a.global_interaction_name.cmp(&b.global_interaction_name));
     }
+
+    pub fn csv_partition(name_int: &str,parent_dir:&str,millis:bool,result_vec: &Vec<(Option<f64>, Option<f64>, Option<f64>, Option<f64>)>){
+        let file_name = format!("{}/{}_composition_durations.csv",parent_dir,name_int);
+        let file = if let Some(f) = File::create(&file_name).ok(){
+            f
+        }
+        else{
+            panic!("Error creating CSV file");
+        };
+
+        let mut wtr = csv::WriterBuilder::new()
+            .delimiter(b'&')
+            //.quote_style(csv::QuoteStyle::NonNumeric)
+            .from_writer(file);
+
+        //Writing
+        let mut duration1_str =  String::from("(Normalized locals) Composition duration with Fail");
+        let mut duration2_str =  String::from("(Normalized locals) Composition duration without Fail");
+        let mut duration3_str =  String::from("(Mutated locals) Composition duration with Fail");
+        let mut duration4_str =  String::from("(Mutated locals) Composition duration without Fail");
+        if millis {
+            duration1_str.push_str("(ms)");
+            duration2_str.push_str("(ms)");
+            duration3_str.push_str("(ms)");
+            duration4_str.push_str("(ms)");
+        }
+        else{
+            duration1_str.push_str("(s)");
+            duration2_str.push_str("(s)");
+            duration3_str.push_str("(s)");
+            duration4_str.push_str("(s)");
+        }
+
+        let _ = wtr.write_record(&["Partition",
+            &duration1_str,
+            &duration2_str,
+            &duration3_str,
+            &duration4_str]);
+
+        let mut partition_ct = 0;
+
+        for (duration1,duration2,duration3,duration4) in result_vec.iter(){
+
+            let _ = wtr.write_record(&[format!("Partition {}",partition_ct),
+                Self::custom_expect_step_2_partition(duration1,millis),
+                Self::custom_expect_step_2_partition(duration2,millis),
+                Self::custom_expect_step_2_partition(duration3,millis),
+                Self::custom_expect_step_2_partition(duration4,millis)]);
+            partition_ct += 1;
+
+        }
+
+        let _ = wtr.flush();
+    }
+
     #[allow(dead_code)]
     pub fn to_csv_for_paper(&self,parent_dir: &str,millis:bool){
         let file_name = format!("{}/results.csv",parent_dir);
@@ -358,6 +412,24 @@ impl BenchmarkOutput{
     pub fn custom_expect_step_2(op: &Option<f64>)->String{
         match op{
             Some(x) => format!("{}",x),
+            None => "timeout".to_string(),
+        }
+    }
+
+    pub fn custom_expect_step_2_partition(op: &Option<f64>,millis:bool)->String{
+        match op{
+            Some(x) => {
+
+                if millis{
+                    let mut v1 = x*1000.0; // Conversion to ms
+                    v1 = (v1*1000.0).round() / 1000.0;
+                    format!("{}",v1)
+                }
+                else{
+                    format!("{}",x)
+                }
+
+            },
             None => "timeout".to_string(),
         }
     }

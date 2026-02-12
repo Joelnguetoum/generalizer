@@ -148,7 +148,7 @@ The `generalizer` folder contains the following subfolders:
 
  ```tree
       generalizer
-          LICENSE
+          LICENSE.txt
           README.pdf
           README.md
           Dockerfile
@@ -156,7 +156,7 @@ The `generalizer` folder contains the following subfolders:
           Benchmark
           smoke_tests
           Interactions_examples
-          generalizer_sources.tar.gz
+          generalizer_sources.zip
           readme
   ```
 
@@ -278,8 +278,14 @@ In the case of the interaction `Game`, we have the following structure:
         input_global_interaction
              Game.hsf
              Game.hif
-        partition0
+        Partition0
             original_locals
+                i1.hif
+                i1.png
+                i1_tree.png
+                i2.hif
+                i2.png
+                i2_tree.png
             with_mutated_locals
                 mutated_local_interactions
                     i1.hif
@@ -291,11 +297,21 @@ In the case of the interaction `Game`, we have the following structure:
                 results_with_rule_fail
                 results_without_rule_fail
             with_normalized_locals
-        partition1
-        partition2
-        partition3
-        partition4
+              ...
+        Partition1
+            ... 
+        Partition2
+            ...
+        Partition3
+            ...
+        Partition4
+            ...
 ```
+
+The folder `original_locals` contains the 
+local interactions `i1` and `i2` obtained after the projection
+of the global interaction.
+
 The folders `with_normalized_locals` and `with_mutated_locals` have the same structure, as well as 
 the partitions folders.
 
@@ -321,11 +337,18 @@ $ ./benchmark_step_2_composition.sh
 
 ```tree
     Game
+        Game_composition_durations.csv
         input_global_interaction
              Game.hsf
              Game.hif
-        partition0
+        Partition0
             original_locals
+                i1.hif
+                i1.png
+                i1_tree.png
+                i2.hif
+                i2.png
+                i2_tree.png
             with_mutated_locals
                 mutated_local_interactions
                     i1.hif
@@ -345,10 +368,15 @@ $ ./benchmark_step_2_composition.sh
                     result_tree.png
                     time.txt
             with_normalized_locals
-        partition1
-        partition2
-        partition3
-        partition4
+                 ...
+        Partition1
+            ... 
+        Partition2
+            ...
+        Partition3
+            ...
+        Partition4
+            ...
 ```
 The folders `results_with_rule_fail` and `results_without_rule_fail` contain the results of the composition
 with and without the rule $\textsf{Fail}$.  The duration
@@ -380,6 +408,13 @@ In particular, the fourth and fifth columns report the average duration
 for the composition of normalized local interactions,
 and the last two columns report the average duration for the mutated
 local interactions.
+
+In addition, in each folder corresponding to a global interaction,
+there is a `.csv` file showing the composition duration for each partitions
+non-averaged. For example, for the interaction `Game`, such a file is
+`Game/Game_composition_durations.csv`. It contains the following table:
+
+TODO (fig)
 
 ### Step 3: Normal Form Checking
 

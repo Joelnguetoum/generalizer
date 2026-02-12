@@ -1,7 +1,7 @@
 use std::fs;
 use std::time::Instant;
 use crate::benchmark_fm_26::benchmark_fm_26::{Benchmark, Locals};
-use crate::benchmark_fm_26::benchmark_ouput::Line;
+use crate::benchmark_fm_26::benchmark_ouput::{BenchmarkOutput, Line};
 use crate::benchmark_fm_26::error::BenchmarkError;
 use crate::interactions::composition::error::CompositionError;
 use crate::interactions::io::input::hif::interface::parse_hif_file;
@@ -48,7 +48,7 @@ impl Benchmark{
 
                 //Normalization + Mutation
                 let locals = Self::parse_locals(gen_ctx,&norm_input_local_dir,&mutated_local_dir);
-                println!("For partition {} of the {}: Local interaction parsing successful",ct_partition,name);
+                println!("For partition {} of {}: Local interaction parsing successful",ct_partition,name);
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());
 
@@ -222,10 +222,11 @@ impl Benchmark{
 
             self.output.add_line(&line);
 
-
-
+            //Here!! Partial csv
+            BenchmarkOutput::csv_partition(name,&int_dir,millis,&result_vec_per_partition);
 
             println!("Composition of local interactions of {} completed for each partition of lifelines",name);
+            println!("The duration of composition for each partitions are recorded in {}/{}_composition_durations.csv",int_dir,name);
             println!("");
             println!("-----------------------");
             println!("");

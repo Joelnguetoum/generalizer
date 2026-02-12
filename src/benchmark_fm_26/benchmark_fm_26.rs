@@ -363,7 +363,14 @@ impl Benchmark {
 
 
 
-            println!("Global interaction {} processed",name);
+            //Here!! Partial csv
+            BenchmarkOutput::csv_partition(name,&int_dir,millis,&result_vec_per_partition);
+
+            println!("Composition of local interactions of {} completed for each partition of lifelines",name);
+            println!("The duration of composition for each partitions are recorded in {}/{}_composition_durations.csv",int_dir,name);
+            println!("");
+            println!("-----------------------");
+            println!("");
 
 
         }
