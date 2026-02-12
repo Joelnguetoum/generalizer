@@ -359,7 +359,9 @@ Or with column shrinked down:
 ```bash
 $ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_step_2.csv | less -S
 ```
-TODO: add a picture of table with the results obtained in the docker.
+We obtain the following table:
+
+![step_2_results](readme/images/benchmark/step_2_results.png)
 
 Each interaction corresponds to a row in the table.
 The second column indicates the size of each interaction,
@@ -394,10 +396,18 @@ the normal form of the original interaction before projections.
 The final table should be similar to the one in the 
 experiment section of the paper (up to some small differences in numbers,
 due to the randomness of the mutation operations and different 
-execution environments). The `Ok` in the csv files are represented 
-by green checkmarks in the table of the paper.
+execution environments). 
+
+An execution gives the following table:
+![step_3_results](readme/images/benchmark/step_3_results.png)
+
+While the paper table is as follows:
 
 ![benchmark_table](readme/images/benchmark/benchmark_table.png "Benchmark table")
+
+The `Ok` in the csv files are represented
+by green checkmarks in the table of the paper.
+
 
 ### Summary of the workflow for the interaction Game
 
