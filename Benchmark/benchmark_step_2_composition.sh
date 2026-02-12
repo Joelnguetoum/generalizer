@@ -12,7 +12,7 @@ echo "----------------------------------------"
 
 NB_MUTATIONS=7
 MAX_NB_PARTITIONS=5
-TIMOUT_SECS=5
+TIMOUT_SECS=60
 # Run benchmark
 $BINARY benchmark_step_2 Benchmark $OUTPUT_DIR $NB_MUTATIONS $MAX_NB_PARTITIONS $TIMOUT_SECS -m -d
 

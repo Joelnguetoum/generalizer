@@ -38,15 +38,15 @@ impl Benchmark{
             for (ct_partition,locals_original) in all_locals.iter().enumerate() { // CYCLE
 
                 let partition_dir = format!("{}/Partition {}", int_dir, ct_partition);
-                let locals_dir = format!("{}/original locals", partition_dir);
-                let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
-                let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
-                let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);
-                let norm_result_non_gf = format!("{}/result without greedy fail",&normalized_int_dir);
-                let mutated_int_dir = format!("{}/with mutated locals",&partition_dir);
-                let mutated_local_dir = format!("{}/mutated local interactions",&mutated_int_dir);
-                let mut_result_gf = format!("{}/result with greedy fail",&mutated_int_dir);
-                let mut_result_non_gf = format!("{}/result without greedy fail",&mutated_int_dir);
+                let locals_dir = format!("{}/original_locals", partition_dir);
+                let normalized_int_dir = format!("{}/with_normalized_locals",&partition_dir);
+                let norm_input_local_dir = format!("{}/normalized_local_interactions",&normalized_int_dir);
+                let norm_result_gf = format!("{}/result_with_rule_fail",&normalized_int_dir);
+                let norm_result_non_gf = format!("{}/result_without_rule_fail",&normalized_int_dir);
+                let mutated_int_dir = format!("{}/with_mutated_locals",&partition_dir);
+                let mutated_local_dir = format!("{}/mutated_local_interactions",&mutated_int_dir);
+                let mut_result_gf = format!("{}/result_with_rule_fail",&mutated_int_dir);
+                let mut_result_non_gf = format!("{}/result_without_rule_fail",&mutated_int_dir);
                 if draw{
                     fs::create_dir_all(&locals_dir).ok();
                     //Drawing locals

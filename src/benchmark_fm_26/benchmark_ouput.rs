@@ -133,10 +133,10 @@ impl BenchmarkOutput{
             .from_writer(file);
 
         //Writing
-        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
-        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
-        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
-        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with Fail");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without Fail");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with Fail");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without Fail");
         if millis {
             duration1_str.push_str("(ms)");
             duration2_str.push_str("(ms)");
@@ -188,10 +188,10 @@ impl BenchmarkOutput{
             .from_writer(file);
 
         //Writing
-        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
-        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
-        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
-        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with Fail");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without Fail");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with Fail");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without Fail");
         if millis {
             duration1_str.push_str("(ms)");
             duration2_str.push_str("(ms)");
@@ -244,10 +244,10 @@ impl BenchmarkOutput{
             .from_writer(file);
 
         //Writing
-        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
-        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
-        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
-        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with Fail");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without Fail");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with Fail");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without Fail");
         if millis {
             duration1_str.push_str("(ms)");
             duration2_str.push_str("(ms)");
@@ -299,10 +299,10 @@ impl BenchmarkOutput{
             .from_writer(file);
 
         //Writing
-        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
-        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
-        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
-        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with Fail");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without Fail");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with Fail");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without Fail");
         if millis {
             duration1_str.push_str("(ms)");
             duration2_str.push_str("(ms)");
