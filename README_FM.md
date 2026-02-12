@@ -168,7 +168,7 @@ with scripts to compose them.
 
 ## Smoke tests
 
-By running the container, `Docker` will open a shell in a container inside a directory named `generalizer`.
+By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
 The smoke tests are located in the `generalizer/smoke_tests` directory. There are 
 two smoke tests: a composition smoke test and a reduced benchmark smoke test.
 
