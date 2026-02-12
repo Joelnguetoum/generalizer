@@ -352,12 +352,12 @@ This step produces a csv file `results_step_2.csv` in the folder `Benchmark_Outp
 You can visualize it with the following command:
 
 ```bash
-$ csvlook -d '&' Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' Benchmark_Output/results_step_2.csv | less -S
 ```
 Or with column shrinked down:
 
 ```bash
-$ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_step_2.csv | less -S
 ```
 TODO: add a picture of table with the results obtained in the docker.
 
