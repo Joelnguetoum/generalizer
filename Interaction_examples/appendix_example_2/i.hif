@@ -1,0 +1,41 @@
+loopS(
+
+	seq(
+	
+		CSI -- ce -> CI,
+		seq(
+				seq(
+					CI -- cmi -> SM,
+					seq(
+						SM -- rlsoc -> | [1],
+						lsoc -> SM [2]
+					)
+				),
+			
+			
+			seq(
+				par(
+					seq(
+						SM -- rbm -> LSM,
+						LSM -- bm -> SM
+					),
+					seq(
+						SM -- rcm -> | [3],
+						cm -> SM [4]
+					)
+				),
+				
+				seq(
+					SM -- cm -> CSI,
+					loopS(
+					
+						seq(
+							ucm -> SM [5],
+							SM -- ucm -> CSI
+						)
+					)
+				)
+			)
+		)
+	)
+)

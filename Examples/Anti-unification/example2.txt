@@ -1,6 +1,0 @@
-Function: f 2 A
-Function: a 0 S
-Function: b 0
-Function: c 0
-Function: d 0
-Problem: x f(a,f(b,c)) f(f(a,b),d)

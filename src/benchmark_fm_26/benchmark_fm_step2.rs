@@ -18,7 +18,7 @@ impl Benchmark{
          }
 
         for (name,gen_ctx,global_interaction) in self.global_interactions.iter() {
-            let canon_global = global_interaction.iat_canonize(gen_ctx).clean_gates(); //Important to clean gates here
+            let _canon_global = global_interaction.iat_canonize(gen_ctx).clean_gates(); //Important to clean gates here
             //FOR EACH GLOBAL
             let mut result_vec_per_partition = Vec::new();
             let mut gates_vec = Vec::new();
@@ -36,7 +36,7 @@ impl Benchmark{
             for ct_partition in 0..nb_partitions { // CYCLE
 
                 let partition_dir = format!("{}/Partition {}", int_dir, ct_partition);
-                let locals_dir = format!("{}/original locals", partition_dir);
+                let _locals_dir = format!("{}/original locals", partition_dir);
                 let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
                 let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
                 let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);
@@ -48,7 +48,7 @@ impl Benchmark{
 
                 //Normalization + Mutation
                 let locals = Self::parse_locals(gen_ctx,&norm_input_local_dir,&mutated_local_dir);
-                println!("Local interaction parsing successful");
+                println!("For partition {} of the {}: Local interaction parsing successful",ct_partition,name);
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());
 
@@ -226,8 +226,9 @@ impl Benchmark{
 
 
             println!("Composition of local interactions of {} completed for each partition of lifelines",name);
-
-
+            println!("");
+            println!("-----------------------");
+            println!("");
         }
 
         //creating the csv file
@@ -239,7 +240,7 @@ impl Benchmark{
 
 
     pub fn parse_locals(gen_ctx:&GeneralContext, norm_int_folder: &str,mut_int_folder: &str)-> Locals{
-        println!("{}",norm_int_folder);
+        //println!("{}",norm_int_folder);
         let n_i1 = parse_hif_file(&gen_ctx,&format!("{}/i1.hif",norm_int_folder)).unwrap();
         let n_i2 = parse_hif_file(&gen_ctx,&format!("{}/i2.hif",norm_int_folder)).unwrap();
 

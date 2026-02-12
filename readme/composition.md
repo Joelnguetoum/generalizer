@@ -97,12 +97,12 @@ use the flag `-f`.
 # Example 
 
 As an example, we describe the execution of 
-an [example](../Examples/Composition/example1).
+an [example](../Interaction_examples/Composition/example1).
 
 ### Common signature file (.hsf)
 
 The two local interaction share 
-the same signature file [sig.hsf](../Examples/Composition/example1/sig.hsf).
+the same signature file [sig.hsf](../Interaction_examples/Composition/example1/sig.hsf).
 
 ~~~
 @message{
@@ -117,7 +117,7 @@ the same signature file [sig.hsf](../Examples/Composition/example1/sig.hsf).
 ### Local interaction $i$
 
 We give below the first local 
-interaction [i.hif](../Examples/Composition/example1/i.hif)
+interaction [i.hif](../Interaction_examples/Composition/example1/i.hif)
 and its sequence diagram representation.
 
 ~~~
@@ -147,7 +147,7 @@ loopS(
 
 ### Local interaction $j$
 
-The second local interaction [j](../Examples/Composition/example1/j.hif) and its graphical 
+The second local interaction [j](../Interaction_examples/Composition/example1/j.hif) and its graphical 
 representation is as follows.  
 
 ~~~

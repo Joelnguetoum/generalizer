@@ -4,9 +4,10 @@ use crate::terms::function::Axioms;
 
 pub fn cli_benchmark_step_3(matches: &ArgMatches) {
     let folder = matches.value_of("folder").unwrap();
+    let output_folder = matches.value_of("output_folder").unwrap();
     let nb_mutations = matches.value_of("nb_mutations").unwrap().parse::<usize>().unwrap();
     let nb_lifelines_partitions = matches.value_of("nb_lifelines_partitions").unwrap().parse::<usize>().unwrap();
-    let timeout = matches.value_of("timout_secs").unwrap().parse::<f64>().unwrap();
+    //let timeout = matches.value_of("timout_secs").unwrap().parse::<f64>().unwrap();
 
     let alpuente = matches.is_present("alpuente");
     let verbose = matches.is_present("verbose");
@@ -18,8 +19,10 @@ pub fn cli_benchmark_step_3(matches: &ArgMatches) {
     //println!("Number of mutations {}",nb_mutations);
 
 
+    println!("Starting step 3 of the benchmark based on the output folder: {}",output_folder);
 
-    match Benchmark::init(folder,nb_mutations,nb_lifelines_partitions,Some(timeout),Axioms::acu()){
+
+    match Benchmark::init(folder,nb_mutations,nb_lifelines_partitions,None,Axioms::acu()){
         Ok(mut benchmark) => {
 
             match benchmark.run_step_3(draw,alpuente,verbose,/*greedyfail,*/millis){

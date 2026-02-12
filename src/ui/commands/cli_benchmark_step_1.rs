@@ -1,13 +1,11 @@
 use clap::ArgMatches;
 use crate::benchmark_fm_26::benchmark_fm_26::Benchmark;
 use crate::terms::function::Axioms;
-use crate::ui::utils::print_axioms::print_axioms;
 
 pub fn cli_benchmark_step_1(matches: &ArgMatches) {
     let folder = matches.value_of("folder").unwrap();
     let nb_mutations = matches.value_of("nb_mutations").unwrap().parse::<usize>().unwrap();
     let nb_lifelines_partitions = matches.value_of("nb_lifelines_partitions").unwrap().parse::<usize>().unwrap();
-    let timeout = matches.value_of("timout_secs").unwrap().parse::<f64>().unwrap();
 
     let alpuente = matches.is_present("alpuente");
     let verbose = matches.is_present("verbose");
@@ -20,7 +18,7 @@ pub fn cli_benchmark_step_1(matches: &ArgMatches) {
 
 
 
-    match Benchmark::init(folder,nb_mutations,nb_lifelines_partitions,Some(timeout),Axioms::acu()){
+    match Benchmark::init(folder,nb_mutations,nb_lifelines_partitions,None,Axioms::acu()){
         Ok(mut benchmark) => {
 
             match benchmark.run_step_1(draw,alpuente,verbose,/*greedyfail,*/millis){

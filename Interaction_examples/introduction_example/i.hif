@@ -1,0 +1,10 @@
+seq(
+    not -> tc [1],
+    alt(
+        tc -- wrn -> |,
+        seq(
+            tc -- con -> | [2],
+            ack -> tc [3]
+        )
+    )
+)

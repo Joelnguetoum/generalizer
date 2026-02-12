@@ -1,16 +1,14 @@
 use std::fs;
-use std::time::Instant;
 use crate::benchmark_fm_26::benchmark_fm_26::Benchmark;
 use crate::benchmark_fm_26::benchmark_ouput::Line;
 use crate::benchmark_fm_26::error::BenchmarkError;
 use crate::interactions::composition::error::CompositionError;
 use crate::interactions::io::input::hif::interface::parse_hif_file;
-use crate::interactions::io::output::quick_drawing::draw_model;
 use crate::interactions::syntax::general_context::GeneralContext;
 use crate::interactions::syntax::interaction::Interaction;
 
 impl Benchmark{
-    pub fn run_step_3(&mut self,draw:bool,alpuente:bool, verbose:bool,millis:bool)->Result<(),BenchmarkError>{
+    pub fn run_step_3(&mut self,_draw:bool,_alpuente:bool, _verbose:bool,millis:bool)->Result<(),BenchmarkError>{
         let output_dir = "Benchmark_Output";
 
         if let Err(_) =  fs::exists(output_dir){
@@ -36,7 +34,7 @@ impl Benchmark{
             for ct_partition in 0..nb_partitions { // CYCLE
 
                 let partition_dir = format!("{}/Partition {}", int_dir, ct_partition);
-                let locals_dir = format!("{}/original locals", partition_dir);
+                let _locals_dir = format!("{}/original locals", partition_dir);
                 let normalized_int_dir = format!("{}/with normalized locals",&partition_dir);
                 let norm_input_local_dir = format!("{}/normalized local interactions",&normalized_int_dir);
                 let norm_result_gf = format!("{}/result with greedy fail",&normalized_int_dir);

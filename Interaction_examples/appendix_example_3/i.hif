@@ -2,14 +2,8 @@ loopS(
 	seq(
 		par(
 			alt(
-				seq(
-					l0 -- cwin ->| [3],
-					∅
-				),
-				seq(
-					l0 -- bwin ->| [1],
-					∅
-				)
+				l0 -- cwin ->| [3],
+				l0 -- bwin ->| [1]
 			),
 			busy -> l3 [5]
 		),

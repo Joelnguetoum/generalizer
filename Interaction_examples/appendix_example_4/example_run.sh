@@ -2,20 +2,21 @@
 
 
 #BINARY="./generalizer"
-BINARY="../Executable/generalizer"
-OUTPUT_DIR="./Benchmark_Output"
+BINARY="../../Executable/generalizer"
+OUTPUT_DIR="./Composition Output"
 
 echo "----------------------------------------"
-echo "Starting the Step 1 of Benchmark: $(date)"
+echo "Example 4 of the paper's appendix"
+echo "This script uses the executable at the location:  generalizer/target/release/generalizer"
+echo "Starting composition: $(date)"
 echo "Results will be written to: ${OUTPUT_DIR}"
 echo "----------------------------------------"
 
-NB_MUTATIONS=7
-MAX_NB_PARTITIONS=5
+
 # Run benchmark
-$BINARY benchmark_step_1 Benchmark $NB_MUTATIONS $MAX_NB_PARTITIONS -m -d
+$BINARY compose signature.hsf i.hif j.hif -f
 
 echo "----------------------------------------"
-echo "Step 1 of the Benchmark finished: $(date)"
+echo "Composition smoke test: $(date)"
 echo "Check results inside: ${OUTPUT_DIR}"
 echo "----------------------------------------"

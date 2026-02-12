@@ -1,0 +1,27 @@
+loopS(
+
+	seq(
+		seq(
+			rlsoc -> SOS [1],
+			SOS -- lsoc -> | [2]
+		),
+		seq(
+			seq(
+				rcm -> CSM [3],
+				CSM -- cm -> | [4]
+			),
+			loopS (
+				seq(
+					CA -- tdc -> CR,
+					seq(
+						CR -- tmu -> CSM,
+						CSM -- ucm -> | [5]
+					)
+				)
+				
+				
+			)
+		)
+	)
+
+)

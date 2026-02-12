@@ -96,7 +96,7 @@ For examples of problem specification, see the Example folder.
 
 ### Execution of the anti-unification algorithm
 
-The file [example6.txt](../Examples/Anti-unification/exemple6.txt) in the [Example/Anti-unification](../Examples/Anti-unification) folder
+The file [example6.txt](../Interaction_examples/Anti-unification/exemple6.txt) in the [Example/Anti-unification](../Interaction_examples/Anti-unification) folder
 contains the following problem:
 
 ```

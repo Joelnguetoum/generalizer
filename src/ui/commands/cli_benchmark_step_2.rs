@@ -5,6 +5,7 @@ use crate::terms::function::Axioms;
 pub fn cli_benchmark_step_2(matches: &ArgMatches) {
     
     let folder = matches.value_of("folder").unwrap();
+    let output_folder = matches.value_of("output_folder").unwrap();
     let nb_mutations = matches.value_of("nb_mutations").unwrap().parse::<usize>().unwrap();
     let nb_lifelines_partitions = matches.value_of("nb_lifelines_partitions").unwrap().parse::<usize>().unwrap();
     let timeout = matches.value_of("timout_secs").unwrap().parse::<f64>().unwrap();
@@ -18,7 +19,7 @@ pub fn cli_benchmark_step_2(matches: &ArgMatches) {
     //println!("Max number of partitions {}",nb_lifelines_partitions);
     //println!("Number of mutations {}",nb_mutations);
 
-
+    println!("Starting step 2 of the benchmark based on the output folder: {}",output_folder);
 
     match Benchmark::init(folder,nb_mutations,nb_lifelines_partitions,Some(timeout),Axioms::acu()){
         Ok(mut benchmark) => {

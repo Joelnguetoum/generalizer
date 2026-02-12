@@ -116,7 +116,7 @@ impl BenchmarkOutput{
         self.results_benchmark
             .sort_by(|a, b| a.global_interaction_name.cmp(&b.global_interaction_name));
     }
-
+    #[allow(dead_code)]
     pub fn to_csv_for_paper(&self,parent_dir: &str,millis:bool){
         let file_name = format!("{}/results.csv",parent_dir);
         let file = if let Some(f) = File::create(&file_name).ok(){

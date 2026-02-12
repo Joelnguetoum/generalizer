@@ -11,7 +11,7 @@ seq(
 	
 	),
 	seq(
-		center -- result -> | [3],
+		center -- result -> |,
 		center -- sig -> | [4]
 	)
 )

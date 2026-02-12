@@ -1,14 +1,10 @@
 use std::fs;
-use std::time::Instant;
 use crate::benchmark_fm_26::benchmark_fm_26::Benchmark;
-use crate::benchmark_fm_26::benchmark_ouput::Line;
 use crate::benchmark_fm_26::error::BenchmarkError;
-use crate::interactions::composition::error::CompositionError;
 use crate::interactions::io::output::quick_drawing::draw_model;
-use crate::interactions::syntax::interaction::Interaction;
 
 impl Benchmark{
-    pub fn run_step_1(&mut self,draw:bool,alpuente:bool, verbose:bool,millis:bool)->Result<(),BenchmarkError>{
+    pub fn run_step_1(&mut self,draw:bool,_alpuente:bool, _verbose:bool,_millis:bool)->Result<(),BenchmarkError>{
         let output_dir = "Benchmark_Output";
         fs::remove_dir_all(output_dir).ok();
         fs::create_dir(output_dir).ok();
@@ -20,7 +16,7 @@ impl Benchmark{
 
 
         for (name,gen_ctx,global_interaction) in self.global_interactions.iter() {
-            let canon_global = global_interaction.iat_canonize(gen_ctx).clean_gates(); //Important to clean gates here
+            let _canon_global = global_interaction.iat_canonize(gen_ctx).clean_gates(); //Important to clean gates here
             //FOR EACH GLOBAL
             //let mut result_vec_per_partition = Vec::new();
             let mut gates_vec = Vec::new();
