@@ -3,6 +3,30 @@ use itertools::Itertools;
 use crate::interactions::syntax::interaction::Interaction;
 
 impl Interaction {
+
+    pub fn nb_partitions_shuffled(&self,max_number_of_partitions:usize) ->usize {
+      
+
+
+        let lifelines: Vec<usize> = self.get_lifelines().into_iter().collect();
+
+
+        let partitions = Self::partitions_at_least_half(&lifelines);
+
+
+        for (ct,(lifelines_1, lifelines_2)) in partitions.iter().enumerate() {
+
+            if ct>=max_number_of_partitions{
+                return ct-1;
+            }
+            
+           
+        }
+        
+        partitions.len()
+        
+    }
+    
     pub fn random_decompose_into_two_ints(&self,max_number_of_partitions:usize) -> Vec<Vec<Interaction>> {
         let mut local_interactions = Vec::new();
 

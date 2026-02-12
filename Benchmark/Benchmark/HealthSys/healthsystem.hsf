@@ -1,7 +1,7 @@
 @message{
 
 sendData;subscribed;
-nok;ok;
+nok;Ok;
 notSubscribed;account;
 logCreated;fwd;fwdOk;helpReq;provideService
 

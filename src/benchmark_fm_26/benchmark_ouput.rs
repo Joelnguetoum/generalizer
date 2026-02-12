@@ -117,7 +117,7 @@ impl BenchmarkOutput{
             .sort_by(|a, b| a.global_interaction_name.cmp(&b.global_interaction_name));
     }
 
-    pub fn to_csv(&self,parent_dir: &str,millis:bool){
+    pub fn to_csv_for_paper(&self,parent_dir: &str,millis:bool){
         let file_name = format!("{}/results.csv",parent_dir);
         let file = if let Some(f) = File::create(&file_name).ok(){
             f
@@ -172,6 +172,171 @@ impl BenchmarkOutput{
 
     }
 
+    pub fn to_csv(&self,parent_dir: &str,millis:bool){
+        let file_name = format!("{}/results_one_pass.csv",parent_dir);
+        let file = if let Some(f) = File::create(&file_name).ok(){
+            f
+        }
+        else{
+            panic!("Error creating CSV file");
+        };
+
+        //let mut wtr = Writer::from_writer(file);
+        let mut wtr = csv::WriterBuilder::new()
+            .delimiter(b'&')
+            //.quote_style(csv::QuoteStyle::NonNumeric)
+            .from_writer(file);
+
+        //Writing
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        if millis {
+            duration1_str.push_str("(ms)");
+            duration2_str.push_str("(ms)");
+            duration3_str.push_str("(ms)");
+            duration4_str.push_str("(ms)");
+        }
+        else{
+            duration1_str.push_str("(s)");
+            duration2_str.push_str("(s)");
+            duration3_str.push_str("(s)");
+            duration4_str.push_str("(s)");
+        }
+        let _ = wtr.write_record(&["Global interaction",
+            "Size of the global interaction",
+            "Gates range",
+            &duration1_str,
+            &duration2_str,
+            &duration3_str,
+            &duration4_str]);
+
+        for line in &self.results_benchmark{
+            let _ = wtr.write_record(&[line.global_interaction_name.clone(),
+                line.global_interaction_size.to_string(),
+                Self::custom_interval_string(line.gates_range), //line.gates_range.to_string(),
+                Self::custom_expect(&line.av_composition_duration_norm_with_greedy_fail),
+                Self::custom_expect(&line.av_composition_duration_norm_without_greedy_fail),
+                Self::custom_expect(&line.av_composition_duration_mut_with_greedy_fail),
+                format!("{}",Self::custom_expect(&line.av_composition_duration_mut_without_greedy_fail))]);
+        }
+
+        let _ = wtr.flush();
+
+
+    }
+
+
+    pub fn to_csv_step_2(&self,parent_dir: &str,millis:bool){
+        let file_name = format!("{}/results_step_2.csv",parent_dir);
+        let file = if let Some(f) = File::create(&file_name).ok(){
+            f
+        }
+        else{
+            panic!("Error creating CSV file");
+        };
+
+        //let mut wtr = Writer::from_writer(file);
+        let mut wtr = csv::WriterBuilder::new()
+            .delimiter(b'&')
+            //.quote_style(csv::QuoteStyle::NonNumeric)
+            .from_writer(file);
+
+        //Writing
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        if millis {
+            duration1_str.push_str("(ms)");
+            duration2_str.push_str("(ms)");
+            duration3_str.push_str("(ms)");
+            duration4_str.push_str("(ms)");
+        }
+        else{
+            duration1_str.push_str("(s)");
+            duration2_str.push_str("(s)");
+            duration3_str.push_str("(s)");
+            duration4_str.push_str("(s)");
+        }
+        let _ = wtr.write_record(&["Global interaction",
+            "Size of the global interaction",
+            "Gates range",
+            &duration1_str,
+            &duration2_str,
+            &duration3_str,
+            &duration4_str]);
+
+        for line in &self.results_benchmark{
+            let _ = wtr.write_record(&[line.global_interaction_name.clone(),
+                line.global_interaction_size.to_string(),
+                Self::custom_interval_string(line.gates_range), //line.gates_range.to_string(),
+                Self::custom_expect_step_2(&line.av_composition_duration_norm_with_greedy_fail),
+                Self::custom_expect_step_2(&line.av_composition_duration_norm_without_greedy_fail),
+                Self::custom_expect_step_2(&line.av_composition_duration_mut_with_greedy_fail),
+                format!("{}",Self::custom_expect_step_2(&line.av_composition_duration_mut_without_greedy_fail))]);
+        }
+
+        let _ = wtr.flush();
+
+
+    }
+
+    pub fn to_csv_step_3(&self,parent_dir: &str,millis:bool){
+        let file_name = format!("{}/results_step_3.csv",parent_dir);
+        let file = if let Some(f) = File::create(&file_name).ok(){
+            f
+        }
+        else{
+            panic!("Error creating CSV file");
+        };
+
+        //let mut wtr = Writer::from_writer(file);
+        let mut wtr = csv::WriterBuilder::new()
+            .delimiter(b'&')
+            //.quote_style(csv::QuoteStyle::NonNumeric)
+            .from_writer(file);
+
+        //Writing
+        let mut duration1_str =  String::from("(Normalized locals) Av.Composition duration with GF");
+        let mut duration2_str =  String::from("(Normalized locals) Av.Composition duration without GF");
+        let mut duration3_str =  String::from("(Mutated locals) Av.Composition duration with GF");
+        let mut duration4_str =  String::from("(Mutated locals) Av.Composition duration without GF");
+        if millis {
+            duration1_str.push_str("(ms)");
+            duration2_str.push_str("(ms)");
+            duration3_str.push_str("(ms)");
+            duration4_str.push_str("(ms)");
+        }
+        else{
+            duration1_str.push_str("(s)");
+            duration2_str.push_str("(s)");
+            duration3_str.push_str("(s)");
+            duration4_str.push_str("(s)");
+        }
+        let _ = wtr.write_record(&["Global interaction",
+            "Size of the global interaction",
+            "Gates range",
+            &duration1_str,
+            &duration2_str,
+            &duration3_str,
+            &duration4_str]);
+
+        for line in &self.results_benchmark{
+            let _ = wtr.write_record(&[line.global_interaction_name.clone(),
+                line.global_interaction_size.to_string(),
+                Self::custom_interval_string(line.gates_range), //line.gates_range.to_string(),
+                Self::custom_expect(&line.av_composition_duration_norm_with_greedy_fail),
+                Self::custom_expect(&line.av_composition_duration_norm_without_greedy_fail),
+                Self::custom_expect(&line.av_composition_duration_mut_with_greedy_fail),
+                format!("{}",Self::custom_expect(&line.av_composition_duration_mut_without_greedy_fail))]);
+        }
+
+        let _ = wtr.flush();
+
+
+    }
     fn custom_interval_string(interval: (usize,usize))->String{
         if interval.0 < interval.1{
             format!("[{}, {}]", interval.0, interval.1)
@@ -185,7 +350,14 @@ impl BenchmarkOutput{
     }
     pub fn custom_expect(op: &Option<f64>)->String{
         match op{
-            Some(x) => format!("{}(\\greencheck)",x),
+            Some(x) => format!("{}(Ok)",x),
+            None => "timeout".to_string(),
+        }
+    }
+
+    pub fn custom_expect_step_2(op: &Option<f64>)->String{
+        match op{
+            Some(x) => format!("{}",x),
             None => "timeout".to_string(),
         }
     }

@@ -276,6 +276,30 @@ impl Interaction {
         }
     }
 
+    pub fn clean_gates(&self)->Interaction{
+        match self{
+            Interaction::Empty =>{ self.clone() }
+            Interaction::Action(a)=>{
+                Interaction::Action(a.clean_gate())
+            },
+            Interaction::Vp(a,b)=>{
+                Interaction::Vp(a.clean_gate(),b.clean_gate())
+            },
+            Interaction::LoopS(box1)=>{
+                let i1 = *box1.clone();
+                Interaction::wrap_loop(&i1.clean_gates())
+            },
+            Interaction::Seq(box1,box2)
+            |Interaction::Par(box1,box2)
+            |Interaction::Alt(box1,box2)
+            |Interaction::Tensor(box1,box2)=>{
+                let i1 = *box1.clone();
+                let i2 = *box2.clone();
+                Interaction::wrap_binary(&i1.clean_gates(),&i2.clean_gates(),&self.head_symbol().unwrap())
+            }
+        }
+    }
+
 
 }
 

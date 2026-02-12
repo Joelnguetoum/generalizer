@@ -216,6 +216,10 @@ subcommands:
             required: true
             index: 3
             help: Number of random partitions computed per global interaction
+        - timout_secs:
+            required: true
+            index: 4
+            help: Timout of computations in seconds
         - draw:
             long: draw
             short: d
@@ -237,6 +241,14 @@ subcommands:
             required: true
             index: 1
             help: Folder containing the global models
+        - nb_mutations:
+            required: true
+            index: 2
+            help: Number of local mutations
+        - nb_lifelines_partitions:
+            required: true
+            index: 3
+            help: Number of random partitions computed per global interaction
         - timout_secs:
             required: true
             index: 4
@@ -262,10 +274,30 @@ subcommands:
             required: true
             index: 1
             help: Folder containing the global models
+        - nb_mutations:
+            required: true
+            index: 2
+            help: Number of local mutations
+        - nb_lifelines_partitions:
+            required: true
+            index: 3
+            help: Number of random partitions computed per global interaction
+        - timout_secs:
+            required: true
+            index: 4
+            help: Timout of computations in seconds
+        - draw:
+            long: draw
+            short: d
+            help: Draw the models for visualisation
+        - milliseconds:
+            long: milliseconds
+            short: m
+            help: Display durations in milliseconds
         - verbose:
             long: verbose
             short: v
-            help: Print the computation history of clggs
+            help: Print the computation history of sclggs
   - test:
       about: Various tests
       version: "0.0.0"

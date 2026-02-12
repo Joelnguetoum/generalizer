@@ -2,7 +2,7 @@
 login;validateUser;userOk ;
 logged ;chooseClass ;getClosePlanOk;closePlanOk;
  requestPlan;enterPlan;insertPlan ;
- enterOption ;opt;getWorkLoad;workLoad;
+ enterOption ;Opt;getWorkLoad;workLoad;
 getHours;hours;enterClassRecord;insertClassRecord;
 classRecordOk ;
 enterGradeRecord;insertGradeRecord;insertedGradeRecord;

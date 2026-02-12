@@ -37,6 +37,10 @@ impl Action {
 
         format!("Action({},{},{},{})",self.lf_id,self.ms_id,ty,gate_id)
     }
+
+    pub fn clean_gate(&self)->Action{
+        Action::new(self.lf_id, self.ms_id, self.action_type.clone())
+    }
 }
 
 impl fmt::Display for Action {

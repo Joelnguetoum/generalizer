@@ -14,7 +14,7 @@ loopS(
 			)
 			,
 			seq(
-				l2 -- ok -> l0
+				l2 -- Ok -> l0
 				,
 				l0 -- account -> l3
 				,

@@ -21,7 +21,7 @@ impl Interaction {
 
                 let res = gen.merge(&guideline)?;
 
-                Ok(res)
+                Ok(res.clean_gates())
             }
             Err(ConfigurationError::TimedOut)=>{
                 Err(CompositionError::TimedOut)

@@ -20,7 +20,7 @@ impl Benchmark{
 
 
         for (name,gen_ctx,global_interaction) in self.global_interactions.iter() {
-            let canon_global = global_interaction.iat_canonize(gen_ctx);
+            let canon_global = global_interaction.iat_canonize(gen_ctx).clean_gates(); //Important to clean gates here
             //FOR EACH GLOBAL
             //let mut result_vec_per_partition = Vec::new();
             let mut gates_vec = Vec::new();
@@ -101,7 +101,7 @@ impl Benchmark{
 
             }
 
-            println!("Global interaction {} processed",name);
+            println!("Projection and mutation/normalization of the Global interaction {} processed",name);
 
 
         }

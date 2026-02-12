@@ -11,7 +11,7 @@ loopS(
 				alt(
 					l0 -- remove -> l1
 					,
-					l0 -- ok -> l1
+					l0 -- Ok -> l1
 				)
 			)
 		)
