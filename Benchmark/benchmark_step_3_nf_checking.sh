@@ -16,7 +16,7 @@ MAX_NB_PARTITIONS=5
 $BINARY benchmark_step_3 Benchmark $OUTPUT_DIR $NB_MUTATIONS $MAX_NB_PARTITIONS -m -d
 
 echo "----------------------------------------"
-echo "Step 2 of the benchmark finished: $(date)"
+echo "Step 3 of the benchmark finished: $(date)"
 echo "Check results inside: ${OUTPUT_DIR}"
-echo "Check the file results_step_2.csv for the computation durations"
+echo "Check the file results_step_3.csv for the computation durations"
 echo "----------------------------------------"
