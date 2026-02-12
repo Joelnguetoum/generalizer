@@ -276,8 +276,9 @@ In the case of the interaction `Game`, we have the following structure:
 ```tree
     Game
         input_global_interaction
-             Game.hsf
+             Game.png
              Game.hif
+             Game_tree.png
         Partition0
             original_locals
                 i1.hif
@@ -339,8 +340,9 @@ $ ./benchmark_step_2_composition.sh
     Game
         Game_composition_durations.csv
         input_global_interaction
-             Game.hsf
+             Game.png
              Game.hif
+             Game_tree.png
         Partition0
             original_locals
                 i1.hif
