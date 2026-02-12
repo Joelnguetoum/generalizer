@@ -182,6 +182,13 @@ with the example in the introduction of the paper. It is located in
 - `j.hif`: the second interaction.
 - `composition_smoke_test.sh`: the script to run the composition of the interaction models `i` and `j`.
 
+The `.hsf` and `.hif` can be visualized with the `cat` command.
+```bash
+$ cat signature.hsf
+$ cat i.hif
+$ cat j.hif
+```
+
 ```bash
 $ cd smoke_tests/composition_smoke_test
 $ ./composition_smoke_test.sh
