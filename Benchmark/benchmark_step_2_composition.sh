@@ -5,6 +5,7 @@
 BINARY="../Executable/generalizer"
 OUTPUT_DIR="./Benchmark_Output"
 
+
 echo "----------------------------------------"
 echo "Starting the step 2 of the benchmark: $(date)"
 echo "Results will be written to: ${OUTPUT_DIR}"
