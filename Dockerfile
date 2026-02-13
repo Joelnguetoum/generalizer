@@ -55,9 +55,8 @@ COPY --from=builder /app ./
 RUN mkdir "Executable"
 RUN cp /home/fm/generalizer/target/release/generalizer "Executable"
 RUN zip -r generalizer_sources.zip src readme Cargo.lock Cargo.toml Dockerfile LICENCE.txt README.txt README_FM.md
-RUN rm Cargo.lock Cargo.toml README.md
+RUN rm Cargo.lock Cargo.toml
 RUN rm -r src target
-RUN mv README_FM.md README.md
 
 RUN chown -R fm:fm /home/fm
 

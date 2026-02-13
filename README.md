@@ -15,8 +15,11 @@
     - [Reduced benchmark smoke test](#reduced-benchmark-smoke-test)
 7. [Others Composition Examples](#others-composition-examples)
 8. [Benchmark](#benchmark)
-    - [Protocol](#protocol)
-    - [How to run the benchmark](#how-to-run-the-benchmark)
+    - [Step 1: projection, normalization and mutation](#step-1-projection-normalization-and-mutation)
+    - [Step 2: composition](#step-2-composition)
+    - [Step 3: Normal Form Checking](#step-3-normal-form-checking)
+    - [Summary of the workflow for the interaction Game](#summary-of-the-workflow-for-the-interaction-game)
+    - [To Execute all three steps in one pass](#to-execute-all-three-steps-in-one-pass)
     - [Interactions of the benchmark](#interactions-of-the-benchmark)
 
 
@@ -26,29 +29,38 @@ This README file describes the artifact related to the paper ["Specializing anti
 models composition via gate connections"] accepted to the ``FM26`` conference.
 
 The paper proposes an approach to the composition of interaction models using
-anti-unification. The program, named `generalizer` is developed in Rust.
+anti-unification. The program, named `generalizer` is developped in Rust.
 
+The paper's experiments were run on an Intel Core i7-13850HX (20-core, 2.1 GHz) with 32
+GB RAM.
 
 ## Note on this document
 
 We recommend reading this README file as the joint README.pdf file outside
 of the docker container, because of the images illustrations.
 
+
 ## Set Up
 
-To build the sources, you need to have Rust installed, and then 
-execute the following command in the root of code directory:
+The artefact is wrapped in a docker image available on Zenodo(todo: link).
+After downloading the image, it is loaded with the following command:
 
 ```bash
-$ cargo build --release
+$ docker load -i generalizer.tar.gz
 ```
 
-To be able to run the experiments, you need to install Maude
+Alternatively, the image can be built from the root of the repository
+with the following command:
 
 ```bash
-$ python -m pip install maude
+$ docker build -t generalizer .
 ```
 
+After loading or building the image, running the container is done with the following command:
+
+```bash
+$ docker run -it --rm generalizer:latest
+```
 ## Interaction language
 
 ### Representation of interactions
@@ -59,7 +71,7 @@ Our implementation of Interactions models is based on the work of
 We follow the notation of HIBOU for signature files (.hsf)
 and interaction files (.hif).
 
-with the signature (sig.hsf):
+Let us consider the signature (sig.hsf):
 ~~~
 @message{
 	bwin;cwin;close;blose;busy;msg;sig;free
@@ -88,14 +100,14 @@ loopS(
 )
 ~~~
 
-For instance `l0 -- cwin ->|` is an emission of the message `cwin` from lifeline `l0` to
+For instance `l0 -- cwin ->|` is an emission of the message `cwin` from lifeline `l0` to 
 environment; and `busy -> l3 ` is reception of the message `busy` from environment to lifeline `l3`.
 The term `l0 -- free -> l3` represents the transmission of the message `free` from lifeline `l0` to lifeline `l3`,
 and is called a `value passing` in the paper.
 
-The above interaction is visualized in a UML sequence-diagram-like form, as shown below:
+The above interaction can be visualized as:
 
-<img src="readme/images/interactions/i0_repr.png" alt="i0" width="150"/>
+![i0](readme/images/interactions/i0_repr.png)
 
 #### Gates
 
@@ -128,8 +140,9 @@ loopS(
 
 which can be visually represented as:
 
+![i0](readme/images/interactions/i_gates.png)
 
-<img src="readme/images/interactions/i_gates.png" alt="i0" width="150"/>
+
 
 
 ## Artifact structure
@@ -138,7 +151,7 @@ The `generalizer` folder contains the following subfolders:
 
  ```tree
       generalizer
-          LICENSE
+          LICENSE.txt
           README.pdf
           README.md
           Dockerfile
@@ -146,31 +159,38 @@ The `generalizer` folder contains the following subfolders:
           Benchmark
           smoke_tests
           Interactions_examples
-          generalizer_sources.tar.gz
+          generalizer_sources.zip
           readme
   ```
 
 The Docker image provides a built executable under the folder `generalizer/Executable`.
 The smoke tests are located in the `generalizer/smoke_tests` directory, the
-benchmark scripts in `generalizer/Benchmark` directory; some
+benchmark scripts in `generalizer/Benchmark` directory; some 
 examples of interactions are provided in `generalizer/Interactions_examples` directory, together
-with scripts to compose them.
+with scripts to compose them. 
 
 ## Smoke tests
 
-By running the container, `Docker` will open a shell in a container inside a directory named `generalizer`.
-The smoke tests are located in the `generalizer/smoke_tests` directory. There are
+By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
+The smoke tests are located in the `generalizer/smoke_tests` directory. There are 
 two smoke tests: a composition smoke test and a reduced benchmark smoke test.
 
 ### Composition smoke test
 
-To check whether the composition of two interactions works, we check that
-with the example in the introduction of the paper. It is located in
-`generalizer/smoke_tests`. The folder contains:
+To check whether the composition of two interactions works, we check that 
+with the example in the introduction of the paper. It is located in 
+`generalizer/smoke_tests/composition_smoke_test`. The folder contains:
 - `signature.hsf`: the signature file of the interactions containing the declaration of lifelines and messages.
 - `i.hif`: the first interaction.
 - `j.hif`: the second interaction.
 - `composition_smoke_test.sh`: the script to run the composition of the interaction models `i` and `j`.
+
+The `.hsf` and `.hif` can be visualized with the `cat` command.
+```bash
+$ cat signature.hsf
+$ cat i.hif
+$ cat j.hif
+```
 
 ```bash
 $ cd smoke_tests/composition_smoke_test
@@ -179,21 +199,21 @@ $ ./composition_smoke_test.sh
 ![figure](readme/images/smoke_tests/comp_smoke_test.png)
 
 If successful, the success message will be printed in the terminal.
-The result will be put in the folder `Composition_output` which contains a folder
-`result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result).
+The result will be put in the folder `Composition_output` which contains a folder 
+`result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result). 
 The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
 
 ### Reduced benchmark smoke test
 
 To quickly check wheher the benchmark runs successfully, we provide a reduced version of the benchmark.
-It is located in `generalizer/smoke_tests/reduced_benchmark_smoke_test`.
+It is located in `generalizer/smoke_tests/reduced_benchmark_smoke_test`. 
 The folder contains the script `reduced_benchmark_smoke_test.sh` to run the small benchmark.
 
 ```bash
 $ cd smoke_tests/reduced_benchmark_smoke_test
 $ ./reduced_benchmark_smoke_test.sh
 ```
-The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing
+The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing 
 a table akin the exprerimental section of the paper.
 
 To visualize the results inside the docker container, the following command can be used:
@@ -215,14 +235,14 @@ described in details the Section [Benchmark](#Benchmark) below.
 ## Others Composition Examples
 
 The folder `Interactions_examples` contains several examples of interactions composition
-described in the appendix of the paper, and the example of the introduction.
+described in the appendix of the paper, and the example of the introduction. 
 Each folder contains a signature file `signature.hsf`, and interaction files `i.hif` and `j.hif`.
-In addition there is a script `example_run.sh` to run the composition of the two interactions, in
+In addition there is a script `example_run.sh` to run the composition of the two interactions, in 
 exactly the same way as in the smoke test of the composition.
 
 ## Benchmark
 
-To execute the benchmark, move into the `Benchmark` folder
+To execute the benchmark, move into the `Benchmark` folder 
 from the root of `generalizer` folder.
 
 ```bash
@@ -252,17 +272,24 @@ For each partition $(L_1,L_2)$ of a set of lifelines of a global interaction $r$
 $ ./benchmark_step_1_projection.sh
 ```
 
-The program will create a folder `Benchmark_Output` containing
+The program will create a folder `Benchmark_Output` containing 
 a folder for each starting global interaction.
 
 In the case of the interaction `Game`, we have the following structure:
 ```tree
     Game
         input_global_interaction
-             Game.hsf
+             Game.png
              Game.hif
-        partition0
+             Game_tree.png
+        Partition0
             original_locals
+                i1.hif
+                i1.png
+                i1_tree.png
+                i2.hif
+                i2.png
+                i2_tree.png
             with_mutated_locals
                 mutated_local_interactions
                     i1.hif
@@ -274,27 +301,35 @@ In the case of the interaction `Game`, we have the following structure:
                 results_with_rule_fail
                 results_without_rule_fail
             with_normalized_locals
-        partition1
-        partition2
-        partition3
-        partition4
+              ...
+        Partition1
+            ... 
+        Partition2
+            ...
+        Partition3
+            ...
+        Partition4
+            ...
 ```
-The folders `with_normalized_locals` and `with_mutated_locals` have the same structure, as well as
+
+The folder `original_locals` contains the 
+local interactions `i1` and `i2` obtained after the projection
+of the global interaction.
+
+The folders `with_normalized_locals` and `with_mutated_locals` have the same structure, as well as 
 the partitions folders.
 
-The folders `results_with_rule_fail` and `results_without_rule_fail`
+The folders `results_with_rule_fail` and `results_without_rule_fail` 
 are empty at this stage, are are meant to contain the results of the composition
 with and without the rule $\textsf{Fail}$, in the next step.
 
 ### Step 2: composition
 
 We compose the pairs $(i_\text{norm},j_\text{norm})$ and $(i_\text{mut},j_\text{mut})$.
-The result of the composition is normalized with HIBOU an compared to the normal form of
-the starting interaction $k$.
 
 In the case of the interaction `Game`, this step will
 compose the interaction `i1.hif` and `i2.hif` in the folders of each of the folders
-`partition{i}/with_normalized_locals/normalized_local_interactions`
+`partition{i}/with_normalized_locals/normalized_local_interactions` 
 and `partition{i}/with_mutated_locals/mutated_local_interactions`.
 
 
@@ -304,11 +339,19 @@ $ ./benchmark_step_2_composition.sh
 
 ```tree
     Game
+        Game_composition_durations.csv
         input_global_interaction
-             Game.hsf
+             Game.png
              Game.hif
-        partition0
+             Game_tree.png
+        Partition0
             original_locals
+                i1.hif
+                i1.png
+                i1_tree.png
+                i2.hif
+                i2.png
+                i2_tree.png
             with_mutated_locals
                 mutated_local_interactions
                     i1.hif
@@ -328,10 +371,15 @@ $ ./benchmark_step_2_composition.sh
                     result_tree.png
                     time.txt
             with_normalized_locals
-        partition1
-        partition2
-        partition3
-        partition4
+                 ...
+        Partition1
+            ... 
+        Partition2
+            ...
+        Partition3
+            ...
+        Partition4
+            ...
 ```
 The folders `results_with_rule_fail` and `results_without_rule_fail` contain the results of the composition
 with and without the rule $\textsf{Fail}$.  The duration
@@ -342,14 +390,16 @@ This step produces a csv file `results_step_2.csv` in the folder `Benchmark_Outp
 You can visualize it with the following command:
 
 ```bash
-$ csvlook -d '&' Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' Benchmark_Output/results_step_2.csv | less -S
 ```
 Or with column shrinked down:
 
 ```bash
-$ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_step_2.csv | less -S
 ```
-TODO: add a picture of table with the results obtained in the docker.
+We obtain the following table:
+
+![step_2_results](readme/images/benchmark/step_2_results.png)
 
 Each interaction corresponds to a row in the table.
 The second column indicates the size of each interaction,
@@ -362,12 +412,19 @@ for the composition of normalized local interactions,
 and the last two columns report the average duration for the mutated
 local interactions.
 
+In addition, in each folder corresponding to a global interaction,
+there is a `.csv` file showing the composition duration for each partitions
+non-averaged. For example, for the interaction `Game`, such a file is
+`Game/Game_composition_durations.csv`. It contains the following table:
+
+TODO (fig)
+
 ### Step 3: Normal Form Checking
 
 In this step, we check whether the normal form of the  results of compositions
 in the previous step is the same as the normal form of the original interactions.
 
-It is accomplished by applying the normal form checking algorithm of [Hibou](https://github.com/erwanM974/hibou_label)
+It is accomplished by applying the normal form checking algorithm of [HIBOU](https://github.com/erwanM974/hibou_label)
 to the interactions obtained in the previous step.
 
 We execute the following command:
@@ -376,17 +433,26 @@ We execute the following command:
 $ ./benchmark_step_3_nf_checking.sh
 ```
 It produces a csv file `results_step_3.csv` in the folder `Benchmark_Output`.
-The new csv file is basically `results_step_2.csv`
+The new csv file is basically `results_step_2.csv` 
 with a verdict (Ok) besides durations to confirm that the normal form of the result
 of each composition across partitions matches with
 the normal form of the original interaction before projections.
 
-The final table should be similar to the one in the
+The final table should be similar to the one in the 
 experiment section of the paper (up to some small differences in numbers,
-due to the randomness of the mutation operations and different
-execution environments).
+due to the randomness of the mutation operations and different 
+execution environments). 
+
+An execution gives the following table:
+![step_3_results](readme/images/benchmark/step_3_results.png)
+
+While the paper table is as follows:
 
 ![benchmark_table](readme/images/benchmark/benchmark_table.png "Benchmark table")
+
+The `Ok` in the csv files are represented
+by green checkmarks in the table of the paper.
+
 
 ### Summary of the workflow for the interaction Game
 
@@ -405,7 +471,7 @@ $ ./benchmark_one_pass.sh
 It directly produces a csv file `result_one_pass.csv` in the folder `Benchmark_Output`
 which is the same as the one produced at the end of step 3.
 
-To take a closer look at the command running the benchmark in one
+To take a closer look at the command running the benchmark in one 
 pass, The subcommand to run the benchmark is `benchmark`. It takes as arguments:
 
 - the name of the subfolder containing the interactions. In the downloadable folder, it is Benchmark.
