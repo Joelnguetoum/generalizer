@@ -323,8 +323,6 @@ with and without the rule $\textsf{Fail}$, in the next step.
 ### Step 2: composition
 
 We compose the pairs $(i_\text{norm},j_\text{norm})$ and $(i_\text{mut},j_\text{mut})$.
-The result of the composition is normalized with HIBOU an compared to the normal form of
-the starting interaction $k$. 
 
 In the case of the interaction `Game`, this step will
 compose the interaction `i1.hif` and `i2.hif` in the folders of each of the folders
