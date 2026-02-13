@@ -6,11 +6,11 @@
 1. [Introduction](#introduction)
 2. [Note on this document](#note-on-this-document)
 3. [Set Up](#set-up)
-4. [Interaction language](#interaction-language)
+4. [Smoke tests](#smoke-tests)
+5. [Artifact structure](#artifact-structure)
+6. [Interaction language](#interaction-language)
     - [Representation of interactions](#representation-of-interactions)
     - [Gates](#gates)
-5. [Artifact structure](#artifact-structure)
-6. [Smoke tests](#smoke-tests)
     - [Composition smoke test](#composition-smoke-test)
     - [Reduced benchmark smoke test](#reduced-benchmark-smoke-test)
 7. [Others Composition Examples](#others-composition-examples)
@@ -61,6 +61,96 @@ After loading or building the image, running the container is done with the foll
 ```bash
 $ docker run -it --rm generalizer:latest
 ```
+
+
+## Smoke tests
+
+By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
+The smoke tests are located in the `generalizer/smoke_tests` directory. There are
+two smoke tests: a composition smoke test and a reduced benchmark smoke test.
+
+### Composition smoke test
+
+To check whether the composition of two interactions works, we check that
+with the example in the introduction of the paper. It is located in
+`generalizer/smoke_tests/composition_smoke_test`. The folder contains:
+- `signature.hsf`: the signature file of the interactions containing the declaration of lifelines and messages.
+- `i.hif`: the first interaction.
+- `j.hif`: the second interaction.
+- `composition_smoke_test.sh`: the script to run the composition of the interaction models `i` and `j`.
+
+The `.hsf` and `.hif` can be visualized with the `cat` command.
+```bash
+$ cat signature.hsf
+$ cat i.hif
+$ cat j.hif
+```
+
+```bash
+$ cd smoke_tests/composition_smoke_test
+$ ./composition_smoke_test.sh
+```
+![figure](readme/images/smoke_tests/comp_smoke_test.png)
+
+If successful, the success message will be printed in the terminal.
+The result will be put in the folder `Composition_output` which contains a folder
+`result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result).
+The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
+
+### Reduced benchmark smoke test
+
+To quickly check wheher the benchmark runs successfully, we provide a reduced version of the benchmark.
+It is located in `generalizer/smoke_tests/reduced_benchmark_smoke_test`.
+The folder contains the script `reduced_benchmark_smoke_test.sh` to run the small benchmark.
+
+```bash
+$ cd smoke_tests/reduced_benchmark_smoke_test
+$ ./reduced_benchmark_smoke_test.sh
+```
+The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing
+a table akin the exprerimental section of the paper.
+
+To visualize the results inside the docker container, the following command can be used:
+
+```bash
+$ csvlook -d '&' Benchmark_Output/result_one_pass.csv | less -S
+```
+To shrink the size of columns, the following command can be used:
+
+```bash
+$ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
+```
+The following table should be printed (up to some small differences in numbers, which are durations):
+![figure](readme/images/smoke_tests/reduced_benchmark_smoke_test.png)
+
+This smoke test executes in one pass the three steps of the benchmark
+described in details the Section [Benchmark](#Benchmark) below.
+
+## Artifact structure
+
+The `generalizer` folder contains the following subfolders:
+
+ ```tree
+      generalizer
+          LICENSE.txt
+          README.pdf
+          README.md
+          Dockerfile
+          Executable
+          Benchmark
+          smoke_tests
+          Interactions_examples
+          generalizer_sources.zip
+          readme
+  ```
+
+The Docker image provides a built executable under the folder `generalizer/Executable`.
+The smoke tests are located in the `generalizer/smoke_tests` directory, the
+benchmark scripts in `generalizer/Benchmark` directory; some
+examples of interactions are provided in `generalizer/Interactions_examples` directory, together
+with scripts to compose them.
+
+
 ## Interaction language
 
 ### Representation of interactions
@@ -145,92 +235,9 @@ which can be visually represented as:
 
 
 
-## Artifact structure
 
-The `generalizer` folder contains the following subfolders:
 
- ```tree
-      generalizer
-          LICENSE.txt
-          README.pdf
-          README.md
-          Dockerfile
-          Executable
-          Benchmark
-          smoke_tests
-          Interactions_examples
-          generalizer_sources.zip
-          readme
-  ```
 
-The Docker image provides a built executable under the folder `generalizer/Executable`.
-The smoke tests are located in the `generalizer/smoke_tests` directory, the
-benchmark scripts in `generalizer/Benchmark` directory; some 
-examples of interactions are provided in `generalizer/Interactions_examples` directory, together
-with scripts to compose them. 
-
-## Smoke tests
-
-By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
-The smoke tests are located in the `generalizer/smoke_tests` directory. There are 
-two smoke tests: a composition smoke test and a reduced benchmark smoke test.
-
-### Composition smoke test
-
-To check whether the composition of two interactions works, we check that 
-with the example in the introduction of the paper. It is located in 
-`generalizer/smoke_tests/composition_smoke_test`. The folder contains:
-- `signature.hsf`: the signature file of the interactions containing the declaration of lifelines and messages.
-- `i.hif`: the first interaction.
-- `j.hif`: the second interaction.
-- `composition_smoke_test.sh`: the script to run the composition of the interaction models `i` and `j`.
-
-The `.hsf` and `.hif` can be visualized with the `cat` command.
-```bash
-$ cat signature.hsf
-$ cat i.hif
-$ cat j.hif
-```
-
-```bash
-$ cd smoke_tests/composition_smoke_test
-$ ./composition_smoke_test.sh
-```
-![figure](readme/images/smoke_tests/comp_smoke_test.png)
-
-If successful, the success message will be printed in the terminal.
-The result will be put in the folder `Composition_output` which contains a folder 
-`result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result). 
-The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
-
-### Reduced benchmark smoke test
-
-To quickly check wheher the benchmark runs successfully, we provide a reduced version of the benchmark.
-It is located in `generalizer/smoke_tests/reduced_benchmark_smoke_test`. 
-The folder contains the script `reduced_benchmark_smoke_test.sh` to run the small benchmark.
-
-```bash
-$ cd smoke_tests/reduced_benchmark_smoke_test
-$ ./reduced_benchmark_smoke_test.sh
-```
-The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing 
-a table akin the exprerimental section of the paper.
-
-To visualize the results inside the docker container, the following command can be used:
-
-```bash
-$ csvlook -d '&' Benchmark_Output/result_one_pass.csv | less -S
-```
-To shrink the size of columns, the following command can be used:
-
-```bash
-$ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
-```
-The following table should be printed (up to some small differences in numbers, which are durations):
-![figure](readme/images/smoke_tests/reduced_benchmark_smoke_test.png)
-
-This smoke test executes in one pass the three steps of the benchmark
-described in details the Section [Benchmark](#Benchmark) below.
 
 ## Others Composition Examples
 
