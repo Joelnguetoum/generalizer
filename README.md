@@ -473,9 +473,7 @@ Its size is `33`. After projection, the number of gates
 in its local interactions ranges from `7` to `17`.
 With the optimization rule **Fail**,
 the average composition time across partitions
-for normalized local interactions is `13.141 ms`,
-and the overall average (including mutated interactions) 
-is `1.2` seconds. Without the **Fail** rule,
+for normalized local interactions is `13.872 ms`. Without the **Fail** rule,
 the composition process times out (after 60 seconds)
 for at least one partition.
 
@@ -483,8 +481,7 @@ Now consider the interaction `Game`,
 highlighted in red. Its size is `16`,
 and the projected local interactions contain
 either `5` or `6` gates. With the **Fail** optimization,
-the average composition time across partitions is `2.146 ms`
-(and `0.3` seconds overall). Without this optimization,
+the average composition time across partitions is `2.146 ms`. Without this optimization,
 the average duration across partitions
 increases to `3.099 ms`. These results illustrate
 that the **Fail** rule not only reduces the average
