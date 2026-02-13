@@ -29,7 +29,11 @@ impl Benchmark{
             //// RANDOM DECOMPOSITION
             let nb_partitions = global_interaction.nb_partitions_shuffled(self.nb_lifelines_partitions);
 
+            let mut ct_comparison = 0;
             //Random decomposition
+
+            println!("");
+            println!("----------------------------");
 
             for ct_partition in 0..nb_partitions { // CYCLE
 
@@ -63,6 +67,7 @@ impl Benchmark{
                             return Err(BenchmarkError::CompositionResultMismatch);
                         }
 
+                        ct_comparison+=1;
                         //////////////////////////////////////////////////////////////////
                         Some(elapsed)
                     },
@@ -84,7 +89,7 @@ impl Benchmark{
                         if result_int.iat_canonize(gen_ctx).clean_gates() != canon_global {
                             return Err(BenchmarkError::CompositionResultMismatch);
                         }
-
+                        ct_comparison+=1;
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
@@ -111,7 +116,7 @@ impl Benchmark{
                         if result_int.iat_canonize(gen_ctx).clean_gates() != canon_global {
                             return Err(BenchmarkError::CompositionResultMismatch);
                         }
-
+                        ct_comparison+=1;
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
@@ -132,7 +137,7 @@ impl Benchmark{
                         if result_int.iat_canonize(gen_ctx).clean_gates() != canon_global {
                             return Err(BenchmarkError::CompositionResultMismatch);
                         }
-
+                        ct_comparison+=1;
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
@@ -170,7 +175,7 @@ impl Benchmark{
 
 
 
-            println!("Normal form Checking for the global interaction {} processed",name);
+            println!("{} out of {} recomposed global interactions have the same normal form as the original {} interaction",ct_comparison,ct_comparison,name);
 
 
         }

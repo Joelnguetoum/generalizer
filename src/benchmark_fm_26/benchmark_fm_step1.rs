@@ -32,7 +32,9 @@ impl Benchmark{
             ////////////////////////////////////////////////////////////////////////////
             //// RANDOM DECOMPOSITION
             let all_locals = global_interaction.random_decompose_into_two_ints(self.nb_lifelines_partitions);
-
+            println!("");
+            println!("----------------------------");
+            println!("Chosen {} partitions of lifelines for Global interaction {}",all_locals.len(),name);
             //Random decomposition
 
             for (ct_partition,locals_original) in all_locals.iter().enumerate() { // CYCLE
@@ -68,6 +70,7 @@ impl Benchmark{
                 //Normalization + Mutation
                 let locals = Self::get_local_interactions(gen_ctx,locals_original,self.nb_local_rewrites);
 
+                println!("For partition {} of Global interaction {}: generated 1 local normalized interaction and 1 local mutated interaction",ct_partition,name);
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());
 

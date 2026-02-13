@@ -3,7 +3,7 @@
 
 #BINARY="./generalizer"
 BINARY="../../Executable/generalizer"
-OUTPUT_DIR="./Benchmark output"
+OUTPUT_DIR="./Benchmark_Output"
 
 echo "----------------------------------------"
 echo "Reduced benchmark smoke test"

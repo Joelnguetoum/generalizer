@@ -3,11 +3,11 @@
 
 #BINARY="./generalizer"
 BINARY="../../Executable/generalizer"
-OUTPUT_DIR="./Composition Output"
+OUTPUT_DIR="./Composition_Output"
 
 echo "----------------------------------------"
 echo "Composition smoke test with a simple example"
-echo "This script uses the executable at the location:  generalizer/target/release/generalizer"
+echo "This script uses the executable at the location:  generalizer/Executable/generalizer"
 echo "Starting composition: $(date)"
 echo "Results will be written to: ${OUTPUT_DIR}"
 echo "----------------------------------------"

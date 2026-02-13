@@ -41,6 +41,7 @@ The `generalizer` folder contains the following subfolders:
           readme
           Benchmark_with_results.zip
           smoke_tests_with_results.zip
+          Interaction_examples_with_results.zip
   ```
 
 The Docker image includes a pre-built executable located in  
@@ -53,11 +54,12 @@ Additional resources are organized as follows:
 - **Interaction examples** (including composition scripts):  
   `generalizer/Interactions_examples`
 
-The provided archives contain:
+The provided archives contain :
 
 - `generalizer_sources.zip` — Source code of the program
 - `Benchmark_with_results.zip` — Benchmark results
 - `smoke_tests_with_results.zip` — Smoke test results
+- `Interaction_examples_with_results.zip` — Interaction examples composition results
 
 
 ## Docker instructions
@@ -81,6 +83,7 @@ After loading or building the image, running the container is done with the foll
 ```bash
 $ docker run -it --rm --name custom_container generalizer:latest
 ```
+To avoid conflics, use a different container name for each run (in this example `custom_container`). 
 
 Our experiments generate image that cannot be easily 
 visualized inside the docker image 
@@ -90,7 +93,7 @@ While the container is running (its name is `custom_container` in the example ab
 you can copy a file from the container to the host machine with the following command:
 
 ```bash
-$ docker cp custom_container:/home/fm/generalizer/generalizer/README.pdf target_folder_on_host
+$ docker cp custom_container:/home/fm/generalizer/README.pdf target_folder_on_host
 ```
 
 where `target_folder_on_host` is the folder where you want to copy the file in the host machine.
@@ -124,14 +127,19 @@ $ cat j.hif
 $ cd smoke_tests/composition_smoke_test
 $ ./composition_smoke_test.sh
 ```
+
+The *Figure 1* illustrates the composition of the two interactions.
+
 ![figure](readme/images/smoke_tests/comp_smoke_test.png)
+*Figure 1: Illustration of the composition smoke test.*
 
 If successful, the success message will be printed in the terminal as 
-shown in the following image:
+shown in *Figure 2*.
+
 ![figure](readme/images/smoke_tests/comp_smoke_test_terminal_image.png)
+*Figure 2: Success message printed in the terminal for the composition smoke test.*
 
-
-The command runs in less than `1` seconds. The result will be put in the folder `Composition_output` which contains a folder
+The command runs in less than `1` seconds. The result will be put in the folder `Composition_Output` which contains a folder
 `result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result).
 The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
 All the images can be visualized by copying them to the host 
@@ -147,9 +155,10 @@ The folder contains the script `reduced_benchmark_smoke_test.sh` to run the smal
 $ cd smoke_tests/reduced_benchmark_smoke_test
 $ ./reduced_benchmark_smoke_test.sh
 ```
-If successful, a success message will be printed in the terminal as shown in the following image:
+If successful, a success message will be printed in the terminal as shown in *Figure 3*.
 
 ![figure](readme/images/smoke_tests/reduced_benchmark_terminal_image.png)
+*Figure 3: Success message printed in the terminal for the reduced benchmark smoke test.*
 
 The execution takes approximatively `3` seconds. The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing
 a table akin the exprerimental section of the paper.
@@ -164,8 +173,9 @@ To shrink the size of columns, the following command can be used:
 ```bash
 $ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
 ```
-The following table should be printed (up to some small differences in numbers, which are durations):
+The table of *Figure 4* should be printed (up to some small differences in numbers, which are durations):
 ![figure](readme/images/smoke_tests/reduced_benchmark_smoke_test.png)
+*Figure 4: Table of results for the reduced benchmark smoke test*
 
 This smoke test executes in one pass the three steps of the benchmark
 described in details the Section [Benchmark](#Benchmark) below.
@@ -223,9 +233,13 @@ environment; and `busy -> l3 ` is reception of the message `busy` from environme
 The term `l0 -- free -> l3` represents the transmission of the message `free` from lifeline `l0` to lifeline `l3`,
 and is called a `value passing` in the paper.
 
-The above interaction can be visualized as:
+The above interaction can be visualized as depicted in *Figure 5*.
 
-![i0](readme/images/interactions/i0_repr.png)
+
+
+<img src="readme/images/interactions/i0_repr.png" alt="Local interaction without gates" width="150">
+
+*Figure 5: Sequence diagram of a local interaction*
 
 #### Gates
 
@@ -256,11 +270,11 @@ loopS(
 )
 ~~~
 
-which can be visually represented as:
+which can be visually represented as depicted in *Figure 6*.
 
-![i0](readme/images/interactions/i_gates.png)
+<img src="readme/images/interactions/i_gates.png" alt="Local interaction with gates" width="150">
 
-
+*Figure 6: Sequence diagram of a local interaction with gates*
 
 
 
@@ -302,11 +316,12 @@ the following table,
 
 We use the interactions in the folder [Benchmark](../Benchmark/Benchmark)
 as our starting global models. For each global interaction `k`, we extract
-at most `N_p` partitions of its set of lifelines `L` into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.
+at most `N_p` partitions of its set of lifelines `L` into a pair of subsets 
+each of size at least `L/2`.
 
 For each partition `(L1,L2)` of a set of lifelines of a global interaction `k`:
 
-- project `k` onto `L1` and `L2` to obtain local interactions `i1` and `i2`;
+- we project `k` onto `L1` and `L2` to obtain local interactions `i1` and `i2`;
 - we normalize `i1` and `i2` using HIBOU to obtain `i1_norm` and `i2_norm`
   respectively.
 - we apply mutation operations to `i1` and `i2`, with consists of successively
@@ -366,8 +381,9 @@ local interactions `i1` and `i2` obtained after the projection
 of the global interaction.
 
 The partition folders have the same structure. 
-Each of them contains the folders `with_normalized_locals` and `with_mutated_locals` have the same structure They contain the models `i1_norm`, `i2_norm` 
-and `i1_mut` and `i2_mut` respectively (`.hif` files and `.png` pictures). 
+Each of them contains the folders `with_normalized_locals` and `with_mutated_locals` 
+have the same structure They contain the models `i1_norm`, `i2_norm` 
+and `i1_mut`, `i2_mut` respectively (`.hif` files and `.png` pictures). 
 
 The folders `results_with_rule_fail` and `results_without_rule_fail` 
 are empty at this stage, are are meant to contain the results of the composition
@@ -375,13 +391,14 @@ with and without the rule **Fail**, in the next step.
 
 ### Step 2: composition
 
-We compose the pairs $(i_\text{norm},j_\text{norm})$ and $(i_\text{mut},j_\text{mut})$.
+This step consists of the composition of the pairs `(i1_norm, i2_norm)`  and `(i1_mut, i2_mut)`.
 
 In the case of the interaction `Game`, this step will
 compose the interaction `i1.hif` and `i2.hif` in the folders of each of the folders
 `partition{i}/with_normalized_locals/normalized_local_interactions` 
-and `partition{i}/with_mutated_locals/mutated_local_interactions`.
+and `partition{i}/with_mutated_locals/mutated_local_interactions`, for each of the partitions `i`.
 
+This step is performed by the script `benchmark_step_2_composition.sh`.
 
 ```bash
 $ ./benchmark_step_2_composition.sh
@@ -432,7 +449,7 @@ $ ./benchmark_step_2_composition.sh
             ...
 ```
 The folders `results_with_rule_fail` and `results_without_rule_fail` contain the results of the composition
-with and without the rule $\textsf{Fail}$.  The duration
+with and without the rule **Fail**.  The duration
 of the compositions are in the file `time.txt` in each folder.
 
 This step produces a csv file `results_step_2.csv` in the folder `Benchmark_Output`.
@@ -447,9 +464,11 @@ Or with column shrinked down:
 ```bash
 $ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_step_2.csv | less -S
 ```
-We obtain the following table (with shrinked down columns):
+We obtain the table of *Figure 7* (with shrinked down columns).
 
 ![step_2_results](readme/images/benchmark/step_2_results.png)
+*Figure 7: Table of results for the step 2 of the benchmark benchmark.*
+
 
 Each interaction corresponds to a row in the table.
 The second column reports the size of the interaction,
@@ -464,9 +483,10 @@ duration for composing normalized local interactions,
 whereas the last two columns report the average duration
 for mutated local interactions.
 
-A truncated version of the table is shown in the figure below.
+A truncated version of the table is shown in *Figure 8*.
 
 ![Truncated result table](readme/images/benchmark/trunc.png)
+*Figure 8: Truncated table of results for the step 2 of the benchmark benchmark.*
 
 Consider the interaction `ATM`, highlighted in yellow.
 Its size is `33`. After projection, the number of gates
@@ -492,9 +512,12 @@ composition time but can also prevent timeouts
 In addition, in each folder corresponding to a global interaction,
 there is a `.csv` file showing the composition duration for each partitions
 non-averaged. For example, for the interaction `Game`, such a file is
-`Game/Game_composition_durations.csv`. It contains a table like the one that follows:
+`Benchmark_Output/Game/Game_composition_durations.csv`. 
+It contains a table similar to the one in *Figure 9*.
 
-![game_table](readme/images/benchmark/game_partial_table.png)
+<img src="readme/images/benchmark/game_partial_table.png" alt="Composition durations of the interaction Game" width="600">
+
+*Figure 9: Composition durations for each partitions for the interaction Game*
 
 ### Step 3: Normal Form Checking
 
@@ -520,12 +543,16 @@ experiment section of the paper (up to some small differences in numbers,
 due to the randomness of the mutation operations and different 
 execution environments). 
 
-An execution gives the following table:
-![step_3_results](readme/images/benchmark/step_3_results.png)
+An execution gives the table of *Figure 10*.
 
-While the paper table is as follows:
+![step_3_results](readme/images/benchmark/step_3_results.png)
+*Figure 10: Table of results for the step 3 of the benchmark benchmark.*
+
+
+The table of results from the paper is shown in *Figure 11*.
 
 ![benchmark_table](readme/images/benchmark/benchmark_table.png "Benchmark table")
+*Figure 11:Table of results from the paper.*
 
 The `Ok` in the csv files are represented
 by green checkmarks in the table of the paper.
@@ -533,10 +560,12 @@ by green checkmarks in the table of the paper.
 
 ### Summary of the workflow for the interaction Game
 
-The following figure illustrates our protocol with the
+The *Figure 12* illustrates the protocol of the benchmark with the
 Game global interaction, with only the mutation scenario.
 
 ![workflow](readme/images/benchmark/workflow_example.png)
+
+*Figure 12: Protocol of the benchmark for the interaction Game.*
 
 ### To Execute all three steps in one pass
 

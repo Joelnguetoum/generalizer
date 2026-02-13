@@ -84,7 +84,7 @@ pub fn cli_compose(matches: &ArgMatches) {
 
 
 
-    let comp_dir = "Composition_output";
+    let comp_dir = "Composition_Output";
     let _ = fs::remove_dir_all(comp_dir).ok();
     let _ = fs::create_dir_all(comp_dir).ok();
 

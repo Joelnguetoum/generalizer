@@ -32,7 +32,11 @@ impl Benchmark{
             let nb_partitions = global_interaction.nb_partitions_shuffled(self.nb_lifelines_partitions);
 
             //Random decomposition
+            let mut ct_comp = 1;
+            let total_nb_comp = nb_partitions * 4;
 
+            println!("");
+            println!("----------------------------");
             for ct_partition in 0..nb_partitions { // CYCLE
 
                 let partition_dir = format!("{}/Partition {}", int_dir, ct_partition);
@@ -48,7 +52,7 @@ impl Benchmark{
 
                 //Normalization + Mutation
                 let locals = Self::parse_locals(gen_ctx,&norm_input_local_dir,&mutated_local_dir);
-                println!("For partition {} of {}: Local interaction parsing successful",ct_partition,name);
+                println!("For partition {} of {}: normalized local interactions and mutated local interactions parsing successful",ct_partition,name);
                 //Recording of the number of gates for the partition
                 gates_vec.push(locals.normalized[0].free_gates().len());
 
@@ -65,12 +69,11 @@ impl Benchmark{
                     Ok(result_int) => {
                         let elapsed = time.elapsed().as_secs_f64();
                         fs::write(&format!("{}/time.txt",norm_result_gf),elapsed.to_string()).unwrap();
-                        /*
-                        if result_int.iat_canonize(gen_ctx) != canon_global {
-                            return Err(BenchmarkError::CompositionResultMismatch);
-                        }
 
-                         */
+
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : with Fail rule : successfully recomposed a global interaction"
+                                 ,ct_comp,total_nb_comp,name);
+
                         //Drawing of the result
                         /////////////////////////////////////////////////////////////////
 
@@ -82,6 +85,8 @@ impl Benchmark{
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : with Fail rule : timeout"
+                                 ,ct_comp,total_nb_comp,name);
                         None
                     }
                     Err(e) => {
@@ -90,9 +95,10 @@ impl Benchmark{
 
 
                 };
+                ct_comp+=1;
 
                 ////////////////////////////////////////////////////////////////////////////
-                //// COMPOSITION WITHOUT GREEDY-FAIL
+                //// COMPOSITION WITHOUT FAIL
                 let time = Instant::now();
                 let duration_norm_2 = match Interaction::compose(&locals.normalized[0], &locals.normalized[1], alpuente, verbose, false,self.timout_secs,&self.axioms) {
                     Ok(result_int) => {
@@ -104,7 +110,8 @@ impl Benchmark{
                         }
 
                          */
-
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : without Fail rule : successfully recomposed a global interaction"
+                                 ,ct_comp,total_nb_comp,name);
                         //Drawing of the result
 
                         /////////////////////////////////////////////////////////////////
@@ -118,6 +125,8 @@ impl Benchmark{
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : without Fail rule : timeout"
+                                 ,ct_comp,total_nb_comp,name);
                         None
                     }
                     Err(e) => {
@@ -126,7 +135,7 @@ impl Benchmark{
 
 
                 };
-
+                ct_comp+=1;
 
                 ////////////////////////////////////////////////////////////////////////////
                 ////////////////////////////////////////////////////////////////////////////
@@ -139,13 +148,9 @@ impl Benchmark{
                     Ok(result_int) => {
                         let elapsed = time.elapsed().as_secs_f64();
                         fs::write(&format!("{}/time.txt",mut_result_gf),elapsed.to_string()).unwrap();
-                        /*
-                        if result_int.iat_canonize(gen_ctx) != canon_global {
-                            return Err(BenchmarkError::CompositionResultMismatch);
-                        }
 
-                         */
-                        //Drawing of the result
+                        println!("Composition {}/{} of  locals (mutated) for {} interactions : with Fail rule : successfully recomposed a global interaction"
+                                 ,ct_comp,total_nb_comp,name);                        //Drawing of the result
                         /////////////////////////////////////////////////////////////////
 
                         if draw {
@@ -156,7 +161,10 @@ impl Benchmark{
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : with Fail rule : timeout"
+                                 ,ct_comp,total_nb_comp,name);
                         None
+
                     }
                     Err(e) => {
                         return Err(BenchmarkError::CompositionError(e.to_string()));
@@ -164,7 +172,7 @@ impl Benchmark{
 
 
                 };
-
+                ct_comp+=1;
                 ////////////////////////////////////////////////////////////////////////////
                 //// COMPOSITION WITHOUT GREEDY-FAIL
                 let time = Instant::now();
@@ -177,7 +185,8 @@ impl Benchmark{
                             return Err(BenchmarkError::CompositionResultMismatch);
                         }
                          */
-
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : without Fail rule : successfully recomposed a global interaction"
+                                 ,ct_comp,total_nb_comp,name);
                         //Drawing of the result
 
                         /////////////////////////////////////////////////////////////////
@@ -191,6 +200,8 @@ impl Benchmark{
                         Some(elapsed)
                     },
                     Err(CompositionError::TimedOut)=>{
+                        println!("Composition {}/{} of  locals (normalized) for {} interactions : without Fail rule : timeout"
+                                 ,ct_comp,total_nb_comp,name);
                         None
                     }
                     Err(e) => {
@@ -199,6 +210,8 @@ impl Benchmark{
 
 
                 };
+                ct_comp+=1;
+
                 result_vec_per_partition.push((duration_norm_1, duration_norm_2, duration_mut_1, duration_mut_2));
 
             }
