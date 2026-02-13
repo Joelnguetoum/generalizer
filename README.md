@@ -69,7 +69,7 @@ After downloading the image, it is loaded with the following command:
 $ docker load -i generalizer.tar.gz
 ```
 
-Alternatively, the image can be built from the root of the repository
+Alternatively, the image can be built from the root of the repository [generalizer](https://github.com/Joelnguetoum/generalizer)
 with the following command:
 
 ```bash
@@ -79,8 +79,24 @@ $ docker build -t generalizer .
 After loading or building the image, running the container is done with the following command:
 
 ```bash
-$ docker run -it --rm generalizer:latest
+$ docker run -it --rm --name custom_container generalizer:latest
 ```
+
+Our experiments generate image that cannot be easily 
+visualized inside the docker image 
+directly. We recommend copying output images to the host machine.
+
+While the container is running (its name is `custom_container` in the example above),
+you can copy a file from the container to the host machine with the following command:
+
+```bash
+$ docker cp custom_container:/home/fm/generalizer/generalizer/README.pdf target_folder_on_host
+```
+
+where `target_folder_on_host` is the folder where you want to copy the file in the host machine.
+The above command will copy the file `generalizer/README.pdf` from the container to the folder `target_folder_on_host`.
+
+
 ## Smoke tests
 
 By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
@@ -118,6 +134,8 @@ shown in the following image:
 The command runs in less than `1` seconds. The result will be put in the folder `Composition_output` which contains a folder
 `result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result).
 The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
+All the images can be visualized by copying them to the host 
+machine according to the instruction in [Docker instructions](#docker-instructions).
 
 ### Reduced benchmark smoke test
 
@@ -260,7 +278,9 @@ exactly the same way as in the smoke test of the composition.
 ## Benchmark
 
 To execute the benchmark, move into the `Benchmark` folder 
-from the root of `generalizer` folder.
+from the root of `generalizer` folder. The produced images may be 
+visualized by copying them to the host machine according to 
+the instruction in [Docker instructions](#docker-instructions).
 
 ```bash
 $ cd Benchmark
@@ -281,19 +301,21 @@ the following table,
 ### Step 1: projection, normalization and mutation
 
 We use the interactions in the folder [Benchmark](../Benchmark/Benchmark)
-as our starting global models. For each global interaction $k$, we extract
-at most $N_p$ partitions of its set of lifelines $L$ into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.
+as our starting global models. For each global interaction `k`, we extract
+at most `N_p` partitions of its set of lifelines `L` into a pair of subsets each of size at least $\lfloor L/2 \rfloor$.
 
-For each partition $(L_1,L_2)$ of a set of lifelines of a global interaction $r$:
+For each partition `(L1,L2)` of a set of lifelines of a global interaction `k`:
 
-- project $r$ onto $L_1$ and $L_2$ to obtain local interactions $i$ and $j$;
-- we normalize $i$ and $j$ using HIBOU to obtain $i_\text{norm}$ and $j_\text{norm}$
+- project `k` onto `L1` and `L2` to obtain local interactions `i1` and `i2`;
+- we normalize `i1` and `i2` using HIBOU to obtain `i1_norm` and `i2_norm`
   respectively.
-- we apply mutation operations to $i$ and $i$, with consists of successively
-  applying $N_m$ times one of the following rewrite operation selected uniformly
-  at random: $\textsf{alt}(x,y) \rightarrow \textsf{alt}(y,x)$ and $\textsf{par}(x,y) \rightarrow \textsf{par}(y,x)$.
-  We obtain the interactions $i_\text{mut}$ and $j_\text{mut}$ from $s$ and $t$ respectively.
-  The mutations are done with [Maude](https://maude.cs.illinois.edu/).
+- we apply mutation operations to `i1` and `i2`, with consists of successively
+  applying `N_m` times one of the following rewrite operation selected uniformly
+  at random: `alt(x,y) -> alt(y,x)` and `par(x,y) -> par(y,x)`.
+  We obtain the interactions `i1_mut` and `i2_mut` from `i1` and `i2` respectively.
+  The mutations are done with [Maude](https://maude.cs.illinois.edu/). Those mutation operations are achieved by the scripts under the folder `maude_mutation`. 
+
+To start the first step, we execute the following command:
 
 ```bash
 $ ./benchmark_step_1_projection.sh
@@ -343,12 +365,13 @@ The folder `original_locals` contains the
 local interactions `i1` and `i2` obtained after the projection
 of the global interaction.
 
-The folders `with_normalized_locals` and `with_mutated_locals` have the same structure, as well as 
-the partitions folders.
+The partition folders have the same structure. 
+Each of them contains the folders `with_normalized_locals` and `with_mutated_locals` have the same structure They contain the models `i1_norm`, `i2_norm` 
+and `i1_mut` and `i2_mut` respectively (`.hif` files and `.png` pictures). 
 
 The folders `results_with_rule_fail` and `results_without_rule_fail` 
 are empty at this stage, are are meant to contain the results of the composition
-with and without the rule $\textsf{Fail}$, in the next step.
+with and without the rule **Fail**, in the next step.
 
 ### Step 2: composition
 
@@ -424,20 +447,50 @@ Or with column shrinked down:
 ```bash
 $ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_step_2.csv | less -S
 ```
-We obtain the following table:
+We obtain the following table (with shrinked down columns):
 
 ![step_2_results](readme/images/benchmark/step_2_results.png)
 
 Each interaction corresponds to a row in the table.
-The second column indicates the size of each interaction,
-while the third column shows the range of the number of gates
-in local interactions with respect to partitions of lifelines.
-The last four columns represent the average composition duration
-across partitions, with and without the rule **Fail**.
-In particular, the fourth and fifth columns report the average duration
-for the composition of normalized local interactions,
-and the last two columns report the average duration for the mutated
-local interactions.
+The second column reports the size of the interaction,
+while the third column indicates the range of gate counts 
+in the local interactions obtained after projection onto 
+the lifeline partitions. The last four columns present the
+average composition time across partitions, 
+both with and without the optimization rule **Fail**.
+This rule is designed to compute compositions more efficiently.
+Specifically, the fourth and fifth columns show the average
+duration for composing normalized local interactions,
+whereas the last two columns report the average duration
+for mutated local interactions.
+
+A truncated version of the table is shown in the figure below.
+
+![Truncated result table](readme/images/benchmark/trunc.png)
+
+Consider the interaction `ATM`, highlighted in yellow.
+Its size is `33`. After projection, the number of gates
+in its local interactions ranges from `7` to `17`.
+With the optimization rule **Fail**,
+the average composition time across partitions
+for normalized local interactions is `13.141 ms`,
+and the overall average (including mutated interactions) 
+is `1.2` seconds. Without the **Fail** rule,
+the composition process times out (after 60 seconds)
+for at least one partition.
+
+Now consider the interaction `Game`,
+highlighted in red. Its size is `16`,
+and the projected local interactions contain
+either `5` or `6` gates. With the **Fail** optimization,
+the average composition time across partitions is `2.146 ms`
+(and `0.3` seconds overall). Without this optimization,
+the average duration across partitions
+increases to `3.099 ms`. These results illustrate
+that the **Fail** rule not only reduces the average
+composition time but can also prevent timeouts
+(set to 60 seconds).
+
 
 In addition, in each folder corresponding to a global interaction,
 there is a `.csv` file showing the composition duration for each partitions
