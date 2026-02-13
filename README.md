@@ -26,7 +26,7 @@ This README file describes the artifact related to the paper ["Specializing anti
 models composition via gate connections"] accepted to the ``FM26`` conference.
 
 The paper proposes an approach to the composition of interaction models using
-anti-unification. The program, named `generalizer` is developped in Rust.
+anti-unification. The program, named `generalizer` is developed in Rust.
 
 
 ## Note on this document
@@ -43,7 +43,7 @@ execute the following command in the root of code directory:
 $ cargo build --release
 ```
 
-To be able to run the exeriments, you need to install Maude
+To be able to run the experiments, you need to install Maude
 
 ```bash
 $ python -m pip install maude
