@@ -10,7 +10,7 @@ echo "----------------------------------------"
 echo "Starting the step 2 of the benchmark: $(date)"
 echo "Results will be written to: ${OUTPUT_DIR}"
 echo "----------------------------------------"
-
+SECONDS=0
 NB_MUTATIONS=7
 MAX_NB_PARTITIONS=5
 TIMOUT_SECS=60
@@ -18,6 +18,7 @@ TIMOUT_SECS=60
 $BINARY benchmark_step_2 Benchmark $OUTPUT_DIR $NB_MUTATIONS $MAX_NB_PARTITIONS $TIMOUT_SECS -m -d
 
 echo "----------------------------------------"
+echo "Execution time: $SECONDS seconds"
 echo "Step 2 of the benchmark finished: $(date)"
 echo "Check results inside: ${OUTPUT_DIR}"
 echo "Check the file results_step_2.csv for the computation durations"

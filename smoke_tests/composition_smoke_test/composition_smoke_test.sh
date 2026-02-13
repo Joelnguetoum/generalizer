@@ -12,11 +12,12 @@ echo "Starting composition: $(date)"
 echo "Results will be written to: ${OUTPUT_DIR}"
 echo "----------------------------------------"
 
-
+SECONDS=0
 # Run benchmark
 $BINARY compose signature.hsf i.hif j.hif -f
 
 echo "----------------------------------------"
+echo "Execution time: $SECONDS seconds"
 echo "Composition smoke test: $(date)"
 echo "Check results inside: ${OUTPUT_DIR}"
 echo "----------------------------------------"

@@ -3,18 +3,18 @@
 
 ## Table of content
 
-1. [Introduction](#introduction)
-2. [Note on this document](#note-on-this-document)
-3. [Set Up](#set-up)
-4. [Smoke tests](#smoke-tests)
-5. [Artifact structure](#artifact-structure)
-6. [Interaction language](#interaction-language)
+
+1. [Artifact structure](#artifact-structure)
+2. [Docker instructions](#docker-instructions)
+3. [Smoke tests](#smoke-tests)
+4. [Introduction](#introduction)
+5. [Interaction language](#interaction-language)
     - [Representation of interactions](#representation-of-interactions)
     - [Gates](#gates)
     - [Composition smoke test](#composition-smoke-test)
     - [Reduced benchmark smoke test](#reduced-benchmark-smoke-test)
-7. [Others Composition Examples](#others-composition-examples)
-8. [Benchmark](#benchmark)
+6. [Composition Examples](#composition-examples)
+7. [Benchmark](#benchmark)
     - [Step 1: projection, normalization and mutation](#step-1-projection-normalization-and-mutation)
     - [Step 2: composition](#step-2-composition)
     - [Step 3: Normal Form Checking](#step-3-normal-form-checking)
@@ -23,24 +23,44 @@
     - [Interactions of the benchmark](#interactions-of-the-benchmark)
 
 
-## Introduction
+## Artifact structure
 
-This README file describes the artifact related to the paper ["Specializing anti-unification for interaction
-models composition via gate connections"] accepted to the ``FM26`` conference.
+The `generalizer` folder contains the following subfolders:
 
-The paper proposes an approach to the composition of interaction models using
-anti-unification. The program, named `generalizer` is developped in Rust.
+ ```tree
+      generalizer
+          LICENSE.txt
+          README.pdf
+          README.md
+          Dockerfile
+          Executable
+          Benchmark
+          smoke_tests
+          Interactions_examples
+          generalizer_sources.zip
+          readme
+          Benchmark_with_results.zip
+          smoke_tests_with_results.zip
+  ```
 
-The paper's experiments were run on an Intel Core i7-13850HX (20-core, 2.1 GHz) with 32
-GB RAM.
+The Docker image includes a pre-built executable located in  
+`generalizer/Executable`.
 
-## Note on this document
+Additional resources are organized as follows:
 
-We recommend reading this README file as the joint README.pdf file outside
-of the docker container, because of the images illustrations.
+- **Smoke tests**: `generalizer/smoke_tests`
+- **Benchmark scripts and files**: `generalizer/Benchmark`
+- **Interaction examples** (including composition scripts):  
+  `generalizer/Interactions_examples`
+
+The provided archives contain:
+
+- `generalizer_sources.zip` — Source code of the program
+- `Benchmark_with_results.zip` — Benchmark results
+- `smoke_tests_with_results.zip` — Smoke test results
 
 
-## Set Up
+## Docker instructions
 
 The artefact is wrapped in a docker image available on Zenodo(todo: link).
 After downloading the image, it is loaded with the following command:
@@ -61,8 +81,6 @@ After loading or building the image, running the container is done with the foll
 ```bash
 $ docker run -it --rm generalizer:latest
 ```
-
-
 ## Smoke tests
 
 By running the container, `Docker` will open as shell  inside a directory named `generalizer`.
@@ -92,8 +110,12 @@ $ ./composition_smoke_test.sh
 ```
 ![figure](readme/images/smoke_tests/comp_smoke_test.png)
 
-If successful, the success message will be printed in the terminal.
-The result will be put in the folder `Composition_output` which contains a folder
+If successful, the success message will be printed in the terminal as 
+shown in the following image:
+![figure](readme/images/smoke_tests/comp_smoke_test_terminal_image.png)
+
+
+The command runs in less than `1` seconds. The result will be put in the folder `Composition_output` which contains a folder
 `result` containing the files `result.hif`(interaction file) and `result.png`(visual representation of the result).
 The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
 
@@ -107,7 +129,11 @@ The folder contains the script `reduced_benchmark_smoke_test.sh` to run the smal
 $ cd smoke_tests/reduced_benchmark_smoke_test
 $ ./reduced_benchmark_smoke_test.sh
 ```
-The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing
+If successful, a success message will be printed in the terminal as shown in the following image:
+
+![figure](readme/images/smoke_tests/reduced_benchmark_terminal_image.png)
+
+The execution takes approximatively `3` seconds. The result will be put in the folder `Benchmark_Output`. It containts a csv file `result_one_pass.csv` containing
 a table akin the exprerimental section of the paper.
 
 To visualize the results inside the docker container, the following command can be used:
@@ -126,30 +152,14 @@ The following table should be printed (up to some small differences in numbers, 
 This smoke test executes in one pass the three steps of the benchmark
 described in details the Section [Benchmark](#Benchmark) below.
 
-## Artifact structure
 
-The `generalizer` folder contains the following subfolders:
+## Introduction
 
- ```tree
-      generalizer
-          LICENSE.txt
-          README.pdf
-          README.md
-          Dockerfile
-          Executable
-          Benchmark
-          smoke_tests
-          Interactions_examples
-          generalizer_sources.zip
-          readme
-  ```
+This README file describes the artifact related to the paper ["Specializing anti-unification for interaction
+models composition via gate connections"] accepted to the ``FM26`` conference.
 
-The Docker image provides a built executable under the folder `generalizer/Executable`.
-The smoke tests are located in the `generalizer/smoke_tests` directory, the
-benchmark scripts in `generalizer/Benchmark` directory; some
-examples of interactions are provided in `generalizer/Interactions_examples` directory, together
-with scripts to compose them.
-
+The paper proposes an approach to the composition of interaction models using
+anti-unification. The program, named `generalizer` is developped in Rust.
 
 ## Interaction language
 
@@ -239,7 +249,7 @@ which can be visually represented as:
 
 
 
-## Others Composition Examples
+## Composition Examples
 
 The folder `Interactions_examples` contains several examples of interactions composition
 described in the appendix of the paper, and the example of the introduction. 
@@ -255,8 +265,18 @@ from the root of `generalizer` folder.
 ```bash
 $ cd Benchmark
 ```
+The paper's experiments were run on an Intel Core i7-13850HX (20-core, 2.1 GHz) with 32
+GB RAM. The benchmark is divided into three steps each performed by the scripts described in 
+the following table, 
 
-We benchmark is divided into three steps each performed by the scripts:
+| Script                     | Description                       | est. time    |
+|----------------------------|-----------------------------------|--------------|
+| benchmark_step_1_projection.sh  | Projection,mutation,normalization | ~21 seconds  |
+| benchmark_step_2_composition.sh   | Composition of local interactions | ~33 minutes  |
+| benchmark_step_3_nf_checking.sh   | Normal form Checking              | ~1 seconds   |
+| benchmark_one_pass.sh        | Run all three steps at once       | ~ 33 minutes |
+
+
 
 ### Step 1: projection, normalization and mutation
 
@@ -422,9 +442,9 @@ local interactions.
 In addition, in each folder corresponding to a global interaction,
 there is a `.csv` file showing the composition duration for each partitions
 non-averaged. For example, for the interaction `Game`, such a file is
-`Game/Game_composition_durations.csv`. It contains the following table:
+`Game/Game_composition_durations.csv`. It contains a table like the one that follows:
 
-TODO (fig)
+![game_table](readme/images/benchmark/game_partial_table.png)
 
 ### Step 3: Normal Form Checking
 
