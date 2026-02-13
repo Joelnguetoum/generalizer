@@ -144,6 +144,12 @@ The command runs in less than `1` seconds. The result will be put in the folder 
 The folder `input` also contains pictures `i.png` and `j.png` of the interactions.
 All the images can be visualized by copying them to the host 
 machine according to the instruction in [Docker instructions](#docker-instructions).
+The file `result.hif` can be visualized with the `cat` command 
+to obtain the model represented in *Figure 1*.
+
+```bash
+$ cat Composition_Output/result/result.hif
+```
 
 ### Reduced benchmark smoke test
 
@@ -166,12 +172,12 @@ a table akin the exprerimental section of the paper.
 To visualize the results inside the docker container, the following command can be used:
 
 ```bash
-$ csvlook -d '&' Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' Benchmark_Output/results_one_pass.csv | less -S
 ```
 To shrink the size of columns, the following command can be used:
 
 ```bash
-$ csvlook -d '&' --max-column-width 10 Benchmark_Output/result_one_pass.csv | less -S
+$ csvlook -d '&' --max-column-width 10 Benchmark_Output/results_one_pass.csv | less -S
 ```
 The table of *Figure 4* should be printed (up to some small differences in numbers, which are durations):
 ![figure](readme/images/smoke_tests/reduced_benchmark_smoke_test.png)
