@@ -26,7 +26,7 @@ This README file describes the artifact related to the paper ["Specializing anti
 models composition via gate connections"] accepted to the ``FM26`` conference.
 
 The paper proposes an approach to the composition of interaction models using
-anti-unification. The program, named `generalizer` is developped in Rust.
+anti-unification. The program, named `generalizer` is developed in Rust.
 
 
 ## Note on this document
@@ -43,7 +43,7 @@ execute the following command in the root of code directory:
 $ cargo build --release
 ```
 
-To be able to run the exeriments, you need to install Maude
+To be able to run the experiments, you need to install Maude
 
 ```bash
 $ python -m pip install maude
@@ -93,9 +93,9 @@ environment; and `busy -> l3 ` is reception of the message `busy` from environme
 The term `l0 -- free -> l3` represents the transmission of the message `free` from lifeline `l0` to lifeline `l3`,
 and is called a `value passing` in the paper.
 
-The above interaction can be visualized as:
+The above interaction is visualized in a UML sequence-diagram-like form, as shown below:
 
-![i0](readme/images/interactions/i0_repr.png)
+<img src="readme/images/interactions/i0_repr.png" alt="i0" width="150"/>
 
 #### Gates
 
@@ -128,9 +128,8 @@ loopS(
 
 which can be visually represented as:
 
-![i0](readme/images/interactions/i_gates.png)
 
-
+<img src="readme/images/interactions/i_gates.png" alt="i0" width="150"/>
 
 
 ## Artifact structure
