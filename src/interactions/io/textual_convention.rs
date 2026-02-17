@@ -29,7 +29,7 @@ pub static SYNTAX_PAR: &'static str = "par";
 #[allow(dead_code)]
 pub static SYNTAX_ALT: &'static str = "alt";
 #[allow(dead_code)]
-pub static SYNTAX_LOOP_S: &'static str = "loop";
+pub static SYNTAX_LOOP_S: &'static str = "loopS";
 
 #[allow(dead_code)]
 pub static SYNTAX_EMISSION: &'static str = "!";
